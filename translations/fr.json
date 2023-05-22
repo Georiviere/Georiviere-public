@@ -1,0 +1,72 @@
+{
+  "details": {
+    "closePage": "Fermer la fiche",
+    "descent": "Dénivelé",
+    "length": "Longueur",
+    "flow": "Écoulement",
+    "km": "km",
+    "kilometers": "kilomètres",
+    "m": "m",
+    "meters": "mètres"
+  },
+  "home": {
+    "title": "Sentinelle des rivières : observations, protections",
+    "punchline": "Citoyen, contribuez à la connaissance des rivières aux côtés des agents du Parc"
+  },
+  "mapMenu": {
+    "search": "Rechercher",
+    "observation": "Ajouter une observation",
+    "details": "Fiche",
+    "map": "Carte"
+  },
+  "observation": {
+    "cancel": "Annuler votre observation",
+    "submit": "Soumettre votre observation",
+    "title": "Observation",
+    "labelButton": "Ajouter une observation",
+    "quality": {
+      "label": "Qualité",
+      "description": "Apportez des observations sur les propriétés des cours d'eau (pollution, température, développement algal, etc.)",
+      "shortDescription": "Apportez des observations sur les propriétés des cours d'eau"
+    },
+    "fauna-flora": {
+      "label": "Faune et Flore",
+      "description": "Recensez les espèces de notre territoire",
+      "shortDescription": "Recensez les espèces de notre territoire"
+    },
+    "quantity": {
+      "label": "Quantité",
+      "description": "Aidez-nous à répertorier les volumes des rivières (crue, débordement, assèchement, etc.)",
+      "shortDescription": "Répertorier les volumes des rivières"
+    },
+    "damages": {
+      "label": "Dégâts potentiels",
+      "description": "Avertissez-nous pour tout incident sur la berge ou sur le lit d'un cours d'eau (embâque, érosion, etc.)",
+      "shortDescription": "Rapportez un incident sur la berge ou sur le lit d'un cours d'eau"
+    }
+  },
+  "map": {
+    "title": "Carte",
+    "label": "Recherchez",
+    "centerOnMap": "Centrer sur la carte",
+    "resetView": "Réinitialiser la position de la carte"
+  },
+  "searchBox": {
+    "label": "Recherchez votre rivière",
+    "navigate": "Naviguez directement sur la carte"
+  },
+  "site": {
+    "title": "Georivière",
+    "description": "Gérez et suivez vos cours d'eau",
+    "externalLink": "Lien externe",
+    "followUs": "Suivez-nous sur",
+    "ourPage": "Notre page",
+    "notFound": "Page non trouvée",
+    "notFound-content": "Cette page n'existe pas ou plus."
+  },
+  "theme": {
+    "toggle": "Thème {theme}",
+    "light": "clair",
+    "dark": "sombre"
+  }
+}
