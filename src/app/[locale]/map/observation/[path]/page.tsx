@@ -1,14 +1,22 @@
-'use client';
-
-import { useParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import {
+  getObservationJsonSchema,
+  handleSubmitObservation,
+} from '@/api/observations';
+import { JSONSchema } from 'json-schema-yup-transformer/dist/schema';
+import { getTranslations } from 'next-intl/server';
 
 import ButtonClose from '@/components/button-close';
 import ObservationForm from '@/components/observation-form';
 
-export default function ObservationPage() {
-  const { path } = useParams();
-  const t = useTranslations('observation');
+type Props = {
+  params: {
+    path: string;
+  };
+};
+
+export default async function ObservationPage({ params: { path } }: Props) {
+  const t = await getTranslations('observation');
+  const jsonSchema = (await getObservationJsonSchema(path)) as JSONSchema;
 
   return (
     <section className="px-2">
@@ -23,7 +31,10 @@ export default function ObservationPage() {
 
       <p className="py-8">{t(`${path}.description`)}</p>
 
-      <ObservationForm />
+      <ObservationForm
+        jsonSchema={jsonSchema}
+        handleSubmit={handleSubmitObservation}
+      />
     </section>
   );
 }

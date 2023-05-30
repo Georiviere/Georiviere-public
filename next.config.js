@@ -12,6 +12,7 @@ const nextConfig = withNextIntl({
   },
   experimental: {
     appDir: true,
+    serverActions: true,
   },
   images: {
     remotePatterns: [

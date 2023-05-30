@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useEffect } from 'react';
+import { JSONSchema } from 'json-schema-yup-transformer/dist/schema';
+import { UseFormReturn, useFormContext } from 'react-hook-form';
 
 import ObservationFormItem from './observation-form-item';
 
 type Props = {
-  control: any;
+  form: UseFormReturn;
   name: string;
   description?: string;
   format?: string;
   label: string;
   list?: string[];
+  properties: JSONSchema;
 };
 
 export default function ConditionalField(props: Props) {
@@ -20,7 +22,7 @@ export default function ConditionalField(props: Props) {
     return () => {
       unregister(props.name);
     };
-  }, [props.name, register, unregister]);
+  }, [props.name, props.properties.type, register, unregister]);
 
-  return <ObservationFormItem {...props} />;
+  return <ObservationFormItem {...props} fieldsProps={props.properties} />;
 }

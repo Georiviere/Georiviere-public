@@ -21,6 +21,7 @@
   },
   "observation": {
     "cancel": "Annuler votre observation",
+    "coordinatesHelptext": "Indiquez la position de l'observation sur la carte",
     "submit": "Soumettre votre observation",
     "title": "Observation",
     "labelButton": "Ajouter une observation",
@@ -43,6 +44,14 @@
       "label": "Dégâts potentiels",
       "description": "Avertissez-nous pour tout incident sur la berge ou sur le lit d'un cours d'eau (embâque, érosion, etc.)",
       "shortDescription": "Rapportez un incident sur la berge ou sur le lit d'un cours d'eau"
+    },
+    "validation": {
+      "title": "Merci de votre contibution",
+      "content": "Votre contribution a bien été soumise. Elle sera publiée après vérifications."
+    },
+    "error": {
+      "title": "Une erreur est survenue",
+      "required": "Ce champ est requis"
     }
   },
   "map": {

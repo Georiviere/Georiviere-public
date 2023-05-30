@@ -125,7 +125,8 @@ export default function DetailsPageUI({ content }: Props) {
         </dl>
       </header>
 
-      {content.description.split('\r\n')
+      {content.description
+        .split('\r\n')
         .filter((line: string) => line.trim() !== '')
         .map((line: string, index: number) => {
           return (

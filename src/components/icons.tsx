@@ -1,7 +1,9 @@
 import React from 'react';
 import {
+  AlertCircle,
   ArrowDownRight,
   AtSign,
+  CheckCircle2,
   ChevronRight,
   ChevronsLeftRight,
   Crosshair,
@@ -27,8 +29,10 @@ export const propsForSVGPresentation = {
 };
 
 export const Icons = {
+  alert: AlertCircle,
   atSign: AtSign,
   arrowDownRight: ArrowDownRight,
+  check: CheckCircle2,
   chevronRight: ChevronRight,
   chevronsLeftRight: ChevronsLeftRight,
   crosshair: Crosshair,

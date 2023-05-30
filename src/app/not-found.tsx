@@ -6,7 +6,7 @@ export default function NotFound() {
   // const t = useTranslations('site');
   const t = (text: string) => {
     if (text === 'title') {
-      return "Georivière";
+      return 'Georivière';
     }
     if (text === 'notFound') {
       return 'Page non trouvée';

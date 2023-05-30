@@ -1,95 +1,71 @@
 'use client';
 
-import { useCallback, useEffect, useId, useRef } from 'react';
+import { useEffect } from 'react';
 import { useMapContext } from '@/context/map';
+import {
+  JSONSchema,
+  JSONSchemaExtended,
+} from 'json-schema-yup-transformer/dist/schema';
+import { useTranslations } from 'next-intl';
+import { UseFormReturn } from 'react-hook-form/dist/types/form';
 
 import { cn } from '@/lib/utils';
 
-import { Input, InputProps } from './ui/input';
-import { Label } from './ui/label';
+import ObservationFormItem from './observation-form-item';
 
 type Props = {
   className?: string;
-  fieldProps?: InputProps;
-  helpText?: string;
+  form: UseFormReturn;
   label?: string;
+  lngLat: JSONSchema;
 };
 
-export function FormRowCoordinates({ className, fieldProps, ...props }: Props) {
-  const longitudeId = useId();
-  const latitudeId = useId();
-  const helpTextId = useId();
-
-  const { observationCoordinates, setObservationCoordinates } = useMapContext();
-
-  const longitudeEl = useRef<HTMLInputElement>(null);
-  const latitudeEl = useRef<HTMLInputElement>(null);
+export function FormRowCoordinates({
+  className,
+  lngLat,
+  form,
+  ...props
+}: Props) {
+  const { observationCoordinates } = useMapContext();
+  const t = useTranslations('observation');
 
   useEffect(() => {
     if (observationCoordinates) {
       const {
         coordinates: [lng, lat],
       } = observationCoordinates;
-      if (longitudeEl.current !== null) {
-        longitudeEl.current.value = lng.toString();
-      }
-      if (latitudeEl.current !== null) {
-        latitudeEl.current.value = lat.toString();
-      }
+      form.setValue('lat', lat, { shouldTouch: true });
+      form.setValue('lng', lng, { shouldTouch: true });
+      form.trigger('lat');
+      form.trigger('lng');
     }
-  }, [observationCoordinates]);
-
-  const handleChange = useCallback(() => {
-    setObservationCoordinates({
-      type: 'Point',
-      coordinates: [
-        Number(longitudeEl.current?.value),
-        Number(latitudeEl.current?.value),
-      ],
-    });
-  }, [setObservationCoordinates]);
+  }, [form, observationCoordinates]);
 
   return (
     <div
       className={cn(
-        'my-6 grid w-full grid-cols-2 items-center gap-1.5',
+        'items-top my-6 grid w-full grid-cols-2 gap-1.5',
         className,
       )}
       {...props}
     >
-      <div>
-        <Label htmlFor={longitudeId}>Longitude</Label>
-        <Input
-          aria-describedby={helpTextId}
-          className="bg-input"
-          id={longitudeId}
-          max="180"
-          min="-180"
-          name="longitude"
-          onChange={handleChange}
-          ref={longitudeEl}
-          required
-          step="0.00001"
-          type="number"
+      {Object.entries(lngLat as JSONSchemaExtended).map(([name, props]) => (
+        <ObservationFormItem
+          key={name}
+          form={form}
+          name={name}
+          label={props.title}
+          list={props.enum}
+          format={props.format}
+          description={props.description}
+          fieldsProps={{
+            step: '0.00001',
+            readOnly: true,
+          }}
         />
-      </div>
-      <div>
-        <Label htmlFor={latitudeId}>Latitude</Label>
-        <Input
-          aria-describedby={helpTextId}
-          className="bg-input"
-          id={latitudeId}
-          max="90"
-          min="-90"
-          name="latitude"
-          onChange={handleChange}
-          ref={latitudeEl}
-          step="0.00001"
-          type="number"
-        />
-      </div>
-      <p id={helpTextId} className="col-span-2 text-sm text-muted-foreground">
-        Indiquez la position de l&apos;observation sur la carte
+      ))}
+      <p className="col-span-2 text-sm text-muted-foreground">
+        {t('coordinatesHelptext')}
       </p>
     </div>
   );

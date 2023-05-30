@@ -1,132 +1,86 @@
-function fetchObservation(path: string) {
-  const commonFields = {
-    type: 'object',
-    required: ['name_author', 'email_author', 'date_observation', 'type'],
-    properties: {
-      name_author: {
-        type: 'string',
-        title: 'Name author',
-        maxLength: 128,
-        description: 'test flo',
-      },
-      first_name_author: {
-        type: 'string',
-        title: 'First name author',
-        maxLength: 128,
-      },
-      email_author: {
-        type: 'string',
-        title: 'Email',
-        format: 'email',
-      },
-      date_observation: {
-        type: 'string',
-        title: "Observation's date",
-        format: 'datetime-local',
-      },
-      description: {
-        type: 'string',
-        title: 'Description',
-      },
+import {
+  JSONSchema,
+  JSONSchemaType,
+} from 'json-schema-yup-transformer/dist/schema';
+
+import { getCorrespondingPath } from '@/lib/utils';
+
+async function fetchObservation() {
+  const res = await fetch(
+    `${process.env.apiHost}/api/portal/fr/${process.env.portal}/contributions/json_schema/`,
+    {
+      next: { revalidate: 60 * 60 },
     },
-  };
-  if (path === 'damages') {
-    return {
-      ...commonFields,
-      properties: {
-        ...commonFields.properties,
-        type: {
-          type: 'string',
-          title: 'Type',
-          enum: [
-            'Landing',
-            'Excessive cutting of riparian forest',
-            'Rockslides',
-            'Disruptive jam',
-            'Bank erosion',
-            'River bed incision (sinking)',
-            'Fish diseases (appearance of fish)',
-            'Fish mortality',
-            'Trampling by livestock (impacting)',
-          ],
-        },
-      },
-      allOf: [
-        {
-          if: {
-            properties: {
-              type: {
-                const: 'Landing',
-              },
-            },
-          },
-          then: {
-            properties: {
-              landing_type: {
-                type: 'string',
-                title: 'Landing Type',
-              },
-            },
-            required: ['landing_type'],
-          },
-        },
-        {
-          if: {
-            properties: {
-              type: {
-                const: 'Bank erosion',
-              },
-            },
-          },
-          then: {
-            properties: {
-              length_bank_erosion: {
-                type: 'string',
-                title: 'Length Bank Erosoion',
-              },
-            },
-          },
-        },
-        {
-          if: {
-            properties: {
-              type: {
-                const: 'River bed incision (sinking)',
-              },
-            },
-          },
-          then: {
-            properties: {
-              bank_height: {
-                type: 'string',
-                title: 'Bank Height',
-              },
-            },
-          },
-        },
-        {
-          if: {
-            properties: {
-              type: {
-                const: 'Fish mortality',
-              },
-            },
-          },
-          then: {
-            properties: {
-              number_death: {
-                type: 'string',
-                title: 'Number Death',
-              },
-            },
-          },
-        },
-      ],
-    };
+  );
+  if (res.status < 200 || res.status > 299) {
+    return {};
   }
-  return commonFields;
+  return res.json();
 }
 
-export function getObservationJsonSchema(path: string) {
-  return fetchObservation(path);
+async function postObservation(body: Record<string, string>) {
+  try {
+    const res = await fetch(
+      `${process.env.apiHost}/api/portal/fr/${process.env.portal}/contributions/`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify(body),
+      },
+    ).catch(errorServer => {
+      return errorServer;
+    });
+    const json = await res.json();
+    if (res.status < 200 || res.status > 299) {
+      const errors = Object.values(json)
+        .map(err => (Array.isArray(err) ? err[0] : err))
+        .join('. ');
+      return { error: true, message: errors };
+    }
+    return { error: false, message: json };
+  } catch (error) {
+    return error;
+  }
+}
+
+function observationAdapter(json: JSONSchema, path: string) {
+  const { category, ...jsonProperties } = json.properties;
+  const { then: type } = json.allOf.find(
+    (item: JSONSchemaType) =>
+      item.if.properties.category?.const === getCorrespondingPath(path),
+  );
+  return {
+    ...json,
+    properties: {
+      lng: {
+        type: 'number',
+        title: 'Longitude',
+        minimum: -180,
+        maximum: 180,
+      },
+      lat: {
+        type: 'number',
+        title: 'Latitude',
+        minimum: -90,
+        maximum: 90,
+      },
+      ...jsonProperties,
+      ...type.properties,
+    },
+    required: [...json.required, 'lng', 'lat'].filter(
+      item => item !== 'category',
+    ),
+  };
+}
+
+export async function getObservationJsonSchema(path: string) {
+  const rawObservation = await fetchObservation();
+  return observationAdapter(rawObservation, path);
+}
+
+export async function handleSubmitObservation(body: Record<string, string>) {
+  'use server';
+  return postObservation(body);
 }

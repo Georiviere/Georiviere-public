@@ -8,7 +8,7 @@ export default function NotFound() {
   // const t = useTranslations();
   const t = (text: string) => {
     if (text === 'details.closePage') {
-      return "Fermer la page";
+      return 'Fermer la page';
     }
     if (text === 'site.notFound') {
       return 'Page non trouvée';
