@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Menu } from '@/api/settings';
 import { useTranslations } from 'next-intl';
 
 import { MainNav } from '@/components/main-nav';
@@ -6,18 +7,11 @@ import { ThemeToggle } from '@/components/theme-toggle';
 
 import { Icons, propsForSVGPresentation } from './icons';
 
-const items = [
-  {
-    label: 'Mentions-legales',
-    href: '/',
-  },
-  {
-    label: 'À propos',
-    href: '/',
-  },
-];
+type Props = {
+  menu: Menu[];
+};
 
-export function SiteHeader() {
+export function SiteHeader({ menu }: Props) {
   const t = useTranslations('site');
   return (
     <header
@@ -34,7 +28,7 @@ export function SiteHeader() {
         </Link>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav role="navigation" className="flex items-center space-x-1">
-            <MainNav items={items} />
+            <MainNav menu={menu} />
             <ThemeToggle />
           </nav>
         </div>

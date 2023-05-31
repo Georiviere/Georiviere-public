@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
+import { getMenuSettings } from '@/api/settings';
 import { NextIntlClientProvider, useLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
@@ -49,6 +50,8 @@ export default async function PageLayout({ children, params }: Props) {
     notFound();
   }
 
+  const menu = await getMenuSettings();
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
@@ -60,7 +63,7 @@ export default async function PageLayout({ children, params }: Props) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <div className="relative flex h-screen flex-col">
-              <SiteHeader />
+              <SiteHeader menu={menu} />
               <div className="h-full min-h-0">{children}</div>
             </div>
           </NextIntlClientProvider>

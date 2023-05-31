@@ -1,5 +1,6 @@
 import { GeoJSON } from 'geojson';
 import { GeoJSONOptions, LatLngBoundsExpression } from 'leaflet';
+import slugify from 'slugify';
 
 import { getGeoJSON } from './geojson';
 
@@ -26,12 +27,28 @@ type LayersTree = {
   layers: Layers;
 }[];
 
+type RawMenu = {
+  title: string;
+  url: string;
+  order: number;
+  hidden: boolean;
+};
+export type Menu = {
+  title: string;
+  href: string;
+  external: boolean;
+  url: string;
+  order: number;
+  hidden: boolean;
+};
+
 type RawSettings = {
   map: {
     baseLayers: BaseLayers;
     group: LayersTree;
     bounds: [number, number, number, number];
   };
+  flatpages: RawMenu[];
 };
 
 export type Settings = {
@@ -42,6 +59,7 @@ export type Settings = {
     layersTree: LayersTree;
     baseLayers: BaseLayers;
   };
+  flatpages: RawMenu[];
 };
 
 async function fetchSettings(): Promise<RawSettings> {
@@ -100,4 +118,24 @@ export async function getMapSettings(): Promise<Settings['map']> {
     ...map,
     layersTree,
   };
+}
+
+export async function getMenuSettings(): Promise<Menu[]> {
+  const { flatpages } = await getSettings();
+  return flatpages
+    .filter(({ hidden }) => !hidden)
+    .map(item => {
+      if (item.url.startsWith('/api/')) {
+        return {
+          ...item,
+          external: false,
+          href: `page/${slugify(item.title, { lower: true })}`,
+        };
+      }
+      return {
+        ...item,
+        external: true,
+        href: item.url,
+      };
+    });
 }

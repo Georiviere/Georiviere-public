@@ -1,40 +1,49 @@
 import React from 'react';
 import Link from 'next/link';
+import { Menu } from '@/api/settings';
 
-import { cn } from '@/lib/utils';
+import { Icons, propsForSVGPresentation } from './icons';
 
 interface MainNavProps {
-  items?: {
-    label: string;
-    href?: string;
-    disabled?: boolean;
-    external?: boolean;
-  }[];
+  menu?: Menu[];
 }
 
-export function MainNav({ items }: MainNavProps) {
+export function MainNav({ menu }: MainNavProps) {
+  if (menu === undefined) {
+    return null;
+  }
   return (
     <div className="flex gap-6 md:gap-10">
-      {items?.length ? (
-        <ul className="flex gap-6">
-          {items?.map(
-            (item, index) =>
-              item.href && (
-                <li key={index}>
+      <ul className="flex gap-6">
+        {menu?.map(
+          (item, index) =>
+            item.href && (
+              <li key={index}>
+                {item.external ? (
+                  <a
+                    href={item.href}
+                    className="flex items-center text-sm font-semibold text-muted-foreground hover:underline focus:underline  "
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.title}{' '}
+                    <Icons.externalLink
+                      height={16}
+                      {...propsForSVGPresentation}
+                    />
+                  </a>
+                ) : (
                   <Link
                     href={item.href}
-                    className={cn(
-                      'flex items-center text-sm font-semibold text-muted-foreground',
-                      item.disabled && 'cursor-not-allowed opacity-80',
-                    )}
+                    className="flex items-center text-sm font-semibold text-muted-foreground hover:underline focus:underline  "
                   >
-                    {item.label}
+                    {item.title}
                   </Link>
-                </li>
-              ),
-          )}
-        </ul>
-      ) : null}
+                )}
+              </li>
+            ),
+        )}
+      </ul>
     </div>
   );
 }
