@@ -36,6 +36,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "react-leaflet": "^4.2.1",
+    "slugify": "^1.6.6",
     "tailwind-merge": "^1.12.0",
     "tailwindcss-animate": "^1.0.5",
     "yup": "^1.2.0"
