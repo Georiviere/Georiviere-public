@@ -20,7 +20,7 @@ type Props = {
     length?: number;
     descent?: number;
     flow?: string;
-    geometry_center?: {
+    geometryCenter?: {
       type: 'Point';
       coordinates: [number, number];
     };
@@ -53,10 +53,10 @@ export default function DetailsPageUI({ content }: Props) {
           {content.name}
         </h1>
         <div className="absolute right-0 top-0 flex rounded-bl-lg border border-t-0 bg-background">
-          {content.geometry_center && (
+          {content.geometryCenter && (
             <ButtonCenterView
               latLng={
-                content.geometry_center.coordinates.reverse() as LatLngTuple
+                content.geometryCenter.coordinates.reverse() as LatLngTuple
               }
             />
           )}
