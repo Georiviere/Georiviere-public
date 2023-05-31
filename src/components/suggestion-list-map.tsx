@@ -49,7 +49,7 @@ export default function SuggestionListMap({ className }: Props) {
   return (
     <section className={cn(className)}>
       <h2 className="text-lg font-bold lg:text-2xl">
-        <span className="block text-primary lg:mb-1">Observations</span>
+        <span className="block text-primary lg:mb-1">Connaissances</span>
         <span className="tracking-tight">
           Parcourez les données et actions liées au cours d&apos;eau sur le
           territoire

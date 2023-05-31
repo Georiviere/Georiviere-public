@@ -47,7 +47,7 @@ export default function SuggestionListObservation({ className }: Props) {
   return (
     <section className={cn(className)}>
       <h2 className="text-lg font-bold lg:text-2xl">
-        <span className="block text-primary lg:mb-1">Protections</span>
+        <span className="block text-primary lg:mb-1">Contributions</span>
         <span className="tracking-tight">
           Citoyen, contribuez à la connaissance des rivières aux côtés des
           agents du parc
