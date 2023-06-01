@@ -25,7 +25,7 @@ export default function SuggestionListPois({ pois, className }: Props) {
   return (
     <section className={cn(className)}>
       <h2 className="text-lg font-bold lg:text-2xl">
-        <span className="tracking-tight">Dernières contributions</span>
+        <span className="tracking-tight">Dernières actions</span>
       </h2>
       <div className="grid gap-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
         {pois.map(poi => (
