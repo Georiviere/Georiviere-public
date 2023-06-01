@@ -47,6 +47,12 @@ export function ObservationCTA() {
                 >
                   {t('quality.shortDescription')}
                 </ListItem>
+                <ListItem
+                  href="/map/observation/landscape"
+                  title={t('landscape.label')}
+                >
+                  {t('landscape.shortDescription')}
+                </ListItem>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>

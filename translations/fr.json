@@ -45,6 +45,11 @@
       "description": "Avertissez-nous pour tout incident sur la berge ou sur le lit d'un cours d'eau (embâque, érosion, etc.)",
       "shortDescription": "Rapportez un incident sur la berge ou sur le lit d'un cours d'eau"
     },
+    "landscape": {
+      "label": "Éléments paysagers",
+      "description": "Lorem ipsum dolor site amet",
+      "shortDescription": "Lorem ipsum dolor site amet"
+    },
     "validation": {
       "title": "Merci de votre contibution",
       "content": "Votre contribution a bien été soumise. Elle sera publiée après vérifications."

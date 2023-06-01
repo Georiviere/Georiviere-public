@@ -43,6 +43,12 @@ export default function SuggestionListObservation({ className }: Props) {
       name: 'quality',
       image: '/medias/placeholder3.jpg',
     },
+    {
+      label: t('landscape.label'),
+      description: t('landscape.description'),
+      name: 'landscape',
+      image: '/medias/placeholder3.jpg',
+    },
   ];
   return (
     <section className={cn(className)}>
@@ -53,7 +59,7 @@ export default function SuggestionListObservation({ className }: Props) {
           agents du parc
         </span>
       </h2>
-      <div className="grid gap-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 py-4 sm:grid-cols-2 lg:grid-cols-5">
         {items.map(item => (
           <Card key={item.name} className="group relative">
             <CardMedia>
