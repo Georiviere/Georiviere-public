@@ -30,8 +30,11 @@ async function postObservation(body: Record<string, string>) {
         body: JSON.stringify(body),
       },
     ).catch(errorServer => {
-      return errorServer;
+      throw Error(errorServer);
     });
+    if (res.status > 499) {
+      throw Error(res.statusText);
+    }
     const json = await res.json();
     if (res.status < 200 || res.status > 299) {
       const errors = Object.values(json)
@@ -41,7 +44,9 @@ async function postObservation(body: Record<string, string>) {
     }
     return { error: false, message: json };
   } catch (error) {
-    return error;
+    let message = 'Unknown Error';
+    if (error instanceof Error) message = error.message;
+    return { error: true, message };
   }
 }
 

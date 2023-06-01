@@ -21,6 +21,7 @@
   },
   "observation": {
     "cancel": "Annuler votre observation",
+    "loading": "Chargement de données vers le serveur",
     "coordinatesHelptext": "Indiquez la position de l'observation sur la carte",
     "submit": "Soumettre votre observation",
     "title": "Observation",

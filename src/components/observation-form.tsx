@@ -19,7 +19,7 @@ import { Form } from '@/components/ui/form';
 import { Alert, AlertDescription, AlertTitle } from './alert/alert';
 import ConditionalField from './conditional-field';
 import { FormRowCoordinates } from './form-row-coordinates';
-import { Icons } from './icons';
+import { Icons, propsForSVGPresentation } from './icons';
 import ObservationFormItem from './observation-form-item';
 
 type Props = {
@@ -39,6 +39,7 @@ export default function ObservationForm({ jsonSchema, handleSubmit }: Props) {
   const [validationMessage, setValidationMessage] = useState<null | Message>(
     null,
   );
+  const [isLoading, setLoading] = useState(false);
 
   const { allOf, ...schema } = jsonSchema;
   const [conditionalFieldsToDisplay, setConditionalFieldsToDisplay] = useState<
@@ -74,8 +75,10 @@ export default function ObservationForm({ jsonSchema, handleSubmit }: Props) {
         ...rest,
       },
     };
+    setLoading(true);
     const submit = await handleSubmit(body);
     setValidationMessage(submit);
+    setLoading(false);
   }
 
   const watchType = form.watch('type');
@@ -167,8 +170,18 @@ export default function ObservationForm({ jsonSchema, handleSubmit }: Props) {
           Fusce placerat lectus non dui lacinia, in pellentesque eros bibendum.
         </p>
 
-        <Button className="my-3" type="submit">
-          {t('submit')}
+        <Button className="my-3 flex gap-2" type="submit">
+          {isLoading && (
+            <>
+              <Icons.loading
+                className="animate-spin"
+                {...propsForSVGPresentation}
+                height="20"
+              />
+              <span className="sr-only">{t('loading')}</span>
+            </>
+          )}{' '}
+          <span>{t('submit')}</span>
         </Button>
       </form>
     </Form>
