@@ -58,7 +58,8 @@
     "title": "Carte",
     "label": "Recherchez",
     "centerOnMap": "Centrer sur la carte",
-    "resetView": "Réinitialiser la position de la carte"
+    "resetView": "Réinitialiser la position de la carte",
+    "geolocate": "Voir ma position"
   },
   "searchBox": {
     "label": "Recherchez votre rivière",

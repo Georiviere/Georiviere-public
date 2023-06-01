@@ -15,13 +15,15 @@ import { useParams, usePathname } from 'next/navigation';
 import ResetViewControl from '@20tab/react-leaflet-resetview';
 import { useMapContext } from '@/context/map';
 import { Feature } from 'geojson';
-import L, { Icon, LatLng, Layer } from 'leaflet';
+import L, { Icon, LatLng, Layer, LeafletEvent } from 'leaflet';
 import { useTranslations } from 'next-intl';
 
 import { Icons, propsForSVGPresentation } from './icons';
 import { DefaultMarker } from './map/default-marker';
 import { ObservationMarker } from './map/observation-marker';
 import Popup from './map/popup';
+import 'leaflet.locatecontrol';
+import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css';
 
 export default function SearchMap() {
   const params = useParams();
@@ -39,6 +41,21 @@ export default function SearchMap() {
   }
 
   const { container, baseLayers } = settings;
+
+  const handleReady = (event: LeafletEvent) => {
+    // Geolocate
+    L.control
+      .locate({
+        locateOptions: {
+          enableHighAccuracy: true,
+        },
+        strings: {
+          title: t('geolocate'),
+        },
+        position: 'bottomright',
+      })
+      .addTo(event.target);
+  };
 
   const pointToLayerHandler = (feature: Feature, latlng: LatLng) => {
     const icon =
@@ -83,6 +100,8 @@ export default function SearchMap() {
       {...container}
       scrollWheelZoom
       ref={setMap}
+      // @ts-ignore type is wrong for this prop
+      whenReady={handleReady}
     >
       <ResetViewControl
         title={t('resetView')}
