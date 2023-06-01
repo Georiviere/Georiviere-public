@@ -63,6 +63,7 @@
   "map": {
     "title": "Carte",
     "label": "Recherchez",
+    "loading": "Chargement de la carte",
     "centerOnMap": "Centrer sur la carte",
     "resetView": "Réinitialiser la position de la carte",
     "geolocate": "Voir ma position"
