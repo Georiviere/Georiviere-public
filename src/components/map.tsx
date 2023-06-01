@@ -60,7 +60,7 @@ export default function SearchMap() {
   const pointToLayerHandler = (feature: Feature, latlng: LatLng) => {
     const icon =
       feature.properties?.type?.pictogram ??
-      renderToStaticMarkup(<Icons.eye fill="white" />);
+      renderToStaticMarkup(<Icons.info fill="white" />);
     return L.marker(latlng, {
       icon: DefaultMarker(icon, 1) as Icon,
     });
