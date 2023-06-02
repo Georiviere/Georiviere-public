@@ -11,7 +11,7 @@ import {
 
 import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
-import { useParams, usePathname } from 'next/navigation';
+import { useParams, usePathname, useSearchParams } from 'next/navigation';
 import ResetViewControl from '@20tab/react-leaflet-resetview';
 import { useMapContext } from '@/context/map';
 import { Feature } from 'geojson';
@@ -35,6 +35,7 @@ export default function SearchMap() {
   const pathName = usePathname();
   const { settings, layers, setMap } = useMapContext();
   const t = useTranslations('map');
+  const searchParams = useSearchParams();
 
   if (settings === null) {
     return null;
@@ -88,6 +89,7 @@ export default function SearchMap() {
           attachments={properties.attachments}
           type={type}
           id={properties.id}
+          params={searchParams}
         />,
       ),
       { offset: [4, -14] },
@@ -121,7 +123,7 @@ export default function SearchMap() {
       </LayersControl>
 
       {layers?.map(layer => {
-        if (layer.geojson === undefined || layer.defaultActive == false) {
+        if (layer.geojson === undefined || layer.isActive == false) {
           return null;
         }
         return (

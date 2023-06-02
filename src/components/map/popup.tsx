@@ -1,5 +1,8 @@
+import { URLSearchParams } from 'url';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { getLinkWithLayers } from '@/lib/utils';
 
 import {
   Card,
@@ -11,6 +14,7 @@ import {
 
 type Props = {
   name: string;
+  params: URLSearchParams;
   description: string;
   attachments?: { thumbnail: string }[];
   type: string;
@@ -19,6 +23,7 @@ type Props = {
 
 export default function Popup({
   attachments,
+  params,
   name,
   description,
   type,
@@ -42,7 +47,7 @@ export default function Popup({
         <CardTitle>
           <Link
             className="after:absolute after:inset-0 after:rounded-lg after:content-[''] hover:underline hover:after:shadow focus:after:shadow"
-            href={`/map/${type}/${id}`}
+            href={getLinkWithLayers(`/map/${type}/${id}`, params)}
           >
             {name}
           </Link>

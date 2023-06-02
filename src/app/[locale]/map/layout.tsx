@@ -9,7 +9,6 @@ import { MapSidebar } from '@/components/map-sidebar';
 
 type Props = {
   children: ReactNode;
-  params: { locale: string; id?: string };
 };
 
 export const generateMetadata = async () => {

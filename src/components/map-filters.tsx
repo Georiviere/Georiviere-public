@@ -1,6 +1,8 @@
+import { useCallback } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useMapContext } from '@/context/map';
 
-import { partition } from '@/lib/utils';
+import { getUrlSearchParamsForLayers, partition } from '@/lib/utils';
 import {
   Accordion,
   AccordionContent,
@@ -12,19 +14,37 @@ import { Label } from './ui/label';
 import { Switch } from './ui/switch';
 
 export default function MapFilters() {
-  const { settings, toggleLayer } = useMapContext();
+  const { settings } = useMapContext();
+  const router = useRouter();
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const layersFromParams = params.get('layers') ?? '';
+
+  const handleChange = useCallback(
+    (id: number, isActive: boolean) => {
+      const nextLayerSearchParams = getUrlSearchParamsForLayers(
+        layersFromParams,
+        [id],
+        isActive,
+      );
+      router.push(`${pathname}${nextLayerSearchParams}`);
+    },
+    [pathname, router, layersFromParams],
+  );
 
   if (settings === null || settings.layersTree.length === 0) {
     return null;
   }
-  const [grouped, notGrouped] = partition(
+
+  const [grouped, [notGrouped]] = partition(
     settings.layersTree,
     layer => layer.label !== null,
   );
 
-  const handleChange = (id: number, isActive: boolean) => {
-    toggleLayer(id, isActive);
-  };
+  const defaultActivatedLayers = layersFromParams
+    .split(',')
+    .filter(Boolean)
+    .map(Number);
 
   return (
     <>
@@ -52,7 +72,7 @@ export default function MapFilters() {
                       </Label>
                       <Switch
                         id={`layerItem-${layer.id}`}
-                        defaultChecked={layer.defaultActive}
+                        checked={defaultActivatedLayers.includes(layer.id)}
                         onCheckedChange={isActive =>
                           handleChange(layer.id, isActive)
                         }
@@ -65,9 +85,9 @@ export default function MapFilters() {
           ))}
         </Accordion>
       )}
-      {notGrouped[0].layers.length !== 0 && (
+      {notGrouped.layers.length !== 0 && (
         <ul className="bg-background px-4">
-          {notGrouped[0].layers.map(layer => (
+          {notGrouped.layers.map(layer => (
             <li
               key={layer.id}
               className="flex flex-1 items-center justify-between border-b py-4 font-medium hover:underline"
@@ -77,7 +97,7 @@ export default function MapFilters() {
               </Label>
               <Switch
                 id={`layerItem-${layer.id}`}
-                defaultChecked={layer.defaultActive}
+                checked={defaultActivatedLayers.includes(layer.id)}
                 onCheckedChange={isActive => handleChange(layer.id, isActive)}
               />
             </li>

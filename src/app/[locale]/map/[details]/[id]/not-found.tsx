@@ -1,22 +1,10 @@
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 import { Icons, propsForSVGPresentation } from '@/components/icons';
 
-export default function NotFound() {
-  // TODO: next-intl should support soon translations for statics pages
-  // const t = useTranslations();
-  const t = (text: string) => {
-    if (text === 'details.closePage') {
-      return 'Fermer la page';
-    }
-    if (text === 'site.notFound') {
-      return 'Page non trouvée';
-    }
-    if (text === 'site.notFound-content') {
-      return "Cette page n'existe pas ou plus.";
-    }
-  };
+export default async function NotFound() {
+  const t = await getTranslations();
   return (
     <article>
       <header>

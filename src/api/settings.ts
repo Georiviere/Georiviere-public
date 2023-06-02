@@ -11,20 +11,31 @@ type BaseLayers = {
   attribution: string;
 }[];
 
-export type Layers = {
+export type RawLayer = {
   id: number;
   label: string;
   defaultActive: boolean;
+  options: GeoJSONOptions;
+  geojsonUrl: string;
+  url: string;
+  type: string;
+};
+
+export type Layer = {
+  id: number;
+  label: string;
+  defaultActive?: boolean;
+  isActive: boolean;
   options: GeoJSONOptions;
   geojson?: GeoJSON;
   geojsonUrl: string;
   url: string;
   type: string;
-}[];
+};
 
 type LayersTree = {
   label: string;
-  layers: Layers;
+  layers: RawLayer[];
 }[];
 
 type RawMenu = {

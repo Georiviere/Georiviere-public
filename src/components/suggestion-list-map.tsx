@@ -21,29 +21,29 @@ export default function SuggestionListMap({ className }: Props) {
       label: "Cours d'eau",
       description:
         "Naviguez sur la carte pour voir les informations détaillées sur les cours d'eau du territoire",
-      name: '',
       image: '/medias/placeholder0.jpg',
+      href: '/map?layers=8,10,12,14',
     },
     {
       label: 'Connaissances',
       description:
         "Visualisez l'ensemble des observations réalisées conjointement par le parc et les contributeurs",
-      name: '',
       image: '/medias/placeholder0.jpg',
+      href: '/map?layers=8,10,11,12,14',
     },
     {
       label: 'Actions',
       description:
         'Découvez les travaux du parc dans le cadre de la gestion du territoire aquatique (animation à venir, travaux, chantiers participatifs, etc.)',
-      name: '',
       image: '/medias/placeholder0.jpg',
+      href: '/map?layers=8,10,12,14',
     },
     {
       label: 'Zones sensibles',
       description:
         'Explorez les zones de protection du biotope et de la biodiversité',
-      name: '',
       image: '/medias/placeholder0.jpg',
+      href: '/map?layers=8,10,12,13,14',
     },
   ];
   return (
@@ -57,7 +57,7 @@ export default function SuggestionListMap({ className }: Props) {
       </h2>
       <div className="grid gap-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
         {items.map(item => (
-          <Card key={item.name} className="group relative">
+          <Card key={item.label} className="group relative">
             <CardMedia>
               <Image
                 loading="lazy"
@@ -72,7 +72,7 @@ export default function SuggestionListMap({ className }: Props) {
               <CardTitle>
                 <Link
                   className="after:absolute after:inset-0 after:rounded-lg after:content-[''] hover:underline hover:after:shadow focus:after:shadow"
-                  href={`/map/`}
+                  href={item.href}
                 >
                   {item.label}
                 </Link>

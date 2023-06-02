@@ -1,8 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-import { cn } from '@/lib/utils';
+import { cn, getLinkWithLayers } from '@/lib/utils';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -15,6 +16,7 @@ import { Icons } from './icons';
 
 export function ObservationCTA() {
   const t = useTranslations('observation');
+  const params = useSearchParams();
   return (
     <div className="flex justify-center p-4">
       <NavigationMenu>
@@ -24,31 +26,34 @@ export function ObservationCTA() {
             <NavigationMenuContent>
               <ul className="m-auto grid grid-cols-2 gap-2 p-6 md:w-[400px]">
                 <ListItem
-                  href="/map/observation/damages"
+                  href={getLinkWithLayers('/map/observation/damages', params)}
                   title={t('damages.label')}
                 >
                   {t('damages.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href="/map/observation/fauna-flora"
+                  href={getLinkWithLayers(
+                    '/map/observation/fauna-flora',
+                    params,
+                  )}
                   title={t('fauna-flora.label')}
                 >
                   {t('fauna-flora.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href="/map/observation/quantity"
+                  href={getLinkWithLayers('/map/observation/quantity', params)}
                   title={t('quantity.label')}
                 >
                   {t('quantity.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href="/map/observation/quality"
+                  href={getLinkWithLayers('/map/observation/quality', params)}
                   title={t('quality.label')}
                 >
                   {t('quality.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href="/map/observation/landscape"
+                  href={getLinkWithLayers('/map/observation/landscape', params)}
                   title={t('landscape.label')}
                 >
                   {t('landscape.shortDescription')}
