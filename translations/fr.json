@@ -79,7 +79,9 @@
     "followUs": "Suivez-nous sur",
     "ourPage": "Notre page",
     "notFound": "Page non trouvée",
-    "notFound-content": "Cette page n'existe pas ou plus."
+    "notFound-content": "Cette page n'existe pas ou plus.",
+    "menu": "Menu",
+    "openMenu": "Ouvrir le menu"
   },
   "theme": {
     "toggle": "Thème {theme}",
