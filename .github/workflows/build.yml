@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+
+      - name: Cache node_modules
+        id: cache-admin
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: node-modules-hashFiles('**/yarn.lock')
+
+      - name: Install dependencies
+        if: steps.cache-admin.outputs.cache-hit != 'true'
+        run: |
+          yarn install --frozen-lock
+
+
+      - name: Run build
+        run: |
+          npm run build

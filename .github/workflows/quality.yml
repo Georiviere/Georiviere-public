@@ -1,4 +1,4 @@
-name: ESLint
+name: Quality check
 
 on:
   push:
@@ -12,8 +12,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  eslint:
-    name: ESlint
+  quality:
+    name: Quality check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -34,7 +34,14 @@ jobs:
         run: |
           yarn install --frozen-lock
 
-
-      - name: Run lint
+      - name: Run ESlint
         run: |
           npm run lint
+
+      - name: Run Type check
+        run: |
+          npm run typecheck
+
+      - name: Run Prettier check
+        run: |
+          npm run format:check
