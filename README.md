@@ -13,8 +13,10 @@ Installation in development:
 - Use nvm and then:
 
 ```bash
-nvm use 18
+nvm use
 ```
+
+install specific version if required
 
 Install yarn
 
