@@ -36,12 +36,12 @@ jobs:
 
       - name: Run ESlint
         run: |
-          npm run lint
+          yarn lint
 
       - name: Run Type check
         run: |
-          npm run typecheck
+          yarn typecheck
 
       - name: Run Prettier check
         run: |
-          npm run format:check
+          yarn format:check

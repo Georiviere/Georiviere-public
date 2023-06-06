@@ -34,7 +34,6 @@ jobs:
         run: |
           yarn install --frozen-lock
 
-
       - name: Run build
         run: |
-          npm run build
+          yarn build
