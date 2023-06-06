@@ -52,7 +52,9 @@ export default function Popup({
             {name}
           </Link>
         </CardTitle>
-        <CardDescription className="truncate">{description}</CardDescription>
+        {description && (
+          <CardDescription className="truncate">{description}</CardDescription>
+        )}
       </CardHeader>
     </Card>
   );

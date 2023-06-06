@@ -81,19 +81,24 @@ export default function SearchMap() {
     ) {
       return;
     }
-    layer.bindPopup(
-      renderToStaticMarkup(
-        <Popup
-          name={properties.name}
-          description={properties.description}
-          attachments={properties.attachments}
-          type={type}
-          id={properties.id}
-          params={searchParams}
-        />,
-      ),
-      { offset: [4, -14] },
-    );
+
+    layer.bindTooltip(properties.name);
+
+    if (layers?.find(item => item.type === type)?.url) {
+      layer.bindPopup(
+        renderToStaticMarkup(
+          <Popup
+            name={properties.name}
+            description={properties.description}
+            attachments={properties.attachments}
+            type={type}
+            id={properties.id}
+            params={searchParams}
+          />,
+        ),
+        { offset: [4, -14] },
+      );
+    }
   };
 
   return (
