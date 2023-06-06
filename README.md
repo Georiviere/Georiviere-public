@@ -16,8 +16,6 @@ Installation in development:
 nvm use
 ```
 
-install specific version if required
-
 Install yarn
 
 ```bash
