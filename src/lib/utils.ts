@@ -16,6 +16,30 @@ export const partition = <T, _>(arr: T[], criteria: (a: T) => boolean): T[][] =>
 const unique = <T>(arr: T[]): T[] =>
   arr.filter((el, i, array) => array.indexOf(el) === i);
 
+export const toBase64 = (file: File) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+  });
+
+export const filesToBase64 = (files: File[]) => {
+  return Promise.all(
+    files
+      .filter(file => file.size > 0)
+      .map(async file => {
+        let base64File;
+        try {
+          base64File = await toBase64(file);
+        } catch (error) {
+          base64File = null;
+        }
+        return { name: file.name, file: base64File };
+      }),
+  );
+};
+
 // TODO API must split contents by category
 export const getCorrespondingPath = (path: string) => {
   if (path === 'fauna-flora') {

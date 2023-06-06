@@ -28,7 +28,7 @@ type Props = {
   list?: string[];
   type?: string;
   fieldsProps?: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>;
-  onChange?: ChangeEvent<HTMLInputElement>;
+  onChange?: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 };
 
 const getInputType = (format?: string) => {

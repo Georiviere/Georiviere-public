@@ -26,6 +26,7 @@
     "submit": "Soumettre votre observation",
     "title": "Observation",
     "labelButton": "Ajouter une observation",
+    "photoLabel": "Photo",
     "quality": {
       "label": "Qualité",
       "description": "Apportez des observations sur les propriétés des cours d'eau (pollution, température, développement algal, etc.)",
@@ -58,7 +59,8 @@
     "error": {
       "title": "Une erreur est survenue",
       "required": "Ce champ est requis"
-    }
+    },
+    "gdpr": "Texte RGPD consectetur adipiscing elit. In vitae elit a lorem tempus consequat. Mauris ultrices non risus vitae facilisis. Sed iaculis augue mi, sit amet hendrerit nunc vestibulum non. Nulla facilisi. Fusce placerat lectus non dui lacinia, in pellentesque eros bibendum."
   },
   "map": {
     "title": "Carte",

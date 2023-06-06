@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
+import { PostObservationProps } from '@/api/observations';
 import { yupResolver } from '@hookform/resolvers/yup';
 import convertToYup from 'json-schema-yup-transformer';
 import {
@@ -12,19 +13,23 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { InferType } from 'yup';
 
-import { getCorrespondingPath } from '@/lib/utils';
+import { filesToBase64, getCorrespondingPath } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 
 import { Alert, AlertDescription, AlertTitle } from './alert/alert';
 import ConditionalField from './conditional-field';
 import { FormRowCoordinates } from './form-row-coordinates';
+import { FormRowInput } from './form-row-input';
 import { Icons, propsForSVGPresentation } from './icons';
 import ObservationFormItem from './observation-form-item';
 
 type Props = {
   jsonSchema: JSONSchema;
-  handleSubmit: any;
+  handleSubmit: (body: PostObservationProps) => Promise<{
+    error: boolean;
+    message: string;
+  }>;
 };
 
 type Message = {
@@ -61,22 +66,34 @@ export default function ObservationForm({ jsonSchema, handleSubmit }: Props) {
     ),
     defaultValues: {
       type: '',
-      date_observation: new Date().toISOString().split('.')[0],
+      date_observation: new Date().toISOString().split('T')[0],
     },
   }) as InferType<typeof schema>;
 
-  async function onSubmit(values: InferType<typeof schema>) {
-    // TODO POST
+  async function onSubmit(values: InferType<typeof schema>, event: Event) {
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    const formDataFiles = [
+      formData.get('file1'),
+      formData.get('file2'),
+      formData.get('file3'),
+    ].filter(file => file !== null) as File[];
+
+    const files = (await filesToBase64(formDataFiles)).filter(
+      ({ file }) => file !== null,
+    ) as { name: string; file: string }[];
+
     const { lng, lat, ...rest } = values;
-    const body = {
+    const data = {
       geom: `POINT(${lng} ${lat})`,
-      properties: {
+      properties: JSON.stringify({
         category: getCorrespondingPath(path),
         ...rest,
-      },
+      }),
+      files: JSON.stringify(files),
     };
     setLoading(true);
-    const submit = await handleSubmit(body);
+    const submit = await handleSubmit(data);
     setValidationMessage(submit);
     setLoading(false);
   }
@@ -123,7 +140,11 @@ export default function ObservationForm({ jsonSchema, handleSubmit }: Props) {
         </Alert>
       )}
 
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8"
+        encType="multipart/form-data"
+      >
         {lng && lat && <FormRowCoordinates lngLat={{ lng, lat }} form={form} />}
 
         {Object.entries(properties as JSONSchemaExtended).map(
@@ -163,12 +184,19 @@ export default function ObservationForm({ jsonSchema, handleSubmit }: Props) {
             });
           })}
 
-        <p className="my-8 text-sm">
-          Texte RGPD consectetur adipiscing elit. In vitae elit a lorem tempus
-          consequat. Mauris ultrices non risus vitae facilisis. Sed iaculis
-          augue mi, sit amet hendrerit nunc vestibulum non. Nulla facilisi.
-          Fusce placerat lectus non dui lacinia, in pellentesque eros bibendum.
-        </p>
+        {Array.from({ length: 3 }, (_, index) => (
+          <FormRowInput
+            key={index}
+            label={`${t('photoLabel')} ${index + 1}`}
+            fieldProps={{
+              name: `file${index + 1}`,
+              accept: 'image/*',
+              type: 'file',
+            }}
+          />
+        ))}
+
+        <p className="my-8 text-sm">{t('gdpr')}</p>
 
         <Button className="my-3 flex gap-2" type="submit">
           {isLoading && (

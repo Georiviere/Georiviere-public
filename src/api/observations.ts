@@ -5,6 +5,12 @@ import {
 
 import { getCorrespondingPath } from '@/lib/utils';
 
+export type PostObservationProps = {
+  geom: string;
+  properties: string;
+  files: string;
+};
+
 async function fetchObservation() {
   const res = await fetch(
     `${process.env.apiHost}/api/portal/fr/${process.env.portal}/contributions/json_schema/`,
@@ -18,16 +24,35 @@ async function fetchObservation() {
   return res.json();
 }
 
-async function postObservation(body: Record<string, string>) {
+async function postObservation(props: PostObservationProps) {
+  const { files, properties, geom } = props;
+  const decodedFiles = await Promise.all(
+    JSON.parse(files).map(async (item: { name: string; file: string }) => {
+      return {
+        name: item.name,
+        file: await fetch(item.file).then(res => res.blob()),
+      };
+    }),
+  );
+
+  const body = new FormData();
+
+  body.append('properties', properties);
+  body.append('geom', geom);
+
+  decodedFiles.map((item, index) => {
+    body.append(`file${index + 1}`, item.file, item.name);
+  });
+
   try {
     const res = await fetch(
       `${process.env.apiHost}/api/portal/fr/${process.env.portal}/contributions/`,
       {
         headers: {
-          'Content-Type': 'application/json',
+          boundary: Math.random().toString().substring(2),
         },
         method: 'POST',
-        body: JSON.stringify(body),
+        body,
       },
     ).catch(errorServer => {
       throw Error(errorServer);
@@ -36,6 +61,7 @@ async function postObservation(body: Record<string, string>) {
       throw Error(res.statusText);
     }
     const json = await res.json();
+
     if (res.status < 200 || res.status > 299) {
       const errors = Object.values(json)
         .map(err => (Array.isArray(err) ? err[0] : err))
@@ -85,7 +111,7 @@ export async function getObservationJsonSchema(path: string) {
   return observationAdapter(rawObservation, path);
 }
 
-export async function handleSubmitObservation(body: Record<string, string>) {
+export async function handleSubmitObservation(body: PostObservationProps) {
   'use server';
   return postObservation(body);
 }
