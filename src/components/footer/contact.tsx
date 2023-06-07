@@ -1,4 +1,9 @@
+'use client';
+
 import { Fragment } from 'react';
+import { useSettingsContext } from '@/context/settings';
+
+import { cn } from '@/lib/utils';
 
 import { Icons, propsForSVGPresentation } from '../icons';
 
@@ -16,13 +21,20 @@ const informations = [
 ];
 
 export default function Contact({ className }: Props) {
+  const { settings } = useSettingsContext();
+  if (settings === null) {
+    return null;
+  }
+
+  const { footer: { informations = [] } = {} } = settings.customization;
+
   if (informations.length === 0) {
     return null;
   }
   return (
     <>
-      {informations.map(item => (
-        <address className="p-0 not-italic">
+      {informations.map((item, index) => (
+        <address key={index} className={cn('p-0 not-italic', className)}>
           <h3 className="text-2xl font-bold tracking-tight">{item.name}</h3>
           {item.location.length > 0 && (
             <div className="my-3 flex gap-2">

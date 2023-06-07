@@ -1,4 +1,8 @@
+'use client';
+
 import Image from 'next/image';
+import Link from 'next/link';
+import { useSettingsContext } from '@/context/settings';
 import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/utils';
@@ -15,32 +19,16 @@ type Props = {
   className?: string;
 };
 
-const links = [
-  {
-    label: 'Mentions légal',
-    url: '#',
-  },
-  {
-    label: 'Georivière',
-    url: 'https://georiviere.fr/',
-  },
-];
-
-const socialNetworks = [
-  {
-    label: 'Facebook',
-    url: 'https://www.facebook.com/PNRHJ/',
-    icon: '/medias/facebook.svg',
-  },
-  {
-    label: 'Youtube',
-    url: 'https://www.youtube.com/channel/UC5UbalFTYO8BlYRa9qbZmaQ/',
-    icon: '/medias/youtube.svg',
-  },
-];
-
 export default function Links({ className }: Props) {
   const t = useTranslations('site');
+  const { settings } = useSettingsContext();
+  if (settings === null) {
+    return null;
+  }
+
+  const { footer: { links = [], socialNetworks = [] } = {} } =
+    settings.customization;
+
   if (links.length === 0 && socialNetworks.length === 0) {
     return null;
   }
@@ -53,22 +41,40 @@ export default function Links({ className }: Props) {
     >
       {links.length > 0 && (
         <ul className="mb-3 flex justify-center gap-3 sm:block">
-          {links.map(item => (
-            <li key={item.url}>
-              <a
-                className="group flex items-center justify-center gap-2 hover:underline focus:underline sm:justify-end"
-                href={item.url}
-                rel="nofollow noreferrer"
-              >
-                <Icons.externalLink
-                  className="group-hover:block group-focus:block sm:hidden"
-                  role="img"
-                  aria-label={t('externalLink')}
-                />
-                <span>{item.label}</span>
-              </a>
-            </li>
-          ))}
+          {links.map(item => {
+            if (
+              item.url.startsWith('/') ||
+              item.url.startsWith(global.location?.hostname)
+            ) {
+              return (
+                <li key={item.url}>
+                  <Link
+                    className="group flex items-center justify-center gap-2 hover:underline focus:underline sm:justify-end"
+                    href={item.url}
+                  >
+                    <span>{item.label}</span>
+                  </Link>
+                </li>
+              );
+            }
+            return (
+              <li key={item.url}>
+                <a
+                  className="group flex items-center justify-center gap-2 hover:underline focus:underline sm:justify-end"
+                  href={item.url}
+                  rel="nofollow noreferrer"
+                  target="_blank"
+                >
+                  <Icons.externalLink
+                    className="group-hover:block group-focus:block sm:hidden"
+                    role="img"
+                    aria-label={t('externalLink')}
+                  />
+                  <span>{item.label}</span>
+                </a>
+              </li>
+            );
+          })}
         </ul>
       )}
       {socialNetworks.length > 0 && (

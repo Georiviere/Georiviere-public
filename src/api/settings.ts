@@ -69,10 +69,34 @@ export type Suggestion = {
   }[];
 };
 
+type LocaleSettingsFooter = {
+  informations?: {
+    name: string;
+    location: string[][];
+    phone: string[];
+    email: string[];
+  }[];
+  links?: {
+    label: string;
+    url: string;
+  }[];
+  socialNetworks?: {
+    label: string;
+    url: string;
+    icon: string;
+  }[];
+  partners?: {
+    src: string;
+    label: string;
+    url: string;
+  }[];
+};
+
 export type RawLocalSettings = {
   header?: {
     logo: ImageProps;
   };
+  footer?: LocaleSettingsFooter;
   homepage?: {
     welcomeBanner?: {
       images?: Attachement[];
@@ -93,6 +117,7 @@ export type LocalSettings = {
   header?: {
     logo: ImageProps;
   };
+  footer?: LocaleSettingsFooter;
   homepage: {
     welcomeBanner?: {
       images?: Attachement[];
