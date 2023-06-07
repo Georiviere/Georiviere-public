@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
-import { getMenuSettings } from '@/api/settings';
+import { getMenuSettings, getSettings } from '@/api/settings';
+import { SettingsContextProvider } from '@/context/settings';
 import { NextIntlClientProvider, useLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
@@ -50,6 +51,7 @@ export default async function PageLayout({ children, params }: Props) {
     notFound();
   }
 
+  const settings = await getSettings();
   const menu = await getMenuSettings();
 
   return (
@@ -62,10 +64,12 @@ export default async function PageLayout({ children, params }: Props) {
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <div className="relative flex h-screen flex-col">
-              <SiteHeader menu={menu} />
-              <div className="h-full min-h-0">{children}</div>
-            </div>
+            <SettingsContextProvider settings={settings}>
+              <div className="relative flex h-screen flex-col">
+                <SiteHeader menu={menu} />
+                <div className="h-full min-h-0">{children}</div>
+              </div>
+            </SettingsContextProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
