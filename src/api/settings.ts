@@ -1,8 +1,12 @@
+import { ImgHTMLAttributes } from 'react';
 import { GeoJSON } from 'geojson';
 import { GeoJSONOptions, LatLngBoundsExpression } from 'leaflet';
 import slugify from 'slugify';
 
 import { getGeoJSON } from './geojson';
+import { getLocalettings } from './localSettings';
+
+export type Attachement = { thumbnail: string; url: string; title: string };
 
 type BaseLayers = {
   id: number;
@@ -53,6 +57,49 @@ export type Menu = {
   hidden: boolean;
 };
 
+export type Suggestion = {
+  title: string;
+  subtitle?: string;
+  content?: {
+    label: string;
+    description: string;
+    images?: Attachement[];
+    href: string;
+  }[];
+};
+
+export type RawLocalSettings = {
+  homepage?: {
+    welcomeBanner?: {
+      images?: Attachement[];
+      shouldDisplayText?: boolean;
+    };
+    introduction?: {
+      title?: string;
+      content?: string;
+      images?: Attachement[];
+    };
+    suggestions?: (Suggestion & {
+      type: 'static' | 'observation' | 'action';
+    })[];
+  };
+};
+
+export type LocalSettings = {
+  homepage: {
+    welcomeBanner?: {
+      images?: Attachement[];
+      shouldDisplayText?: boolean;
+    };
+    introduction?: {
+      title?: string;
+      content?: string;
+      images?: Attachement[];
+    };
+    suggestions: Suggestion[];
+  };
+};
+
 type RawSettings = {
   map: {
     baseLayers: BaseLayers;
@@ -71,6 +118,7 @@ export type Settings = {
     baseLayers: BaseLayers;
   };
   flatpages: RawMenu[];
+  customization: LocalSettings;
 };
 
 async function fetchSettings(): Promise<RawSettings> {
@@ -93,10 +141,16 @@ export async function getSettings(): Promise<Settings> {
       group,
       bounds: [lat1, lng1, lat2, lng2],
     },
+    flatpages,
     ...settings
   } = await fetchSettings();
+  const customization = await getLocalettings();
   return {
-    ...settings,
+    customization: {
+      ...settings,
+      ...customization,
+    },
+    flatpages,
     map: {
       baseLayers,
       layersTree: group,
