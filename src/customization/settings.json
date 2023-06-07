@@ -4,6 +4,64 @@
       "src": "/medias/logo.svg"
     }
   },
+  "footer": {
+    "partners": [
+      {
+        "src": "https://randonature.parc-haut-jura.fr/medias/logos/logo_pnrhj_dark.png",
+        "label": "Parc naturel régional du Haut-Jura",
+        "url": "http://parc-haut-jura.fr/"
+      },
+      {
+        "src": "https://randonature.parc-haut-jura.fr/medias/logos/logo_gtj_dark.png",
+        "label": "Grandes traversées du Haut-Jura",
+        "url": "https://www.gtj.asso.fr/"
+      },
+      {
+        "src": "https://randonature.parc-haut-jura.fr/medias/logos/logo_region_aura_dark.png",
+        "label": "La Région Auvergne-Rhône-Alpes",
+        "url": "https://www.montagnes-du-jura.fr/"
+      }
+    ],
+    "informations": [
+      {
+        "name": "Parc naturel régional du Haut-Jura",
+        "location": [
+          [
+            "29 Le Village",
+            "39310 LAJOUX"
+          ]
+        ],
+        "phone": [
+          "03 84 34 12 30"
+        ],
+        "email": [
+          "parc@parc-haut-jura.fr"
+        ]
+      }
+    ],
+    "links": [
+      {
+        "label": "Mentions légales",
+        "url": "/page/mentions-legales"
+      },
+      {
+        "label": "Georivière",
+        "url": "https://georiviere.fr/"
+      }
+    ],
+    "socialNetworks": [
+      {
+        "label": "Facebook",
+        "url": "https://www.facebook.com/PNRHJ/",
+        "icon": "/medias/facebook.svg"
+      },
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/channel/UC5UbalFTYO8BlYRa9qbZmaQ/",
+        "icon": "/medias/youtube.svg"
+      }
+    ]
+  },
   "homepage": {
     "welcomeBanner": {
       "images": [
