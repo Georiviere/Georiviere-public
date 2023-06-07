@@ -51,7 +51,7 @@ async function homepageLocaleSettingsAdapter(
             href: '/map/observation/damages',
             images: [
               {
-                src: '/medias/placeholder0.jpg',
+                thumbnail: '/medias/placeholder0.jpg',
               },
             ],
           },
@@ -61,7 +61,7 @@ async function homepageLocaleSettingsAdapter(
             href: '/map/observation/fauna-flora',
             images: [
               {
-                src: '/medias/placeholder1.jpg',
+                thumbnail: '/medias/placeholder1.jpg',
               },
             ],
           },
@@ -71,7 +71,7 @@ async function homepageLocaleSettingsAdapter(
             href: '/map/observation/quantity',
             images: [
               {
-                src: '/medias/placeholder2.jpg',
+                thumbnail: '/medias/placeholder2.jpg',
               },
             ],
           },
@@ -81,7 +81,7 @@ async function homepageLocaleSettingsAdapter(
             href: '/map/observation/quality',
             images: [
               {
-                src: '/medias/placeholder3.jpg',
+                thumbnail: '/medias/placeholder3.jpg',
               },
             ],
           },
@@ -91,7 +91,7 @@ async function homepageLocaleSettingsAdapter(
             href: '/map/observation/landscape',
             images: [
               {
-                src: '/medias/placeholder3.jpg',
+                thumbnail: '/medias/placeholder3.jpg',
               },
             ],
           },

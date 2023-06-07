@@ -1,10 +1,18 @@
 {
   "homepage": {
+    "welcomeBanner": {
+      "images": [
+        {
+          "url": "/medias/home.jpg"
+        }
+      ],
+      "shouldDisplayText": true
+    },
     "introduction": {
       "title": "Découvez la démarche",
       "images": [
         {
-          "src": "/medias/illustration.jpg"
+          "url": "/medias/illustration.jpg"
         }
       ],
       "content": "<p class=\"my-8\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam orci ex, tristique nec sem id, sagittis sodales neque. Aenean porttitor nunc vitae nisi fermentum tincidunt. Duis at tellus sed risus rhoncus maximus et ut erat. Vestibulum eu tempus odio, ac commodo justo. Cras eget sem ac elit aliquam scelerisque. Nulla id turpis metus. Fusce vel risus lacinia, lobortis ipsum ut, gravida felis. Donec at sollicitudin mi. Fusce ut nibh at libero feugiat faucibus. Sed maximus justo a tellus consectetur, eget accumsan libero ultrices. Vivamus sagittis faucibus pretium. Donec dui tortor, condimentum eu finibus at, feugiat lacinia lorem.</p><p class=\"my-8\">Sed tristique libero quis posuere luctus. Cras et efficitur nisl. Ut porta, ligula at auctor auctor, arcu sem tempor urna, vel convallis dui dolor quis neque. Fusce id rutrum lectus. Suspendisse potenti. Cras sodales semper bibendum. Praesent et viverra nulla. Nunc viverra ut sapien id ultricies. Fusce mollis venenatis metus, id imperdiet diam congue nec. Mauris suscipit suscipit velit, nec maximus est convallis eleifend. Phasellus a elit velit. Proin maximus, enim et gravida imperdiet, nunc enim elementum est, ut consectetur erat diam vel felis. Quisque feugiat nisl malesuada, fringilla sem non, consectetur nisi.</p>"
@@ -20,7 +28,7 @@
             "description": "Naviguez sur la carte pour voir les informations détaillées sur les cours d'eau du territoire",
             "images": [
               {
-                "src": "/medias/placeholder0.jpg"
+                "thumbnail": "/medias/placeholder0.jpg"
               }
             ],
             "href": "/map?layers=8,10,12,14"
@@ -30,7 +38,7 @@
             "description": "Visualisez l'ensemble des observations réalisées conjointement par le parc et les contributeurs",
             "images": [
               {
-                "src": "/medias/placeholder0.jpg"
+                "thumbnail": "/medias/placeholder0.jpg"
               }
             ],
             "href": "/map?layers=8,10,11,12,14"
@@ -40,7 +48,7 @@
             "description": "Découvez les travaux du parc dans le cadre de la gestion du territoire aquatique (animation à venir, travaux, chantiers participatifs, etc.)",
             "images": [
               {
-                "src": "/medias/placeholder0.jpg"
+                "thumbnail": "/medias/placeholder0.jpg"
               }
             ],
             "href": "/map?layers=8,10,12,14"
@@ -50,7 +58,7 @@
             "description": "Explorez les zones de protection du biotope et de la biodiversité",
             "images": [
               {
-                "src": "/medias/placeholder0.jpg"
+                "thumbnail": "/medias/placeholder0.jpg"
               }
             ],
             "href": "/map?layers=8,10,12,13,14"
