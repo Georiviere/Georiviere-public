@@ -1,4 +1,9 @@
 {
+  "header": {
+    "logo": {
+      "src": "/medias/logo.svg"
+    }
+  },
   "homepage": {
     "welcomeBanner": {
       "images": [

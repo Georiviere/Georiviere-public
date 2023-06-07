@@ -1,4 +1,5 @@
 import { ImgHTMLAttributes } from 'react';
+import { ImageProps } from 'next/image';
 import { GeoJSON } from 'geojson';
 import { GeoJSONOptions, LatLngBoundsExpression } from 'leaflet';
 import slugify from 'slugify';
@@ -69,6 +70,9 @@ export type Suggestion = {
 };
 
 export type RawLocalSettings = {
+  header?: {
+    logo: ImageProps;
+  };
   homepage?: {
     welcomeBanner?: {
       images?: Attachement[];
@@ -86,6 +90,9 @@ export type RawLocalSettings = {
 };
 
 export type LocalSettings = {
+  header?: {
+    logo: ImageProps;
+  };
   homepage: {
     welcomeBanner?: {
       images?: Attachement[];
