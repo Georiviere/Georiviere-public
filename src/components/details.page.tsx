@@ -1,20 +1,20 @@
 import Image from 'next/image';
-import { Point } from 'geojson';
+import { Attachement } from '@/api/settings';
 import { LatLngTuple } from 'leaflet';
 import { useTranslations } from 'next-intl';
 
+import { convertAttachementsToImages } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { Icons, propsForSVGPresentation } from '@/components/icons';
 
 import ButtonCenterView from './button-center-view';
 import ButtonClose from './button-close';
+import Carousel from './carousel';
 import MeterLength from './length';
 
 type Props = {
   content: {
-    attachments: {
-      url: string;
-    }[];
+    attachments: Attachement[];
     description: string;
     name: string;
     length?: number;
@@ -38,13 +38,13 @@ export default function DetailsPageUI({ content }: Props) {
   const t = useTranslations('details');
   return (
     <article>
-      {content.attachments[0]?.url && (
+      {content.attachments.length > 0 && (
         <div className="-m-8 mb-6">
-          <Image
-            src={content.attachments[0]?.url}
+          <Carousel
+            className="min-w-full"
+            images={convertAttachementsToImages(content.attachments)}
             width={800}
             height={600}
-            alt=""
           />
         </div>
       )}
