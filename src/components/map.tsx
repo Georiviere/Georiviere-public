@@ -82,7 +82,9 @@ export default function SearchMap() {
       return;
     }
 
-    layer.bindTooltip(properties.name);
+    if (properties.name) {
+      layer.bindTooltip(properties.name);
+    }
 
     if (layers?.find(item => item.type === type)?.url) {
       layer.bindPopup(
