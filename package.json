@@ -41,6 +41,7 @@
     "slugify": "^1.6.6",
     "tailwind-merge": "^1.12.0",
     "tailwindcss-animate": "^1.0.5",
+    "tiny-slider": "^2.9.4",
     "yup": "^1.2.0"
   },
   "devDependencies": {
