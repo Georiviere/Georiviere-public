@@ -83,7 +83,9 @@
     "notFound": "Page non trouvée",
     "notFound-content": "Cette page n'existe pas ou plus.",
     "menu": "Menu",
-    "openMenu": "Ouvrir le menu"
+    "openMenu": "Ouvrir le menu",
+    "prev": "Précédent",
+    "next": "Suivant"
   },
   "theme": {
     "toggle": "Thème {theme}",
