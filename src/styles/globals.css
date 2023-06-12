@@ -93,3 +93,11 @@ body .leaflet-popup-content {
 body .leaflet-container a.leaflet-popup-close-button {
   @apply bg-background rounded-bl-lg -right-px pl-1;
 }
+/* Override tiny-slider */
+.tns-nav {
+  display: none;
+}
+
+.tns-horizontal.tns-subpixel>.tns-item {
+  vertical-align: middle !important;
+}

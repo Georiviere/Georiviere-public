@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import '@/styles/globals.css';
+import 'tiny-slider/dist/tiny-slider.css';
 
 type Props = {
   children: ReactNode;

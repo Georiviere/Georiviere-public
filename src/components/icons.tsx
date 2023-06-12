@@ -2,6 +2,7 @@ import React from 'react';
 import {
   AlertCircle,
   ArrowDownRight,
+  ArrowLeft,
   AtSign,
   CheckCircle2,
   ChevronRight,
@@ -35,6 +36,7 @@ export const Icons = {
   alert: AlertCircle,
   atSign: AtSign,
   arrowDownRight: ArrowDownRight,
+  arrowLeft: ArrowLeft,
   check: CheckCircle2,
   chevronRight: ChevronRight,
   chevronsLeftRight: ChevronsLeftRight,
