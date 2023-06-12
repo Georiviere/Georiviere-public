@@ -1,9 +1,9 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Suggestion } from '@/api/settings';
 
-import { cn } from '@/lib/utils';
+import { cn, convertAttachementsToImages } from '@/lib/utils';
 
+import Carousel from './carousel';
 import {
   Card,
   CardDescription,
@@ -43,11 +43,9 @@ export default function SuggestionList({
           <Card key={item.label} className="group relative">
             {item.images?.[0]?.thumbnail && (
               <CardMedia>
-                <Image
-                  loading="lazy"
+                <Carousel
                   className="aspect-[4/3] h-auto w-auto object-cover transition-all group-hover:scale-105"
-                  src={item.images[0].thumbnail}
-                  alt=""
+                  images={convertAttachementsToImages(item.images, true)}
                   width={400}
                   height={300}
                 />

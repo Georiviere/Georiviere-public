@@ -1,3 +1,4 @@
+import { Attachement } from '@/api/settings';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -88,3 +89,13 @@ export const getLinkWithLayers = (
   }
   return `${pathname}?layers=${layers?.toString()}`;
 };
+
+export function convertAttachementsToImages(
+  attachments: Attachement[],
+  isThumbnail: boolean = false,
+) {
+  return attachments.map(item => ({
+    src: isThumbnail ? item.thumbnail : item.url,
+    alt: item.title ?? '',
+  }));
+}
