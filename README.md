@@ -42,7 +42,7 @@ Edit the following files to personalize your application:
 - CSS settings: You can modify [/src/styles/global.css](https://github.com/Georiviere/Georiviere-public/blob/main/src/styles/globals.css). The project uses [Tailwind CSS](https://tailwindcss.com/). 
  You can also modify colors variables (defined in HSL; See the [Tailwind CSS documentation](https://tailwindcss.com/docs/customizing-colors#using-css-variables) for more information). 
  - Locale messages for the application [/transation/fr.json](https://github.com/Georiviere/Georiviere-public/blob/main/translations/fr.json). For the moment there is only the french version available.
- - Global customization settings (header/footer/homepage) defined in [/customization/settings.json](https://github.com/Georiviere/Georiviere-public/blob/main/customization/settings.json).
+ - Global customization settings (header/footer/homepage) defined in [/src/customization/settings.json](https://github.com/Georiviere/Georiviere-public/blob/main/src/customization/settings.json).
  - If you need to store images (or others medias), you can drop it in `/public/medias`. To define your favicons, you need to override `favicon-16x16.png`, `favicon.png`, and `apple-touch-icon.png` in the same folder.
 
 ### Start the application in development mode
