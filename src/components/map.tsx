@@ -1,41 +1,39 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useParams, usePathname, useSearchParams } from 'next/navigation';
+import ResetViewControl from '@20tab/react-leaflet-resetview';
+import { useMapContext } from '@/context/map';
+import L, { LeafletEvent } from 'leaflet';
+import { useTranslations } from 'next-intl';
 import { renderToStaticMarkup } from 'react-dom/server';
 import {
-  GeoJSON,
   LayersControl,
   MapContainer,
   ScaleControl,
   TileLayer,
 } from 'react-leaflet';
 
-import 'leaflet/dist/leaflet.css';
-import { useEffect } from 'react';
-import { useParams, usePathname, useSearchParams } from 'next/navigation';
-import ResetViewControl from '@20tab/react-leaflet-resetview';
-import { useMapContext } from '@/context/map';
-import { Feature } from 'geojson';
-import L, { Icon, LatLng, Layer, LeafletEvent } from 'leaflet';
-import { useTranslations } from 'next-intl';
+import { Icons, propsForSVGPresentation } from '@/components/icons';
+import GeoJson from '@/components/map/geojson';
+import { ObservationMarker } from '@/components/map/observation-marker';
 
-import { Icons, propsForSVGPresentation } from './icons';
-import { DefaultMarker } from './map/default-marker';
-import { ObservationMarker } from './map/observation-marker';
-import Popup from './map/popup';
+import 'leaflet/dist/leaflet.css';
 import 'leaflet.locatecontrol';
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css';
+import SearchMapBadge from './search-map-badge';
 
 export default function SearchMap() {
   const params = useParams();
+  const searchParams = useSearchParams();
   useEffect(() => {
     // We must fire a resize event for leaflet which can not calculate the width of the available space
     window.dispatchEvent(new Event('resize'));
-  }, [params]);
+  }, [params, searchParams]);
 
   const pathName = usePathname();
   const { settings, layers, setMap } = useMapContext();
   const t = useTranslations('map');
-  const searchParams = useSearchParams();
 
   if (settings === null) {
     return null;
@@ -56,51 +54,6 @@ export default function SearchMap() {
         position: 'bottomright',
       })
       .addTo(event.target);
-  };
-
-  const pointToLayerHandler = (feature: Feature, latlng: LatLng) => {
-    const icon =
-      feature.properties?.type?.pictogram ??
-      renderToStaticMarkup(<Icons.info fill="white" />);
-    return L.marker(latlng, {
-      icon: DefaultMarker(icon, 1) as Icon,
-    });
-  };
-
-  const onEachFeaturehandler = (
-    feature: Feature,
-    layer: Layer,
-    type: string,
-  ) => {
-    const { properties } = feature;
-    if (
-      properties === null ||
-      (!('attachments' in properties) &&
-        !properties.name &&
-        !properties.description)
-    ) {
-      return;
-    }
-
-    if (properties.name) {
-      layer.bindTooltip(properties.name);
-    }
-
-    if (layers?.find(item => item.type === type)?.url) {
-      layer.bindPopup(
-        renderToStaticMarkup(
-          <Popup
-            name={properties.name}
-            description={properties.description}
-            attachments={properties.attachments}
-            type={type}
-            id={properties.id}
-            params={searchParams}
-          />,
-        ),
-        { offset: [4, -14] },
-      );
-    }
   };
 
   return (
@@ -129,22 +82,14 @@ export default function SearchMap() {
         ))}
       </LayersControl>
 
-      {layers?.map(layer => {
-        if (layer.geojson === undefined || layer.isActive == false) {
-          return null;
-        }
-        return (
-          <GeoJSON
-            key={layer.id}
-            data={layer.geojson}
-            style={layer.options.style}
-            onEachFeature={(...args) =>
-              onEachFeaturehandler(...args, layer.type)
-            }
-            pointToLayer={pointToLayerHandler}
-          />
-        );
-      })}
+      <SearchMapBadge />
+
+      {layers?.map((layer, index) => (
+        <GeoJson
+          key={`layer-${index}-${searchParams.toString()}`}
+          layer={layer}
+        />
+      ))}
 
       <ScaleControl />
 

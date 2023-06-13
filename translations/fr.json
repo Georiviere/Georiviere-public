@@ -64,18 +64,19 @@
   },
   "map": {
     "title": "Carte",
-    "label": "Recherchez",
+    "label": "Filtrer sur la carte",
     "loading": "Chargement de la carte",
     "centerOnMap": "Centrer sur la carte",
     "resetView": "Réinitialiser la position de la carte",
-    "geolocate": "Voir ma position"
+    "geolocate": "Voir ma position",
+    "deleteFilterText": "Supprimer le filtre textuel"
   },
   "searchBox": {
     "label": "Recherchez votre rivière",
     "navigate": "Naviguez directement sur la carte"
   },
   "site": {
-    "title": "Georivière",
+    "title": "GeoRivière",
     "description": "Gérez et suivez vos cours d'eau",
     "externalLink": "Lien externe",
     "followUs": "Suivez-nous sur",

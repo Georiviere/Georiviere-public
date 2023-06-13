@@ -47,7 +47,7 @@ export default function Popup({
         <CardTitle>
           <Link
             className="after:absolute after:inset-0 after:rounded-lg after:content-[''] hover:underline hover:after:shadow focus:after:shadow"
-            href={getLinkWithLayers(`/map/${type}/${id}`, params)}
+            href={`/map/${type}/${id}?${params.toString()}`}
           >
             {name}
           </Link>
