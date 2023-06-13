@@ -25,12 +25,8 @@ export default function GeoJson({ layer }: Props) {
     type: string,
   ) => {
     const { properties } = feature;
-    if (
-      properties === null ||
-      (!('attachments' in properties) &&
-        !properties.name &&
-        !properties.description)
-    ) {
+
+    if (properties === null || !properties.name) {
       return;
     }
 
@@ -70,7 +66,7 @@ export default function GeoJson({ layer }: Props) {
 
   const data = useMemo(() => {
     const searchText = searchParams.get('text');
-    if (layer.geojson === undefined || layer.isActive == false) {
+    if (!layer.geojson || layer.isActive == false) {
       return null;
     }
     if (!searchText || layer.geojson.type !== 'FeatureCollection') {
