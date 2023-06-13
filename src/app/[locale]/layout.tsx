@@ -67,7 +67,7 @@ export default async function PageLayout({ children, params }: Props) {
             <SettingsContextProvider settings={settings}>
               <div className="relative flex h-screen flex-col">
                 <SiteHeader menu={menu} />
-                <div className="h-full min-h-0">{children}</div>
+                <div className="flex h-full min-h-0 flex-col">{children}</div>
               </div>
             </SettingsContextProvider>
           </NextIntlClientProvider>
