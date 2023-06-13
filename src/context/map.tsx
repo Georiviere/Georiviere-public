@@ -114,9 +114,14 @@ export const MapContextProvider = ({
         layersID,
         true,
       );
-      router.replace(`${pathname}${nextLayerSearchParams}`);
+      const text = params.get('text');
+      router.replace(
+        `${pathname}${nextLayerSearchParams}${
+          text ? `&text=${encodeURIComponent(text)}` : ''
+        }`,
+      );
     }
-  }, [layers, layersFromParams, pathname, router]);
+  }, [layers, layersFromParams, params, pathname, router]);
 
   useEffect(() => {
     const [activatedLayers, disabledLayers] = partition(layers ?? [], item =>

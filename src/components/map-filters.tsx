@@ -27,9 +27,12 @@ export default function MapFilters() {
         [id],
         isActive,
       );
-      router.push(`${pathname}${nextLayerSearchParams}`);
+      const textFromParams = params.get('text')
+        ? `&text=${params.get('text')}`
+        : '';
+      router.push(`${pathname}${nextLayerSearchParams}${textFromParams}`);
     },
-    [pathname, router, layersFromParams],
+    [layersFromParams, params, router, pathname],
   );
 
   if (settings === null || settings.layersTree.length === 0) {
