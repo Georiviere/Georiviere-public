@@ -2,8 +2,6 @@ import { URLSearchParams } from 'url';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { getLinkWithLayers } from '@/lib/utils';
-
 import {
   Card,
   CardDescription,
@@ -53,7 +51,9 @@ export default function Popup({
           </Link>
         </CardTitle>
         {description && (
-          <CardDescription className="truncate">{description}</CardDescription>
+          <CardDescription className="line-clamp-2">
+            <div dangerouslySetInnerHTML={{ __html: description }} />
+          </CardDescription>
         )}
       </CardHeader>
     </Card>
