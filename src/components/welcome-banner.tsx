@@ -27,7 +27,7 @@ export default function WelcomeBanner() {
   return (
     <div className="relative">
       {welcomeBanner.shouldDisplayText === true && (
-        <h1 className="top absolute inset-2/4 z-20 w-full origin-top-left -translate-x-2/4 px-10 text-center text-lg font-bold text-white shadow lg:text-2xl">
+        <h1 className="top absolute inset-2/4 z-20 w-full origin-top-left -translate-x-2/4 px-10 text-center text-lg font-bold text-white shadow lg:text-3xl">
           {t('title')}
         </h1>
       )}
