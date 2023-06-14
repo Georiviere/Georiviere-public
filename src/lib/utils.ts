@@ -72,24 +72,6 @@ export const getUrlSearchParamsForLayers = (
     : `?layers=${unique(nextLayersID.sort((a, b) => a - b)).join(',')}`;
 };
 
-export const getLinkWithLayers = (
-  pathname: string,
-  params: URLSearchParams,
-) => {
-  if (params === null) {
-    return pathname;
-  }
-  const layers = params.get('layers');
-  if (
-    !pathname.startsWith('/map') ||
-    layers === null ||
-    layers?.toString() === ''
-  ) {
-    return pathname;
-  }
-  return `${pathname}?layers=${layers?.toString()}`;
-};
-
 export function convertAttachementsToImages(
   attachments: Attachement[],
   isThumbnail: boolean = false,

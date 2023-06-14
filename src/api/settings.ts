@@ -258,7 +258,7 @@ export async function getMenuSettings(): Promise<Menu[]> {
         return {
           ...item,
           external: false,
-          href: `page/${slugify(item.title, { lower: true })}`,
+          href: `/page/${slugify(item.title, { lower: true })}`,
         };
       }
       return {

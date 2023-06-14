@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-import { cn, getLinkWithLayers } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -26,34 +26,31 @@ export function ObservationCTA() {
             <NavigationMenuContent>
               <ul className="m-auto grid grid-cols-2 gap-2 p-6 md:w-[400px]">
                 <ListItem
-                  href={getLinkWithLayers('/map/observation/damages', params)}
+                  href={`/map/observation/damages?${params.toString()}`}
                   title={t('damages.label')}
                 >
                   {t('damages.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href={getLinkWithLayers(
-                    '/map/observation/fauna-flora',
-                    params,
-                  )}
+                  href={`/map/observation/fauna-flora?${params.toString()}`}
                   title={t('fauna-flora.label')}
                 >
                   {t('fauna-flora.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href={getLinkWithLayers('/map/observation/quantity', params)}
+                  href={`/map/observation/quantity?${params.toString()}`}
                   title={t('quantity.label')}
                 >
                   {t('quantity.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href={getLinkWithLayers('/map/observation/quality', params)}
+                  href={`/map/observation/quality?${params.toString()}`}
                   title={t('quality.label')}
                 >
                   {t('quality.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href={getLinkWithLayers('/map/observation/landscape', params)}
+                  href={`/map/observation/landscape?${params.toString()}`}
                   title={t('landscape.label')}
                 >
                   {t('landscape.shortDescription')}
