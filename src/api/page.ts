@@ -22,7 +22,7 @@ export async function getPage(slug: string) {
   const { url: endpoint } =
     menu
       .filter(({ external }) => !external)
-      .find(({ href }) => href === `page/${slug}`) ?? {};
+      .find(({ href }) => href === `/page/${slug}`) ?? {};
   if (endpoint === undefined) {
     return null;
   }

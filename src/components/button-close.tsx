@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-import { cn, getLinkWithLayers } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 import { Icons, propsForSVGPresentation } from './icons';
 import LinkAsButton from './ui/link-as-button';
@@ -30,7 +30,7 @@ export default function ButtonClose({ className, label, href }: Props) {
           <LinkAsButton
             size="sm"
             variant="ghost"
-            href={getLinkWithLayers(href ?? '/map', params)}
+            href={`${href ?? '/map'}?${params.toString()}`}
             className={cn('h-7 rounded-none p-2', className)}
           >
             <Icons.close {...propsForSVGPresentation} height={20} />
