@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { getMapSettings } from '@/api/settings';
+import { Settings, getMapSettings } from '@/api/settings';
 import { MapContextProvider } from '@/context/map';
 import { getTranslations } from 'next-intl/server';
 
@@ -20,7 +20,14 @@ export const generateMetadata = async () => {
 };
 
 export default async function MapLayout({ children }: Props) {
-  const settings = await getMapSettings();
+  let settings = null;
+
+  try {
+    settings = (await getMapSettings()) as Settings['map'];
+  } catch (error) {
+    throw error;
+  }
+
   return (
     <MapContextProvider defaultSettings={settings}>
       <main

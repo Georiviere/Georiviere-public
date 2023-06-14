@@ -16,12 +16,12 @@ import { Icons, propsForSVGPresentation } from './icons';
 import { Button } from './ui/button';
 
 interface MainNavProps {
-  menu?: Menu[];
+  menu?: Menu[] | null;
 }
 
 export function MainNav({ menu }: MainNavProps) {
   const t = useTranslations('site');
-  if (menu === undefined) {
+  if (!menu) {
     return null;
   }
   return (

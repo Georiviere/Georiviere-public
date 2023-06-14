@@ -12,12 +12,12 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { Icons, propsForSVGPresentation } from './icons';
 
 type Props = {
-  menu: Menu[];
+  menu?: Menu[] | null;
 };
 
 export function SiteHeader({ menu }: Props) {
   const t = useTranslations('site');
-  const { settings } = useSettingsContext();
+  const { settings = null } = useSettingsContext();
   return (
     <header
       className="sticky top-0 z-[500] w-full border-b bg-background"
