@@ -5,7 +5,7 @@ async function fetchGeoJSON(url: string) {
     next: { revalidate: 60 * 60 },
   });
   if (res.status < 200 || res.status > 299) {
-    return {};
+    return null;
   }
   return res.json();
 }

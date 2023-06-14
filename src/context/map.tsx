@@ -29,7 +29,7 @@ type MapContextProps = {
 
 type MapContextProviderProps = {
   children: React.ReactNode;
-  defaultSettings: Settings['map'];
+  defaultSettings: Settings['map'] | null;
 };
 
 export const MapContext = createContext<MapContextProps>({
@@ -59,8 +59,10 @@ export const MapContextProvider = ({
     [defaultSettings?.layersTree],
   );
 
-  const [layers, setLayers] = useState<Layer[] | null>(() =>
-    settings.map(item => ({ ...item, isActive: item.defaultActive })),
+  const [layers, setLayers] = useState<Layer[] | null>(
+    () =>
+      settings?.map(item => ({ ...item, isActive: item.defaultActive })) ??
+      null,
   );
   const [map, setMap] = useState<Map | null>(null);
   const [observationCoordinates, setObservationCoordinates] =

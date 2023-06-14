@@ -1,4 +1,4 @@
-import { getMenuSettings } from './settings';
+import { Menu, getMenuSettings } from './settings';
 
 async function fetchDetails(url: string) {
   const res = await fetch(`${process.env.apiHost}${url}`, {
@@ -11,7 +11,14 @@ async function fetchDetails(url: string) {
 }
 
 export async function getPage(slug: string) {
-  const menu = await getMenuSettings();
+  let menu = null;
+  try {
+    menu = (await getMenuSettings()) as Menu[];
+  } catch (error) {
+    // notfound
+    return null;
+  }
+
   const { url: endpoint } =
     menu
       .filter(({ external }) => !external)

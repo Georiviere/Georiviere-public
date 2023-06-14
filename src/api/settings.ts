@@ -154,19 +154,33 @@ export type Settings = {
 };
 
 async function fetchSettings(): Promise<RawSettings> {
-  const res = await fetch(
-    `${process.env.apiHost}/api/portal/fr/portal/${process.env.portal}/`,
-    {
-      next: { revalidate: 60 * 60 },
-    },
-  );
-  if (res.status < 200 || res.status > 299) {
-    throw new Error('Failed to fetch data');
+  try {
+    const res = await fetch(
+      `${process.env.apiHost}/api/portal/fr/portal/${process.env.portal}/`,
+      {
+        next: { revalidate: 60 * 60 },
+      },
+    ).catch(error => {
+      throw error;
+    });
+    if (res.status < 200 || res.status > 299) {
+      throw new Error('Failed to fetch settings');
+    }
+    return res.json();
+  } catch (error) {
+    throw error;
   }
-  return res.json();
 }
 
-export async function getSettings(): Promise<Settings> {
+export async function getSettings(): Promise<Settings | null> {
+  let rawSettings = null;
+  let customization = null;
+  try {
+    rawSettings = await fetchSettings();
+    customization = await getLocalettings();
+  } catch (error) {
+    throw error;
+  }
   const {
     map: {
       baseLayers,
@@ -175,8 +189,7 @@ export async function getSettings(): Promise<Settings> {
     },
     flatpages,
     ...settings
-  } = await fetchSettings();
-  const customization = await getLocalettings();
+  } = rawSettings;
   return {
     customization: {
       ...settings,
@@ -196,8 +209,19 @@ export async function getSettings(): Promise<Settings> {
   };
 }
 
-export async function getMapSettings(): Promise<Settings['map']> {
-  const { map } = await getSettings();
+export async function getMapSettings(): Promise<Settings['map'] | []> {
+  let settings = null;
+  try {
+    settings = await getSettings();
+  } catch (error) {
+    throw error;
+  }
+
+  if (settings === null) {
+    return [];
+  }
+
+  const { map } = settings;
   const layersTree = await Promise.all(
     map.layersTree.map(async item => ({
       ...item,
@@ -218,8 +242,16 @@ export async function getMapSettings(): Promise<Settings['map']> {
 }
 
 export async function getMenuSettings(): Promise<Menu[]> {
-  const { flatpages } = await getSettings();
-  return flatpages
+  let settings = null;
+  try {
+    settings = await getSettings();
+  } catch (e) {
+    throw e;
+  }
+  if (settings === null) {
+    return [];
+  }
+  return settings.flatpages
     .filter(({ hidden }) => !hidden)
     .map(item => {
       if (item.url.startsWith('/api/')) {

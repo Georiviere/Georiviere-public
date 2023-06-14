@@ -7,6 +7,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { fontSans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
+import ErrorMessage from '@/components/error-message';
 import { SiteHeader } from '@/components/site-header';
 import { ThemeProvider } from '@/components/theme-provider';
 
@@ -51,8 +52,18 @@ export default async function PageLayout({ children, params }: Props) {
     notFound();
   }
 
-  const settings = await getSettings();
-  const menu = await getMenuSettings();
+  let settings = null;
+  let menu = null;
+  let error = null;
+
+  try {
+    settings = await getSettings();
+    menu = await getMenuSettings();
+  } catch (err) {
+    // Throw error in layout.tsx does not invoke error.tsx
+    // https://nextjs.org/docs/app/building-your-application/routing/error-handling
+    error = err as Error;
+  }
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -67,7 +78,15 @@ export default async function PageLayout({ children, params }: Props) {
             <SettingsContextProvider settings={settings}>
               <div className="relative flex h-screen flex-col">
                 <SiteHeader menu={menu} />
-                <div className="flex h-full min-h-0 flex-col">{children}</div>
+                <div className="flex h-full min-h-0 flex-col">
+                  {error !== null && (
+                    <ErrorMessage
+                      title={messages.observation.error.title}
+                      message={error?.message}
+                    />
+                  )}
+                  {error === null && children}
+                </div>
               </div>
             </SettingsContextProvider>
           </NextIntlClientProvider>
