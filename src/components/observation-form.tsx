@@ -87,7 +87,7 @@ export default function ObservationForm({ jsonSchema, handleSubmit }: Props) {
     const data = {
       geom: `POINT(${lng} ${lat})`,
       properties: JSON.stringify({
-        category: getCorrespondingPath(path),
+        category: getCorrespondingPath(path.toString()),
         ...rest,
       }),
       files: JSON.stringify(files),
