@@ -32,25 +32,25 @@ export function ObservationCTA() {
                   {t('damages.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href={`/map/observation/fauna-flora?${params.toString()}`}
+                  href={`/map/observation/fauna-flora?${params.toString()}#content`}
                   title={t('fauna-flora.label')}
                 >
                   {t('fauna-flora.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href={`/map/observation/quantity?${params.toString()}`}
+                  href={`/map/observation/quantity?${params.toString()}#content`}
                   title={t('quantity.label')}
                 >
                   {t('quantity.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href={`/map/observation/quality?${params.toString()}`}
+                  href={`/map/observation/quality?${params.toString()}#content`}
                   title={t('quality.label')}
                 >
                   {t('quality.shortDescription')}
                 </ListItem>
                 <ListItem
-                  href={`/map/observation/landscape?${params.toString()}`}
+                  href={`/map/observation/landscape?${params.toString()}#content`}
                   title={t('landscape.label')}
                 >
                   {t('landscape.shortDescription')}
