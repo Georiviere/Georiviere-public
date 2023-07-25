@@ -51,7 +51,7 @@ export default function SearchMap() {
         strings: {
           title: t('geolocate'),
         },
-        position: 'bottomright',
+        position: 'topleft',
       })
       .addTo(event.target);
   };
