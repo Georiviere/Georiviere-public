@@ -36,7 +36,7 @@ export default async function MapLayout({ children }: Props) {
       >
         <MapSidebar
           id="search"
-          className="z-10 w-screen lg:sticky lg:left-0 lg:w-[50vw] xl:w-[calc(100vw/3)]"
+          className="z-[1001] w-screen lg:sticky lg:left-0 lg:w-[50vw] xl:w-[calc(100vw/3)]"
         />
         <section
           id="content"
