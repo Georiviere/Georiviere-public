@@ -13,11 +13,13 @@ type Props = HTMLAttributes<HTMLElement>;
 
 export function MapSidebar({ className, ...props }: Props) {
   return (
-    <section {...props} className={cn('bg-primary', className)}>
-      <ScrollArea className="h-full pb-20">
+    <section {...props} className={cn('flex flex-col bg-primary', className)}>
+      <div className="flex flex-col items-stretch gap-4 p-4 sm:flex-row sm:items-end">
         <SearchForm />
-        <MapFilters />
         <ObservationCTA />
+      </div>
+      <ScrollArea className="h-full pb-20">
+        <MapFilters />
       </ScrollArea>
     </section>
   );
