@@ -1,6 +1,6 @@
-import { URLSearchParams } from 'url';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 import {
   Card,
@@ -12,7 +12,6 @@ import {
 
 type Props = {
   name: string;
-  params: URLSearchParams;
   description: string;
   attachments?: { thumbnail: string }[];
   type: string;
@@ -21,12 +20,12 @@ type Props = {
 
 export default function Popup({
   attachments,
-  params,
   name,
   description,
   type,
   id,
 }: Props) {
+  const params = useSearchParams();
   return (
     <Card className="group relative border-0">
       {attachments?.[0]?.thumbnail && (
