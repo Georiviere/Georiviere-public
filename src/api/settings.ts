@@ -1,6 +1,5 @@
-import { ImgHTMLAttributes } from 'react';
 import { ImageProps } from 'next/image';
-import { GeoJSON } from 'geojson';
+import { FeatureCollection } from 'geojson';
 import { GeoJSONOptions, LatLngBoundsExpression } from 'leaflet';
 import slugify from 'slugify';
 
@@ -32,7 +31,7 @@ export type Layer = {
   defaultActive?: boolean;
   isActive: boolean;
   options: GeoJSONOptions;
-  geojson?: GeoJSON;
+  geojson?: FeatureCollection;
   geojsonUrl: string;
   url: string;
   type: string;
