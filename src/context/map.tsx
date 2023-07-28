@@ -11,7 +11,7 @@ import {
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { getGeoJSON } from '@/api/geojson';
 import { Layer, Settings } from '@/api/settings';
-import { Point } from 'geojson';
+import { FeatureCollection, Point } from 'geojson';
 import { Map } from 'leaflet';
 
 import { getUrlSearchParamsForLayers, partition } from '@/lib/utils';
@@ -94,7 +94,11 @@ export const MapContextProvider = ({
           if (nextLayer.id !== id) {
             list.push(nextLayer);
           } else {
-            list.push({ ...nextLayer, isActive, geojson });
+            list.push({
+              ...nextLayer,
+              isActive,
+              geojson: geojson as FeatureCollection,
+            });
           }
           return list;
         }, []);
