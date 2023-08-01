@@ -11,6 +11,7 @@ import {
 } from 'react-leaflet';
 
 import { Icons } from '@/components/icons';
+import AntPath, { AntPathOptions } from '@/components/map/ant-path';
 import { DefaultMarker } from '@/components/map/default-marker';
 import Popup from '@/components/map/popup';
 
@@ -107,6 +108,25 @@ export const GeometryItem = ({
     return (
       <>
         {coordinatesAsMultiLineString.map((group, index) => {
+          if (layer.type === 'streams') {
+            return (
+              <AntPath
+                key={`linestring-${id}-${index}`}
+                positions={group.map(([lat, lng]) => [lng, lat])}
+                options={
+                  {
+                    dashArray: ['30', '30'],
+                    weight: 3,
+                    delay: 2000,
+                    ...options.style,
+                  } as AntPathOptions
+                }
+              >
+                <MetaData properties={properties} layer={layer} />
+              </AntPath>
+            );
+          }
+
           return (
             <Polyline
               key={`linestring-${id}-${index}`}
