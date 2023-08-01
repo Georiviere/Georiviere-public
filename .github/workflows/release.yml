@@ -33,7 +33,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .docker
-          file: ./docker/Dockerfile
+          file: ./.docker/Dockerfile
           push: true
           tags: ${{ steps.meta-builder.outputs.tags }}
           labels: ${{ steps.meta-builder.outputs.labels }}
