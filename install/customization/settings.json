@@ -1,0 +1,142 @@
+{
+  "header": {
+    "logo": {
+      "src": "/medias/logo.svg"
+    }
+  },
+  "footer": {
+    "partners": [
+      {
+        "src": "https://randonature.parc-haut-jura.fr/medias/logos/logo_pnrhj_dark.png",
+        "label": "Parc naturel régional du Haut-Jura",
+        "url": "http://parc-haut-jura.fr/"
+      },
+      {
+        "src": "https://randonature.parc-haut-jura.fr/medias/logos/logo_gtj_dark.png",
+        "label": "Grandes traversées du Haut-Jura",
+        "url": "https://www.gtj.asso.fr/"
+      },
+      {
+        "src": "https://randonature.parc-haut-jura.fr/medias/logos/logo_region_aura_dark.png",
+        "label": "La Région Auvergne-Rhône-Alpes",
+        "url": "https://www.montagnes-du-jura.fr/"
+      }
+    ],
+    "informations": [
+      {
+        "name": "Parc naturel régional du Haut-Jura",
+        "location": [
+          [
+            "29 Le Village",
+            "39310 LAJOUX"
+          ]
+        ],
+        "phone": [
+          "03 84 34 12 30"
+        ],
+        "email": [
+          "parc@parc-haut-jura.fr"
+        ]
+      }
+    ],
+    "links": [
+      {
+        "label": "Mentions légales xxxx",
+        "url": "/page/mentions-legales"
+      },
+      {
+        "label": "Georivière",
+        "url": "https://georiviere.fr/"
+      }
+    ],
+    "socialNetworks": [
+      {
+        "label": "Facebook",
+        "url": "https://www.facebook.com/PNRHJ/",
+        "icon": "/medias/facebook.svg"
+      },
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/channel/UC5UbalFTYO8BlYRa9qbZmaQ/",
+        "icon": "/medias/youtube.svg"
+      }
+    ]
+  },
+  "homepage": {
+    "welcomeBanner": {
+      "images": [
+        {
+          "url": "/medias/home.jpg"
+        }
+      ],
+      "shouldDisplayText": true
+    },
+    "introduction": {
+      "title": "Découvez la démarche",
+      "images": [
+        {
+          "url": "/medias/illustration.jpg"
+        }
+      ],
+      "content": "<p class=\"my-8\">sagittis sodales neque. Aenean porttitor nunc vitae nisi fermentum tincidunt. Duis at tellus sed risus rhoncus maximus et ut erat. Vestibulum eu tempus odio, ac commodo justo. Cras eget sem ac elit aliquam scelerisque. Nulla id turpis metus. Fusce vel risus lacinia, lobortis ipsum ut, gravida felis. Donec at sollicitudin mi. Fusce ut nibh at libero feugiat faucibus. Sed maximus justo a tellus consectetur, eget accumsan libero ultrices. Vivamus sagittis faucibus pretium. Donec dui tortor, condimentum eu finibus at, feugiat lacinia lorem.</p><p class=\"my-8\">Sed tristique libero quis posuere luctus. Cras et efficitur nisl. Ut porta, ligula at auctor auctor, arcu sem tempor urna, vel convallis dui dolor quis neque. Fusce id rutrum lectus. Suspendisse potenti. Cras sodales semper bibendum. Praesent et viverra nulla. Nunc viverra ut sapien id ultricies. Fusce mollis venenatis metus, id imperdiet diam congue nec. Mauris suscipit suscipit velit, nec maximus est convallis eleifend. Phasellus a elit velit. Proin maximus, enim et gravida imperdiet, nunc enim elementum est, ut consectetur erat diam vel felis. Quisque feugiat nisl malesuada, fringilla sem non, consectetur nisi.</p>"
+    },
+    "suggestions": [
+      {
+        "type": "static",
+        "title": "Connaissances",
+        "subtitle": "Parcourez les données et actions liées au cours d'eau sur le territoire",
+        "content": [
+          {
+            "label": "Cours d'eau",
+            "description": "Naviguez sur la carte pour voir les informations détaillées sur les cours d'eau du territoire",
+            "images": [
+              {
+                "thumbnail": "/medias/placeholder0.jpg"
+              }
+            ],
+            "href": "/map?layers=8,10,12,14"
+          },
+          {
+            "label": "Connaissances",
+            "description": "Visualisez l'ensemble des observations réalisées conjointement par le parc et les contributeurs",
+            "images": [
+              {
+                "thumbnail": "/medias/placeholder0.jpg"
+              }
+            ],
+            "href": "/map?layers=8,10,11,12,14"
+          },
+          {
+            "label": "Actions",
+            "description": "Découvez les travaux du parc dans le cadre de la gestion du territoire aquatique (animation à venir, travaux, chantiers participatifs, etc.)",
+            "images": [
+              {
+                "thumbnail": "/medias/placeholder0.jpg"
+              }
+            ],
+            "href": "/map?layers=8,10,12,14"
+          },
+          {
+            "label": "Zones sensibles",
+            "description": "Explorez les zones de protection du biotope et de la biodiversité",
+            "images": [
+              {
+                "thumbnail": "/medias/placeholder0.jpg"
+              }
+            ],
+            "href": "/map?layers=8,10,12,13,14"
+          }
+        ]
+      },
+      {
+        "type": "observation",
+        "title": "Contributions",
+        "subtitle": "Citoyen, contribuez à la connaissance des rivières aux côtés des agents du parc"
+      },
+      {
+        "type": "action",
+        "title": "Dernières contributions"
+      }
+    ]
+  }
+}

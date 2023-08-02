@@ -1,0 +1,14 @@
+version: "2.3"
+services:
+  front:
+    image: georiviere-public
+    build:
+      context: .
+    restart: always
+    ports:
+      - "${PORT:-8080}:3000"
+    env_file:
+      - .env
+    volumes:
+      - "${CUSTOMIZATION_DIRECTORY:-./customization}:/app/src/customization"
+      - "${MEDIAS_DIRECTORY:-./medias}:/app/public/medias/"
