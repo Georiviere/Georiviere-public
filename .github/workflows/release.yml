@@ -38,3 +38,27 @@ jobs:
           tags: ${{ steps.meta-builder.outputs.tags }}
           labels: ${{ steps.meta-builder.outputs.labels }}
           target: builder
+
+  attach_install_release:
+    runs-on: ubuntu-latest
+    needs: [ release ]
+    permissions:
+      contents: write  # required to attach zip to release
+    if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Prepare install.zip
+        run: |
+          cd install
+          mkdir georiviere-public
+          cp * ./georiviere-public 2>/dev/null || :
+          cp .env.dist ./georiviere-public
+          zip -r ../install.zip georiviere-public/
+
+      - name: Attach zip archive as release binary
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: 'install.zip'

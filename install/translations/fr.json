@@ -1,0 +1,96 @@
+{
+  "details": {
+    "closePage": "Fermer la fiche",
+    "descent": "Dénivelé",
+    "length": "Longueur",
+    "flow": "Écoulement",
+    "km": "km",
+    "kilometers": "kilomètres",
+    "m": "m",
+    "meters": "mètres"
+  },
+  "home": {
+    "title": "Sentinelle des rivières : j'observe, je protège",
+    "punchline": "Citoyen, contribuez à la connaissance des rivières aux côtés des agents du Parc"
+  },
+  "mapMenu": {
+    "search": "Rechercher",
+    "observation": "Ajouter une observation",
+    "details": "Fiche",
+    "map": "Carte"
+  },
+  "observation": {
+    "cancel": "Annuler votre observation",
+    "loading": "Chargement de données vers le serveur",
+    "coordinatesHelptext": "Indiquez la position de l'observation sur la carte",
+    "submit": "Soumettre votre observation",
+    "title": "Observation",
+    "labelButton": "Ajouter une observation",
+    "photoLabel": "Photo",
+    "quality": {
+      "label": "Qualité",
+      "description": "Apportez des observations sur les propriétés des cours d'eau (pollution, température, développement algal, etc.)",
+      "shortDescription": "Apportez des observations sur les propriétés des cours d'eau"
+    },
+    "fauna-flora": {
+      "label": "Faune et Flore",
+      "description": "Recensez les espèces de notre territoire",
+      "shortDescription": "Recensez les espèces de notre territoire"
+    },
+    "quantity": {
+      "label": "Quantité",
+      "description": "Aidez-nous à répertorier les volumes des rivières (crue, débordement, assèchement, etc.)",
+      "shortDescription": "Répertorier les volumes des rivières"
+    },
+    "damages": {
+      "label": "Dégâts potentiels",
+      "description": "Avertissez-nous pour tout incident sur la berge ou sur le lit d'un cours d'eau (embâque, érosion, etc.)",
+      "shortDescription": "Rapportez un incident sur la berge ou sur le lit d'un cours d'eau"
+    },
+    "landscape": {
+      "label": "Éléments paysagers",
+      "description": "Lorem ipsum dolor site amet",
+      "shortDescription": "Lorem ipsum dolor site amet"
+    },
+    "validation": {
+      "title": "Merci de votre contibution",
+      "content": "Votre contribution a bien été soumise. Elle sera publiée après vérifications."
+    },
+    "error": {
+      "title": "Une erreur est survenue",
+      "required": "Ce champ est requis"
+    },
+    "gdpr": "Texte RGPD consectetur adipiscing elit. In vitae elit a lorem tempus consequat. Mauris ultrices non risus vitae facilisis. Sed iaculis augue mi, sit amet hendrerit nunc vestibulum non. Nulla facilisi. Fusce placerat lectus non dui lacinia, in pellentesque eros bibendum."
+  },
+  "map": {
+    "title": "Carte",
+    "label": "Filtrer sur la carte",
+    "loading": "Chargement de la carte",
+    "centerOnMap": "Centrer sur la carte",
+    "resetView": "Réinitialiser la position de la carte",
+    "geolocate": "Voir ma position",
+    "deleteFilterText": "Supprimer le filtre textuel"
+  },
+  "searchBox": {
+    "label": "Recherchez votre rivière",
+    "navigate": "Naviguez directement sur la carte"
+  },
+  "site": {
+    "title": "GeoRivière",
+    "description": "Gérez et suivez vos cours d'eau",
+    "externalLink": "Lien externe",
+    "followUs": "Suivez-nous sur",
+    "ourPage": "Notre page",
+    "notFound": "Page non trouvée",
+    "notFound-content": "Cette page n'existe pas ou plus.",
+    "menu": "Menu",
+    "openMenu": "Ouvrir le menu",
+    "prev": "Précédent",
+    "next": "Suivant"
+  },
+  "theme": {
+    "toggle": "Thème {theme}",
+    "light": "clair",
+    "dark": "sombre"
+  }
+}
