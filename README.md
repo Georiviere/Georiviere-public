@@ -39,9 +39,10 @@ You can now access the application by visiting [http://localhost:8080/](http://l
 
 #### Maintenance
 
-Whenever you change the settings you need to relaunch the service :
+Whenever you change the settings you need to relaunch and rebuild the service :
 ```bash
 docker compose down
+docker compose build
 docker compose up -d
 ```
 
