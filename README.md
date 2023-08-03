@@ -35,7 +35,7 @@ docker compose build
 docker compose up -d
 ```
 
-You can now access the application by visiting [http://localhost:3000/](http://localhost:3000/) ! 🎉
+You can now access the application by visiting [http://localhost:8080/](http://localhost:8080/) ! 🎉
 
 #### Maintenance
 
