@@ -1,5 +1,5 @@
 ARG TAG=latest
-FROM ghcr.io/lepetittim/georiviere-public/georiviere-public-builder:${TAG}
+FROM ghcr.io/georiviere/georiviere-public/georiviere-public-builder:${TAG}
 
 WORKDIR /app
 COPY .env .env
