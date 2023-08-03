@@ -34,6 +34,9 @@ docker compose build
 ```bash
 docker compose up -d
 ```
+
+You can now access the application by visiting [http://localhost:3000/](http://localhost:3000/) ! 🎉
+
 #### Maintenance
 
 Whenever you change the settings you need to relaunch the service :
