@@ -22,7 +22,7 @@ unzip install.zip
 cd georiviere-public
 cp .env.dist .env
 ```
-2. Modify .env as needed and change your translation
+2. Modify .env as needed and [change your customization](#customization)
 
 3. Build your image
 ```bash
@@ -140,7 +140,7 @@ Open the `.env` file and modify its contents with your own API url and portal nu
 
 ### Start the application in development mode
 
-Once your dependencies are installed and the `.env` file and your customization are defined, start your server in development mode by running:
+Once your dependencies are installed and the `.env` file and your [customization](#customization)   are defined, start your server in development mode by running:
 
 ```bash
 yarn dev
