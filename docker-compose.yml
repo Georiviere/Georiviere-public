@@ -1,0 +1,15 @@
+version: "2.3"
+services:
+  front:
+    image: georiviere-public-dev
+    build:
+      context: .
+    restart: always
+    ports:
+      - "${PORT:-8080}:3000"
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+      - ./translations:/app/translations
+      - ./public:/app/public
