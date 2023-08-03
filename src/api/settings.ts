@@ -167,6 +167,7 @@ async function fetchSettings(): Promise<RawSettings> {
     }
     return res.json();
   } catch (error) {
+    console.error(error);
     throw error;
   }
 }
