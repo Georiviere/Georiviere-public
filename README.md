@@ -53,12 +53,41 @@ Once your dependencies are installed and the `.env` file and your customization 
 yarn dev
 ```
 
-### Start the app for the production 
+### Start the app for the production
+
+With yarn without docker :
 
 ```bash
 yarn build
 yarn start
 ```
+
+With docker :
+Download `zip archive <https://github.com/Georiviere/Georiviere-admin/releases/latest/download/install.zip>`_
+```bash
+unzip install.zip
+cd georiviere-public
+cp .env.dist .env
+```
+Modify .env as needed and change your translation
+
+Then build your image
+```bash
+docker compose build
+```
+Whenever you need to change your translation or the .env. You have to rebuild the image.
+
+Launch the service :
+```bash
+docker compose up -d
+```
+
+Whenever you change the settings or need to relaunch the service :
+```bash
+docker compose down
+docker compose up -d
+```
+
 
 ### Process manager
 
