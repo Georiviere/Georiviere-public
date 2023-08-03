@@ -51,7 +51,7 @@ yarn build
 yarn start
 ```
 
-### Process manager
+#### Process manager
 
 In order to have a more robust solution to serve your node server, if you don't want to use Docker which is the main method, our advice is to use [pm2](https://pm2.keymetrics.io/).
 
