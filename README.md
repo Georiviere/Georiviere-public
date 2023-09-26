@@ -16,6 +16,7 @@ Georiviere is the public web application displaying the interface you can use to
 
 Follow those instructions in order to install the application on your server :
 
+
 1. Download the latest [zip archive](https://github.com/Georiviere/Georiviere-public/releases/latest/download/install.zip)
 ```bash
 unzip install.zip
