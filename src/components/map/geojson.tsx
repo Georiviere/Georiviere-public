@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Layer } from '@/api/settings';
+import slugify from 'slugify';
 
 import { GeometryList } from '@/components/map/geometry-list';
 
@@ -21,9 +22,14 @@ export default function GeoJson({ layer }: Props) {
     }
     return {
       ...layer.geojson,
-      features: layer.geojson.features.filter(feature =>
-        feature.properties?.name?.includes(searchText),
-      ),
+      features: layer.geojson.features.filter(feature => {
+        if (!feature.properties?.name) {
+          return false;
+        }
+        return slugify(feature.properties.name, { lower: true }).includes(
+          slugify(searchText, { lower: true }),
+        );
+      }),
     };
   }, [layer.geojson, layer.isActive, searchParams]);
 
