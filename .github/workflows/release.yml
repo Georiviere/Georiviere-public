@@ -55,8 +55,8 @@ jobs:
           cp -r translations ./install/georiviere-public
           cp -r src/customization ./install/georiviere-public
           cp -r public/medias ./install/georiviere-public
-          cp docker-compose.yml ./install/georiviere-public
-          cp Dockerfile ./install/georiviere-public
+          cp ./install/docker-compose.yml ./install/georiviere-public
+          cp ./install/Dockerfile ./install/georiviere-public
           cd install
           zip -r ../install.zip ./georiviere-public
 
