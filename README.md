@@ -21,15 +21,14 @@ Follow those instructions in order to install the application on your server :
 ```bash
 unzip install.zip
 cd georiviere-public
-cp .env.dist .env
 ```
-2. Modify .env as needed and [change your customization](#customization)
+2. Modify .env as needed and [change your customization](#customization) (take care it may be hidden by your file browser.)
 
 3. Build your image
 ```bash
 docker compose build
 ```
-*Note : Whenever you need to change your translation or the .env. You have to rebuild the image.*
+*Note : Whenever you need to change your translation. You have to rebuild the image.*
 
 4. Launch the service :
 ```bash
