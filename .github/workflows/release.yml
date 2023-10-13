@@ -50,11 +50,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Prepare install.zip
         run: |
+          mkdir -p ./install/georiviere-public
+          cp .env.dist ./install/georiviere-public/.env
+          cp -r translations ./install/georiviere-public
+          cp -r src/customization ./install/georiviere-public
+          cp -r public/medias ./install/georiviere-public
+          cp ./install/docker-compose.yml ./install/georiviere-public
+          cp ./install/Dockerfile ./install/georiviere-public
           cd install
-          mkdir georiviere-public
-          cp -r * ./georiviere-public 2>/dev/null || :
-          cp .env.dist ./georiviere-public
-          zip -r ../install.zip georiviere-public/
+          zip -r ../install.zip ./georiviere-public
 
       - name: Attach zip archive as release binary
         uses: skx/github-action-publish-binaries@master
