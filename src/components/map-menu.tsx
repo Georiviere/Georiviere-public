@@ -14,7 +14,7 @@ export default function MapMenu() {
     ? t('observation')
     : t('details');
   return (
-    <nav className="max-w-4/5 fixed bottom-4 left-1/2 z-[1000] -translate-x-1/2 sm:w-max">
+    <nav className="max-w-4/5 fixed bottom-4 left-1/2 z-[1001] -translate-x-1/2 sm:w-max">
       <ul
         className={cn(
           'flex items-stretch space-x-1 rounded-md bg-background p-1 xl:hidden ',
