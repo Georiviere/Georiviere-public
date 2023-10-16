@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
@@ -22,7 +23,7 @@ export default function MapMenu() {
         )}
       >
         <li className="lg:hidden">
-          <a
+          <Link
             className={cn(
               'flex h-full items-center rounded-sm  px-3 py-1.5 text-center text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
               // hash === '#search' && 'bg-accent text-accent-foreground',
@@ -30,11 +31,11 @@ export default function MapMenu() {
             href="#search"
           >
             {t('search')}
-          </a>
+          </Link>
         </li>
         {hasContent && (
           <li>
-            <a
+            <Link
               className={cn(
                 'flex h-full items-center rounded-sm px-3 py-1.5 text-center text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
                 // hash === '#content' && 'bg-accent text-accent-foreground',
@@ -42,19 +43,19 @@ export default function MapMenu() {
               href="#content"
             >
               {contentLabel}
-            </a>
+            </Link>
           </li>
         )}
         <li>
-          <a
+          <Link
             className={cn(
               'flex h-full items-center rounded-sm  px-3 py-1.5 text-center text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
               // hash === '#map' && 'bg-accent text-accent-foreground',
             )}
-            href={`#map`}
+            href="#map"
           >
             {t('map')}
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>
