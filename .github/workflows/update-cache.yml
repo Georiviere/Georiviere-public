@@ -20,7 +20,7 @@ jobs:
 
       - name: Setup node
         if: steps.cache-admin.outputs.cache-hit != 'true'
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
 
