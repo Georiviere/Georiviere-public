@@ -135,6 +135,34 @@ You will also be able to see the application logs by running:
 pm2 logs georiviere-public
 ```
 
+### Server configuration
+
+You might need to configure your server to make sure it works properly.
+
+Below you can find a `nginx` configuration example:
+
+```nginx
+location / {
+    proxy_set_header   X-Forwarded-Host     $host;
+    proxy_set_header   X-Forwarded-Server   $host;
+    proxy_set_header   X-Forwarded-Proto    $http_x_forwarded_proto;
+    proxy_set_header   X-Forwarded-For      $proxy_add_x_forwarded_for;
+    proxy_set_header   X-Real-IP            $remote_addr;
+    proxy_set_header   Host                 $http_host;
+    proxy_redirect     off;
+    keepalive_timeout 0;
+    #proxy_pass         http://node;
+    proxy_pass http://localhost:8080;
+}
+gzip on;
+gzip_static on;
+gzip_comp_level 5;
+gzip_min_length 256;
+gzip_proxied any;
+gzip_types text/text text/plain text/xml text/css application/x-javascript application/javascript application/json;
+
+```
+
 ## Customization
 
 Edit the following files to customize your application:
