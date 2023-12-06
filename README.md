@@ -50,7 +50,7 @@ You can locally build and launch the application using yarn, following the same 
 
 #### Prerequisite
 
-- You need to use a node version 18
+- You need to use node. You can use [nvm](https://github.com/nvm-sh/nvm) to get required version.
 - Use nvm and then:
 
 ```bash
