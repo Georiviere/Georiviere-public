@@ -40,7 +40,7 @@ export default function PartnerList({ className }: Props) {
                 <a target="_blank" href={item.url} rel="noopener noreferrer">
                   <Image
                     loading="lazy"
-                    className="h-12 w-auto sm:h-16"
+                    className="h-14 w-auto sm:h-20"
                     src={item.src}
                     alt=""
                     width={300}

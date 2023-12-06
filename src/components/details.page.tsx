@@ -125,16 +125,7 @@ export default function DetailsPageUI({ content }: Props) {
         </dl>
       </header>
 
-      {content.description
-        .split('\r\n')
-        .filter((line: string) => line.trim() !== '')
-        .map((line: string, index: number) => {
-          return (
-            <p key={index} className="py-4">
-              {line}
-            </p>
-          );
-        })}
+      <div dangerouslySetInnerHTML={{ __html: content.description }} />
     </article>
   );
 }
