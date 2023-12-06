@@ -54,7 +54,7 @@ You can locally build and launch the application using yarn, following the same 
 - Use nvm and then:
 
 ```bash
-nvm use 18
+nvm use
 ```
 
 Install yarn
