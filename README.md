@@ -2,15 +2,13 @@
 
 Georiviere is the public web application displaying the interface you can use to value your waterways and where users can contribute.
 
-[1. Installation for production](#install)  
+[1. Installation for production](#installation)
 [2. Customize your application](#customization)  
 [3. Documentation for developers](#development)
 
 ## Installation for production
 
 ### With docker (recommended)
-
-<a name="install"/>
 
 #### Installation
 
@@ -50,16 +48,57 @@ docker compose up -d
 
 You can locally build and launch the application using yarn, following the same method used in development.
 
+#### Prerequisite
+
+- You need to use node. You can use [nvm](https://github.com/nvm-sh/nvm) to get required version.
+- Use nvm and then:
+
+```bash
+nvm use
+```
+
+Install yarn
+
+```bash
+npm install -g yarn
+```
+
+#### Install dependencies
+
+```bash
+yarn
+```
+
+#### Environnements variables
+
+```bash
+cp .env.dist .env
+```
+
+Open the `.env` file and modify its contents with your own API url and portal number.
+
+#### Start the application
+
+Once your dependencies are installed and the `.env` file and your [customization](#customization) are defined, start your server :
+
+##### In production mode
+
 ```bash
 yarn build
 yarn start
+```
+
+##### Or in development mode by running:
+
+```bash
+yarn dev
 ```
 
 #### Process manager
 
 In order to have a more robust solution to serve your node server, if you don't want to use Docker which is the main method, our advice is to use [pm2](https://pm2.keymetrics.io/).
 
-Here is a quick guide on how to use pm2 with an Ubuntu distribution (Make sure you've installed nodejs and built the project following the previous step)
+Here is a quick guide on how to use pm2 with an Ubuntu distribution (Make sure you've installed NodeJS and built the project following the previous step)
 
 ```sh
 sudo npm install -g pm2
@@ -96,56 +135,39 @@ You will also be able to see the application logs by running:
 pm2 logs georiviere-public
 ```
 
-<a name="customization"/>
+### Server configuration
+
+You might need to configure your server to make sure it works properly.
+
+Below you can find a `nginx` configuration example:
+
+```nginx
+location / {
+    proxy_set_header   X-Forwarded-Host     $host;
+    proxy_set_header   X-Forwarded-Server   $host;
+    proxy_set_header   X-Forwarded-Proto    $http_x_forwarded_proto;
+    proxy_set_header   X-Forwarded-For      $proxy_add_x_forwarded_for;
+    proxy_set_header   X-Real-IP            $remote_addr;
+    proxy_set_header   Host                 $http_host;
+    proxy_redirect     off;
+    keepalive_timeout 0;
+    #proxy_pass         http://node;
+    proxy_pass http://localhost:8080;
+}
+gzip on;
+gzip_static on;
+gzip_comp_level 5;
+gzip_min_length 256;
+gzip_proxied any;
+gzip_types text/text text/plain text/xml text/css application/x-javascript application/javascript application/json;
+
+```
 
 ## Customization
 
-Edit the following files to personalize your application:
+Edit the following files to customize your application:
 - CSS settings: You can modify [/src/styles/global.css](https://github.com/Georiviere/Georiviere-public/blob/main/src/styles/globals.css). The project uses [Tailwind CSS](https://tailwindcss.com/). 
  You can also modify colors variables (defined in HSL; See the [Tailwind CSS documentation](https://tailwindcss.com/docs/customizing-colors#using-css-variables) for more information). 
  - Locale messages for the application [/transation/fr.json](https://github.com/Georiviere/Georiviere-public/blob/main/translations/fr.json). For the moment there is only the french version available.
  - Global customization settings (header/footer/homepage) defined in [/src/customization/settings.json](https://github.com/Georiviere/Georiviere-public/blob/main/src/customization/settings.json).
  - If you need to store images (or others medias), you can drop it in `/public/medias`. To define your favicons, you need to override `favicon-16x16.png`, `favicon.png`, and `apple-touch-icon.png` in the same folder.
-
-<a name="development"/>
-
-## Development
-
-To install the app in development, follow those steps:
-
-### Prerequisite
-
-- You need to use a node version above 18
-- Use nvm and then:
-
-```bash
-nvm use
-```
-
-Install yarn
-
-```bash
-npm install -g yarn
-```
-
-### Install dependencies
-
-```bash
-yarn
-```
-
-### Environnements variables
-
-```bash
-cp .env.dist .env
-```
-
-Open the `.env` file and modify its contents with your own API url and portal number.
-
-### Start the application in development mode
-
-Once your dependencies are installed and the `.env` file and your [customization](#customization)   are defined, start your server in development mode by running:
-
-```bash
-yarn dev
-```
