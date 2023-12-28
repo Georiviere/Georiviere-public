@@ -2,9 +2,8 @@
 
 Georiviere is the public web application displaying the interface you can use to value your waterways and where users can contribute.
 
-[1. Installation for production](#installation)
-[2. Customize your application](#customization)  
-[3. Documentation for developers](#development)
+1. [Installation for production](#installation)
+2. [Customize your application](#customization)  
 
 ## Installation for production
 
@@ -45,8 +44,6 @@ docker compose up -d
 ```
 
 ### Without docker (not recommended)
-
-You can locally build and launch the application using yarn, following the same method used in development.
 
 #### Prerequisite
 
