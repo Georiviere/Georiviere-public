@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Layer } from '@/api/settings';
 import { GeoJsonProperties, Geometry } from 'geojson';
 import { GeoJSONOptions } from 'leaflet';
@@ -11,7 +12,6 @@ import {
 } from 'react-leaflet';
 
 import { Icons } from '@/components/icons';
-import AntPath, { AntPathOptions } from '@/components/map/ant-path';
 import { DefaultMarker } from '@/components/map/default-marker';
 import Popup from '@/components/map/popup';
 
@@ -108,33 +108,23 @@ export const GeometryItem = ({
     return (
       <>
         {coordinatesAsMultiLineString.map((group, index) => {
-          if (layer.type === 'streams') {
-            return (
-              <AntPath
-                key={`linestring-${id}-${index}`}
+          return (
+            <Fragment key={`linestring-${id}-${index}`}>
+              {/* Duplicate streams layer to animate it */}
+              {layer.type === 'streams' && (
+                <Polyline
+                  positions={group.map(([lat, lng]) => [lng, lat])}
+                  pathOptions={options.style as GeoJSONOptions}
+                ></Polyline>
+              )}
+              <Polyline
                 positions={group.map(([lat, lng]) => [lng, lat])}
-                options={
-                  {
-                    dashArray: ['30', '30'],
-                    weight: 3,
-                    delay: 2000,
-                    ...options.style,
-                  } as AntPathOptions
-                }
+                pathOptions={options.style as GeoJSONOptions}
+                className={layer.type}
               >
                 <MetaData properties={properties} layer={layer} />
-              </AntPath>
-            );
-          }
-
-          return (
-            <Polyline
-              key={`linestring-${id}-${index}`}
-              positions={group.map(([lat, lng]) => [lng, lat])}
-              pathOptions={options.style as GeoJSONOptions}
-            >
-              <MetaData properties={properties} layer={layer} />
-            </Polyline>
+              </Polyline>
+            </Fragment>
           );
         })}
       </>

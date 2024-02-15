@@ -101,3 +101,20 @@ body .leaflet-container a.leaflet-popup-close-button {
 .tns-horizontal.tns-subpixel>.tns-item {
   vertical-align: middle !important;
 }
+
+.streams.leaflet-interactive {
+  stroke-width: 2;
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-dasharray: 10;
+  stroke-dashoffset: 200;
+  animation-name: dash;
+  animation-duration: 20s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
