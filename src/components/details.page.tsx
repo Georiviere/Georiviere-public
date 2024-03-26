@@ -52,7 +52,7 @@ export default function DetailsPageUI({ content }: Props) {
         <h1 className="text-2xl font-extrabold tracking-tight lg:text-3xl">
           {content.name}
         </h1>
-        <div className="absolute right-0 top-0 flex rounded-bl-lg border border-t-0 bg-background">
+        <div className="absolute right-0 top-0 z-10 flex rounded-bl-lg border border-t-0 bg-background">
           {content.geometryCenter && (
             <ButtonCenterView
               latLng={

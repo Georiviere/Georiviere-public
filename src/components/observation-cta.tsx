@@ -18,8 +18,8 @@ export function ObservationCTA() {
   const t = useTranslations('observation');
   const params = useSearchParams();
   return (
-    <div className="flex justify-center">
-      <NavigationMenu>
+    <div className="flex grow justify-center">
+      <NavigationMenu delayDuration={500}>
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger>{t('labelButton')}</NavigationMenuTrigger>
