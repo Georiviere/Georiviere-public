@@ -40,7 +40,7 @@ export default function SearchForm() {
   }, [searchParams]);
 
   return (
-    <form action="/map" className="grow" onSubmit={handleSubmit}>
+    <form action="/map" className="grow-[10] basis-80" onSubmit={handleSubmit}>
       <Label htmlFor={inputId}>{t('label')}</Label>
       <div className="flex w-full items-center space-x-2 rounded-md bg-input">
         <Input
