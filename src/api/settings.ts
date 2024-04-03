@@ -209,19 +209,40 @@ export async function getSettings(): Promise<Settings | null> {
   };
 }
 
+async function getRawMapSettings(): Promise<Settings['map']> {
+  const settings = await fetchSettings();
+  const {
+    map: {
+      baseLayers,
+      group,
+      bounds: [lat1, lng1, lat2, lng2],
+    },
+  } = settings;
+
+  return {
+    baseLayers,
+    layersTree: group,
+    container: {
+      bounds: [
+        [lng1, lat1],
+        [lng2, lat2],
+      ],
+    },
+  } as Settings['map'];
+}
+
 export async function getMapSettings(): Promise<Settings['map'] | []> {
-  let settings = null;
+  let map = null;
   try {
-    settings = await getSettings();
+    map = await getRawMapSettings();
   } catch (error) {
     throw error;
   }
 
-  if (settings === null) {
+  if (map === null) {
     return [];
   }
 
-  const { map } = settings;
   const layersTree = await Promise.all(
     map.layersTree.map(async item => ({
       ...item,
@@ -241,10 +262,29 @@ export async function getMapSettings(): Promise<Settings['map'] | []> {
   };
 }
 
+export async function getDetailsUrl(path: string): Promise<string> {
+  let map = null;
+  try {
+    map = await getRawMapSettings();
+  } catch (error) {
+    throw error;
+  }
+
+  if (map === null) {
+    return '';
+  }
+
+  const { url: endpoint = '' } =
+    map.layersTree
+      .flatMap(({ layers }) => layers)
+      .find(item => item.type === path) ?? {};
+  return endpoint;
+}
+
 export async function getMenuSettings(): Promise<Menu[]> {
   let settings = null;
   try {
-    settings = await getSettings();
+    settings = await fetchSettings();
   } catch (e) {
     throw e;
   }

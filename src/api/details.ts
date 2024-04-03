@@ -1,4 +1,4 @@
-import { Settings, getMapSettings } from './settings';
+import { getDetailsUrl } from './settings';
 
 async function fetchDetails(url: string) {
   const res = await fetch(`${process.env.apiHost}${url}`, {
@@ -11,18 +11,14 @@ async function fetchDetails(url: string) {
 }
 
 export async function getDetails(path: string, id: number) {
-  let settings = null;
+  let endpoint = '';
   try {
-    settings = (await getMapSettings()) as Settings['map'];
+    endpoint = await getDetailsUrl(path);
   } catch (error) {
     // notfound
     return null;
   }
-  const { url: endpoint } =
-    settings.layersTree
-      .flatMap(({ layers }) => layers)
-      .find(item => item.type === path) ?? {};
-  if (endpoint === undefined) {
+  if (endpoint === '') {
     return null;
   }
   let details = null;
