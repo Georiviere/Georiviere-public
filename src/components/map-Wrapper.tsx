@@ -36,14 +36,7 @@ export default function MapWrapper({ className, ...props }: Props) {
   );
 
   return (
-    <section
-      {...props}
-      className={cn(
-        'h-full grow',
-        className,
-        pathName === '/map' && 'xl:w-[calc(100vw*2/3)]',
-      )}
-    >
+    <section {...props} className={cn('h-full grow', className)}>
       <Map />
     </section>
   );

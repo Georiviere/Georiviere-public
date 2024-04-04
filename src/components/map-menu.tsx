@@ -18,11 +18,10 @@ export default function MapMenu() {
     <nav className="max-w-4/5 fixed bottom-4 left-1/2 z-[1001] -translate-x-1/2 sm:w-max">
       <ul
         className={cn(
-          'flex items-stretch space-x-1 rounded-md bg-background p-1 xl:hidden ',
-          !hasContent && 'lg:hidden',
+          'flex items-stretch space-x-1 rounded-md bg-background/80 p-1 shadow-lg backdrop-blur-sm lg:hidden',
         )}
       >
-        <li className="lg:hidden">
+        <li>
           <Link
             className={cn(
               'flex h-full items-center rounded-sm  px-3 py-1.5 text-center text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
@@ -34,7 +33,7 @@ export default function MapMenu() {
           </Link>
         </li>
         {hasContent && (
-          <li>
+          <li className="md:hidden">
             <Link
               className={cn(
                 'flex h-full items-center rounded-sm px-3 py-1.5 text-center text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',

@@ -32,22 +32,16 @@ export default async function MapLayout({ children }: Props) {
     <MapContextProvider defaultSettings={settings}>
       <main
         role="main"
-        className="grid h-full w-screen grid-cols-[1fr_1fr_1fr] grid-rows-1 justify-stretch overflow-x-hidden scroll-smooth"
+        className="grid h-full w-screen grid-cols-[100dvw_auto_100dvw] grid-rows-1 justify-stretch overflow-x-hidden scroll-smooth md:grid-cols-[50dvw_auto_50dvw] lg:grid-cols-[300px_auto_1fr]"
       >
-        <MapSidebar
-          id="search"
-          className="z-[1001] w-screen lg:sticky lg:left-0 lg:w-[50vw] xl:w-[calc(100vw/3)]"
-        />
+        <MapSidebar id="search" className="z-[1001]" />
         <section
           id="content"
-          className="h-full w-screen pb-20 empty:hidden lg:w-[50vw] lg:scroll-ml-[50vw] xl:w-[calc(100vw/3)] xl:pb-0"
+          className="h-full w-[100dvw] empty:w-0 md:w-[50dvw] lg:w-[350px] xl:w-[450px]"
         >
           {children}
         </section>
-        <MapWrapper
-          id="map"
-          className="w-screen lg:w-[50vw] xl:w-[calc(100vw/3)]"
-        />
+        <MapWrapper id="map" />
         <MapMenu />
       </main>
     </MapContextProvider>
