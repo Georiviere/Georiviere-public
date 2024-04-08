@@ -164,6 +164,7 @@ export const GeometryItem = ({
               line.map<[number, number]>(([lat, lng]) => [lng, lat]),
             )}
             pathOptions={options.style as GeoJSONOptions}
+            pane="tilePane"
           >
             <MetaData properties={properties} layer={layer} />
           </Polygon>
