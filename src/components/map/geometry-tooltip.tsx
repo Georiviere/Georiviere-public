@@ -1,0 +1,57 @@
+import Image from 'next/image';
+import { Layer } from '@/api/settings';
+import { GeoJsonProperties } from 'geojson';
+import { Tooltip } from 'react-leaflet';
+
+import { MetadataList } from '../details.page';
+
+export const GeometryTooltip = ({
+  properties,
+  layer,
+}: {
+  properties: GeoJsonProperties;
+  layer: Layer;
+}) => {
+  if (properties === null || (!properties.name && !properties.category)) {
+    return null;
+  }
+  if (layer.type === undefined || !layer.url || !properties.id) {
+    return <Tooltip>{properties.name ?? properties.category}</Tooltip>;
+  }
+  return (
+    <Tooltip
+      sticky
+      className="w-72 !overflow-hidden !whitespace-normal !rounded-xl !border-0 !p-0"
+    >
+      <div className="flex flex-col">
+        {properties.attachments?.[0]?.thumbnail && (
+          <Image
+            loading="lazy"
+            className="aspect-[4/3] h-auto w-auto object-cover transition-all group-hover:scale-105"
+            src={properties.attachments[0].thumbnail}
+            alt=""
+            width="400"
+            height="300"
+          />
+        )}
+        <div className="p-4">
+          <h3 className="line-clamp-2 text-lg font-bold">
+            {properties.name ?? properties.category}
+          </h3>
+          <MetadataList
+            descent={properties.descent}
+            flow={properties.flow}
+            length={properties.length}
+            type={properties.type}
+          />
+          {properties.description && (
+            <span
+              className="mb-1 line-clamp-2"
+              dangerouslySetInnerHTML={{ __html: properties.description }}
+            ></span>
+          )}
+        </div>
+      </div>
+    </Tooltip>
+  );
+};

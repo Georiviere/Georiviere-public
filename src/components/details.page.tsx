@@ -34,8 +34,92 @@ type Props = {
   };
 };
 
-export default function DetailsPageUI({ content }: Props) {
+export type MetadataListProps = {
+  length?: number;
+  descent?: number;
+  flow?: string;
+  type?: {
+    label: string;
+    category: {
+      label: string;
+    };
+    pictogram?: string;
+  };
+};
+
+export const MetadataList = ({
+  length,
+  descent,
+  flow,
+  type,
+}: MetadataListProps) => {
   const t = useTranslations('details');
+  return (
+    <dl className="flex items-center gap-2 py-2">
+      {length !== undefined && (
+        <>
+          <dt>
+            <Icons.chevronsLeftRight
+              className="text-primary"
+              {...propsForSVGPresentation}
+            />
+            <span className="sr-only">{t('length')}</span>
+          </dt>
+          <dd className="mr-2">
+            <MeterLength length={length} />
+          </dd>
+        </>
+      )}
+      {descent !== undefined && (
+        <>
+          <dt>
+            <Icons.arrowDownRight
+              className="text-primary"
+              {...propsForSVGPresentation}
+            />
+            <span className="sr-only">{t('descent')}</span>
+          </dt>
+          <dd className="mr-2">
+            <MeterLength length={descent} />
+          </dd>
+        </>
+      )}
+      {flow && (
+        <>
+          <dt>
+            <Icons.waves
+              className="text-primary"
+              {...propsForSVGPresentation}
+            />
+            <span className="sr-only">{t('flow')}</span>
+          </dt>
+          <dd className="mr-2">{flow}</dd>
+        </>
+      )}
+      {type && (
+        <>
+          <dt>{type.category.label} :</dt>
+          <dd>
+            <Badge className="gap-2">
+              {type.pictogram && (
+                <Image
+                  loading="lazy"
+                  src={type.pictogram}
+                  width={24}
+                  height={24}
+                  alt=""
+                />
+              )}
+              <span>{type.label}</span>
+            </Badge>
+          </dd>
+        </>
+      )}
+    </dl>
+  );
+};
+
+export default function DetailsPageUI({ content }: Props) {
   return (
     <article>
       {content.attachments.length > 0 && (
@@ -62,67 +146,12 @@ export default function DetailsPageUI({ content }: Props) {
           )}
           <ButtonClose />
         </div>
-        <dl className="flex items-center gap-2 py-2">
-          {content.length !== undefined && (
-            <>
-              <dt>
-                <Icons.chevronsLeftRight
-                  className="text-primary"
-                  {...propsForSVGPresentation}
-                />
-                <span className="sr-only">{t('length')}</span>
-              </dt>
-              <dd className="mr-2">
-                <MeterLength length={content.length} />
-              </dd>
-            </>
-          )}
-          {content.descent !== undefined && (
-            <>
-              <dt>
-                <Icons.arrowDownRight
-                  className="text-primary"
-                  {...propsForSVGPresentation}
-                />
-                <span className="sr-only">{t('descent')}</span>
-              </dt>
-              <dd className="mr-2">
-                <MeterLength length={content.descent} />
-              </dd>
-            </>
-          )}
-          {content.flow && (
-            <>
-              <dt>
-                <Icons.waves
-                  className="text-primary"
-                  {...propsForSVGPresentation}
-                />
-                <span className="sr-only">{t('flow')}</span>
-              </dt>
-              <dd className="mr-2">{content.flow}</dd>
-            </>
-          )}
-          {content.type && (
-            <>
-              <dt>{content.type.category.label} :</dt>
-              <dd>
-                <Badge className="gap-2">
-                  {content.type.pictogram && (
-                    <Image
-                      loading="lazy"
-                      src={content.type.pictogram}
-                      width={24}
-                      height={24}
-                      alt=""
-                    />
-                  )}
-                  <span>{content.type.label}</span>
-                </Badge>
-              </dd>
-            </>
-          )}
-        </dl>
+        <MetadataList
+          length={content.length}
+          descent={content.descent}
+          flow={content.flow}
+          type={content.type}
+        />
       </header>
 
       <div dangerouslySetInnerHTML={{ __html: content.description }} />
