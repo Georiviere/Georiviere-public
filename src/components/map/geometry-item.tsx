@@ -30,16 +30,16 @@ const MetaData = ({
   properties: GeoJsonProperties;
   layer: Layer;
 }) => {
-  if (properties === null || !properties.name) {
+  if (properties === null || (!properties.name && !properties.category)) {
     return null;
   }
   return (
     <>
-      <Tooltip>{properties.name}</Tooltip>
-      {layer.type !== undefined && layer.url && (
+      <Tooltip>{properties.name ?? properties.category}</Tooltip>
+      {layer.type !== undefined && layer.url && properties.id && (
         <LeafletPopup>
           <Popup
-            name={properties.name}
+            name={properties.name ?? properties.category}
             description={properties.description}
             attachments={properties.attachments}
             type={layer.type}
