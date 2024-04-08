@@ -102,7 +102,7 @@ body .leaflet-container a.leaflet-popup-close-button {
   vertical-align: middle !important;
 }
 
-.streams.leaflet-interactive {
+.streams-animation.leaflet-interactive {
   stroke-width: 2;
   stroke: rgba(255, 255, 255, 0.6);
   stroke-dasharray: 10;

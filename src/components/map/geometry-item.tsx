@@ -30,16 +30,16 @@ const MetaData = ({
   properties: GeoJsonProperties;
   layer: Layer;
 }) => {
-  if (properties === null || !properties.name) {
+  if (properties === null || (!properties.name && !properties.category)) {
     return null;
   }
   return (
     <>
-      <Tooltip>{properties.name}</Tooltip>
-      {layer.type !== undefined && layer.url && (
+      <Tooltip>{properties.name ?? properties.category}</Tooltip>
+      {layer.type !== undefined && layer.url && properties.id && (
         <LeafletPopup>
           <Popup
-            name={properties.name}
+            name={properties.name ?? properties.category}
             description={properties.description}
             attachments={properties.attachments}
             type={layer.type}
@@ -108,23 +108,42 @@ export const GeometryItem = ({
     return (
       <>
         {coordinatesAsMultiLineString.map((group, index) => {
-          return (
-            <Fragment key={`linestring-${id}-${index}`}>
-              {/* Duplicate streams layer to animate it */}
-              {layer.type === 'streams' && (
+          if (layer.type === 'streams') {
+            return (
+              <Fragment key={`linestring-${id}-${index}`}>
                 <Polyline
                   positions={group.map(([lat, lng]) => [lng, lat])}
                   pathOptions={options.style as GeoJSONOptions}
+                  className={layer.type}
                 ></Polyline>
-              )}
-              <Polyline
-                positions={group.map(([lat, lng]) => [lng, lat])}
-                pathOptions={options.style as GeoJSONOptions}
-                className={layer.type}
-              >
-                <MetaData properties={properties} layer={layer} />
-              </Polyline>
-            </Fragment>
+                {/* Duplicate streams layer to animate it */}
+                <Polyline
+                  positions={group.map(([lat, lng]) => [lng, lat])}
+                  pathOptions={options.style as GeoJSONOptions}
+                  className="streams-animation"
+                ></Polyline>
+                {/* Add an invisible stream to have a click buffer */}
+                <Polyline
+                  positions={group.map(([lat, lng]) => [lng, lat])}
+                  pathOptions={{
+                    weight: 10,
+                    opacity: 0,
+                  }}
+                  className={layer.type}
+                >
+                  <MetaData properties={properties} layer={layer} />
+                </Polyline>
+              </Fragment>
+            );
+          }
+          return (
+            <Polyline
+              positions={group.map(([lat, lng]) => [lng, lat])}
+              pathOptions={options.style as GeoJSONOptions}
+              className={layer.type}
+            >
+              <MetaData properties={properties} layer={layer} />
+            </Polyline>
           );
         })}
       </>
@@ -145,6 +164,7 @@ export const GeometryItem = ({
               line.map<[number, number]>(([lat, lng]) => [lng, lat]),
             )}
             pathOptions={options.style as GeoJSONOptions}
+            pane="tilePane"
           >
             <MetaData properties={properties} layer={layer} />
           </Polygon>
