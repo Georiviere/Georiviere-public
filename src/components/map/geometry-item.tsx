@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Layer } from '@/api/settings';
 import { GeoJsonProperties, Geometry } from 'geojson';
-import { GeoJSONOptions } from 'leaflet';
+import { GeoJSONOptions, PathOptions } from 'leaflet';
 import { renderToStaticMarkup } from 'react-dom/server';
 import {
   Popup as LeafletPopup,
@@ -35,7 +35,7 @@ const MetaData = ({
   }
   return (
     <>
-      <Tooltip>{properties.name ?? properties.category}</Tooltip>
+      <Tooltip sticky>{properties.name ?? properties.category}</Tooltip>
       {layer.type !== undefined && layer.url && properties.id && (
         <LeafletPopup>
           <Popup
@@ -129,6 +129,10 @@ export const GeometryItem = ({
                     weight: 10,
                     opacity: 0,
                   }}
+                  eventHandlers={{
+                    mouseover: e => e.target.setStyle({ opacity: 0.5 }),
+                    mouseout: e => e.target.setStyle({ opacity: 0 }),
+                  }}
                   className={layer.type}
                 >
                   <MetaData properties={properties} layer={layer} />
@@ -164,6 +168,15 @@ export const GeometryItem = ({
               line.map<[number, number]>(([lat, lng]) => [lng, lat]),
             )}
             pathOptions={options.style as GeoJSONOptions}
+            eventHandlers={{
+              mouseover: e => e.target.setStyle({ fillOpacity: 0.8 }),
+              mouseout: e =>
+                e.target.setStyle({
+                  fillOpacity:
+                    (options.style as PathOptions)?.fillOpacity ?? 0.2,
+                }),
+            }}
+            className="transition-[fill-opacity]"
             pane="tilePane"
           >
             <MetaData properties={properties} layer={layer} />
