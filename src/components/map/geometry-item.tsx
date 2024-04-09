@@ -115,7 +115,7 @@ export const GeometryItem = ({
                     mouseout: e => e.target.setStyle({ opacity: 0 }),
                     ...featureEventHandler,
                   }}
-                  className={layer.type}
+                  className="streams-hover"
                 >
                   <GeometryTooltip properties={properties} layer={layer} />
                 </Polyline>

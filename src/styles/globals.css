@@ -104,17 +104,31 @@ body .leaflet-container a.leaflet-popup-close-button {
 
 .streams-animation.leaflet-interactive {
   stroke-width: 2;
-  stroke: rgba(255, 255, 255, 0.6);
-  stroke-dasharray: 10;
-  stroke-dashoffset: 200;
+  stroke: rgba(255, 255, 255, 0.75);
+  stroke-dasharray: 1 15;
+  stroke-dashoffset: 208;
   animation-name: dash;
-  animation-duration: 20s;
+  animation-duration: 40s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+
+.streams-hover.leaflet-interactive:focus {
+  outline: none !important;
+  stroke-opacity: 0.5;
 }
 
 @keyframes dash {
   to {
     stroke-dashoffset: 0;
   }
+}
+
+/*
+leaflet bug: tooltips stay open if hovering an element while panning.
+As new tooltips are added at the end of .leaflet-tooltip-pane,
+just hide all tooltips that aren't the last one
+*/
+.leaflet-tooltip-pane > .leaflet-tooltip:not(:last-child) {
+  display: none;
 }

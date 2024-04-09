@@ -3,7 +3,7 @@ import { Layer } from '@/api/settings';
 import { GeoJsonProperties } from 'geojson';
 import { Tooltip } from 'react-leaflet';
 
-import { MetadataList } from '../details.page';
+import { MetadataList } from '../metadata-list';
 
 export const GeometryTooltip = ({
   properties,
@@ -21,7 +21,7 @@ export const GeometryTooltip = ({
   return (
     <Tooltip
       sticky
-      className="w-72 !overflow-hidden !whitespace-normal !rounded-xl !border-0 !p-0"
+      className="w-64 !overflow-hidden !whitespace-normal !rounded-xl !border-0 !p-0"
     >
       <div className="flex flex-col">
         {properties.attachments?.[0]?.thumbnail && (
@@ -43,6 +43,7 @@ export const GeometryTooltip = ({
             flow={properties.flow}
             length={properties.length}
             type={properties.type}
+            small
           />
           {properties.description && (
             <span

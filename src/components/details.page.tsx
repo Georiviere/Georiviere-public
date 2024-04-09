@@ -1,16 +1,12 @@
-import Image from 'next/image';
 import { Attachement } from '@/api/settings';
 import { LatLngTuple } from 'leaflet';
-import { useTranslations } from 'next-intl';
 
 import { convertAttachementsToImages } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
-import { Icons, propsForSVGPresentation } from '@/components/icons';
 
 import ButtonCenterView from './button-center-view';
 import ButtonClose from './button-close';
 import Carousel from './carousel';
-import MeterLength from './length';
+import { MetadataList } from './metadata-list';
 
 type Props = {
   content: {
@@ -32,91 +28,6 @@ type Props = {
       pictogram?: string;
     };
   };
-};
-
-export type MetadataListProps = {
-  length?: number;
-  descent?: number;
-  flow?: string;
-  type?: {
-    label: string;
-    category: {
-      label: string;
-    };
-    pictogram?: string;
-  };
-};
-
-export const MetadataList = ({
-  length,
-  descent,
-  flow,
-  type,
-}: MetadataListProps) => {
-  const t = useTranslations('details');
-  return (
-    <dl className="flex items-center gap-2 py-2">
-      {length !== undefined && (
-        <>
-          <dt>
-            <Icons.chevronsLeftRight
-              className="text-primary"
-              {...propsForSVGPresentation}
-            />
-            <span className="sr-only">{t('length')}</span>
-          </dt>
-          <dd className="mr-2">
-            <MeterLength length={length} />
-          </dd>
-        </>
-      )}
-      {descent !== undefined && (
-        <>
-          <dt>
-            <Icons.arrowDownRight
-              className="text-primary"
-              {...propsForSVGPresentation}
-            />
-            <span className="sr-only">{t('descent')}</span>
-          </dt>
-          <dd className="mr-2">
-            <MeterLength length={descent} />
-          </dd>
-        </>
-      )}
-      {flow && (
-        <>
-          <dt>
-            <Icons.waves
-              className="text-primary"
-              {...propsForSVGPresentation}
-            />
-            <span className="sr-only">{t('flow')}</span>
-          </dt>
-          <dd className="mr-2">{flow}</dd>
-        </>
-      )}
-      {type && (
-        <>
-          <dt>{type.category.label} :</dt>
-          <dd>
-            <Badge className="gap-2">
-              {type.pictogram && (
-                <Image
-                  loading="lazy"
-                  src={type.pictogram}
-                  width={24}
-                  height={24}
-                  alt=""
-                />
-              )}
-              <span>{type.label}</span>
-            </Badge>
-          </dd>
-        </>
-      )}
-    </dl>
-  );
 };
 
 export default function DetailsPageUI({ content }: Props) {
