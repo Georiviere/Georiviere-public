@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
+import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { Icon, Icons, propsForSVGPresentation } from '@/components/icons';
 
@@ -44,13 +45,12 @@ const MetadataItem = ({
     <div className="flex flex-row flex-wrap items-center justify-center gap-1">
       <dt>
         <Icon
-          className="text-primary"
+          className={cn('text-primary', small && 'w-4 h-4')}
           {...propsForSVGPresentation}
-          {...(small ? { width: 18, height: 18 } : {})}
         />
         <span className="sr-only">{t(type)}</span>
       </dt>
-      <dd>{meters ? <MeterLength length={meters} /> : value}</dd>
+      <dd>{meters !== undefined ? <MeterLength length={meters} /> : value}</dd>
     </div>
   );
 };

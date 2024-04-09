@@ -36,7 +36,7 @@ export default function DetailsPageUI({ content }: Props) {
       {content.attachments.length > 0 && (
         <div className="-m-8 mb-6">
           <Carousel
-            className="min-w-full"
+            className="w-full"
             images={convertAttachementsToImages(content.attachments)}
             width={800}
             height={600}

@@ -6,6 +6,7 @@ import { GeoJSONOptions, PathOptions } from 'leaflet';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Marker, Polygon, Polyline } from 'react-leaflet';
 
+import { cn } from '@/lib/utils';
 import { Icons } from '@/components/icons';
 import { DefaultMarker } from '@/components/map/default-marker';
 
@@ -46,16 +47,15 @@ export const GeometryItem = ({
   }
 
   const hasDetails = layer.type !== undefined && layer.url && properties?.id;
-  const pointerClassName = hasDetails ? '' : '!cursor-[unset]';
 
   const featureEventHandler = {
-    click: () => {
-      if (hasDetails) {
+    ...(hasDetails && {
+      click: () => {
         router.push(
           `/map/${layer?.type}/${properties?.id}?${params.toString()}`,
         );
-      }
-    },
+      },
+    }),
   };
 
   if (geometry.type === 'Point' || geometry.type === 'MultiPoint') {
@@ -118,7 +118,10 @@ export const GeometryItem = ({
                     mouseout: e => e.target.setStyle({ opacity: 0 }),
                     ...featureEventHandler,
                   }}
-                  className={`streams-hover ${pointerClassName}`}
+                  className={cn(
+                    'streams-hover',
+                    !hasDetails && '!cursor-[unset]',
+                  )}
                 >
                   <GeometryTooltip properties={properties} layer={layer} />
                 </Polyline>
@@ -129,7 +132,7 @@ export const GeometryItem = ({
             <Polyline
               positions={group.map(([lat, lng]) => [lng, lat])}
               pathOptions={options.style as GeoJSONOptions}
-              className={`${layer.type} ${pointerClassName}`}
+              className={cn(layer.type, !hasDetails && '!cursor-[unset]')}
               eventHandlers={featureEventHandler}
             >
               <GeometryTooltip properties={properties} layer={layer} />
@@ -163,7 +166,10 @@ export const GeometryItem = ({
                 }),
               ...featureEventHandler,
             }}
-            className={`transition-[fill-opacity] ${pointerClassName}`}
+            className={cn(
+              'transition-[fill-opacity]',
+              !hasDetails && '!cursor-[unset]',
+            )}
             pane="tilePane"
           >
             <GeometryTooltip properties={properties} layer={layer} />
