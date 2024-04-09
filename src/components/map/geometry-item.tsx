@@ -1,19 +1,16 @@
 import { Fragment } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Layer } from '@/api/settings';
 import { GeoJsonProperties, Geometry } from 'geojson';
-import { GeoJSONOptions } from 'leaflet';
+import { GeoJSONOptions, PathOptions } from 'leaflet';
 import { renderToStaticMarkup } from 'react-dom/server';
-import {
-  Popup as LeafletPopup,
-  Marker,
-  Polygon,
-  Polyline,
-  Tooltip,
-} from 'react-leaflet';
+import { Marker, Polygon, Polyline } from 'react-leaflet';
 
+import { cn } from '@/lib/utils';
 import { Icons } from '@/components/icons';
 import { DefaultMarker } from '@/components/map/default-marker';
-import Popup from '@/components/map/popup';
+
+import { GeometryTooltip } from './geometry-tooltip';
 
 type Props = {
   geometry: Geometry;
@@ -23,34 +20,6 @@ type Props = {
   options: GeoJSONOptions;
 };
 
-const MetaData = ({
-  properties,
-  layer,
-}: {
-  properties: GeoJsonProperties;
-  layer: Layer;
-}) => {
-  if (properties === null || (!properties.name && !properties.category)) {
-    return null;
-  }
-  return (
-    <>
-      <Tooltip>{properties.name ?? properties.category}</Tooltip>
-      {layer.type !== undefined && layer.url && properties.id && (
-        <LeafletPopup>
-          <Popup
-            name={properties.name ?? properties.category}
-            description={properties.description}
-            attachments={properties.attachments}
-            type={layer.type}
-            id={properties.id}
-          />
-        </LeafletPopup>
-      )}
-    </>
-  );
-};
-
 export const GeometryItem = ({
   geometry,
   properties,
@@ -58,6 +27,8 @@ export const GeometryItem = ({
   layer,
   options = { style: {} },
 }: Props) => {
+  const params = useSearchParams();
+  const router = useRouter();
   if (geometry.type === 'GeometryCollection') {
     return (
       <>
@@ -75,6 +46,18 @@ export const GeometryItem = ({
     );
   }
 
+  const hasDetails = layer.type !== undefined && layer.url && properties?.id;
+
+  const featureEventHandler = {
+    ...(hasDetails && {
+      click: () => {
+        router.push(
+          `/map/${layer?.type}/${properties?.id}?${params.toString()}`,
+        );
+      },
+    }),
+  };
+
   if (geometry.type === 'Point' || geometry.type === 'MultiPoint') {
     const coordinatesAsMultiPoint =
       geometry.type === 'Point' ? [geometry.coordinates] : geometry.coordinates;
@@ -90,8 +73,9 @@ export const GeometryItem = ({
               key={`point-${id}-${index}`}
               position={[lng, lat]}
               icon={DefaultMarker(icon, 1)}
+              eventHandlers={featureEventHandler}
             >
-              <MetaData properties={properties} layer={layer} />
+              <GeometryTooltip properties={properties} layer={layer} />
             </Marker>
           );
         })}
@@ -129,9 +113,17 @@ export const GeometryItem = ({
                     weight: 10,
                     opacity: 0,
                   }}
-                  className={layer.type}
+                  eventHandlers={{
+                    mouseover: e => e.target.setStyle({ opacity: 0.5 }),
+                    mouseout: e => e.target.setStyle({ opacity: 0 }),
+                    ...featureEventHandler,
+                  }}
+                  className={cn(
+                    'streams-hover',
+                    !hasDetails && '!cursor-[unset]',
+                  )}
                 >
-                  <MetaData properties={properties} layer={layer} />
+                  <GeometryTooltip properties={properties} layer={layer} />
                 </Polyline>
               </Fragment>
             );
@@ -140,9 +132,10 @@ export const GeometryItem = ({
             <Polyline
               positions={group.map(([lat, lng]) => [lng, lat])}
               pathOptions={options.style as GeoJSONOptions}
-              className={layer.type}
+              className={cn(layer.type, !hasDetails && '!cursor-[unset]')}
+              eventHandlers={featureEventHandler}
             >
-              <MetaData properties={properties} layer={layer} />
+              <GeometryTooltip properties={properties} layer={layer} />
             </Polyline>
           );
         })}
@@ -164,9 +157,22 @@ export const GeometryItem = ({
               line.map<[number, number]>(([lat, lng]) => [lng, lat]),
             )}
             pathOptions={options.style as GeoJSONOptions}
+            eventHandlers={{
+              mouseover: e => e.target.setStyle({ fillOpacity: 0.8 }),
+              mouseout: e =>
+                e.target.setStyle({
+                  fillOpacity:
+                    (options.style as PathOptions)?.fillOpacity ?? 0.2,
+                }),
+              ...featureEventHandler,
+            }}
+            className={cn(
+              'transition-[fill-opacity]',
+              !hasDetails && '!cursor-[unset]',
+            )}
             pane="tilePane"
           >
-            <MetaData properties={properties} layer={layer} />
+            <GeometryTooltip properties={properties} layer={layer} />
           </Polygon>
         ))}
       </>
