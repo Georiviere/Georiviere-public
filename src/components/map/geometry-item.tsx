@@ -45,9 +45,12 @@ export const GeometryItem = ({
     );
   }
 
+  const hasDetails = layer.type !== undefined && layer.url && properties?.id;
+  const pointerClassName = hasDetails ? '' : '!cursor-[unset]';
+
   const featureEventHandler = {
     click: () => {
-      if (layer.type !== undefined && layer.url && properties?.id) {
+      if (hasDetails) {
         router.push(
           `/map/${layer?.type}/${properties?.id}?${params.toString()}`,
         );
@@ -115,7 +118,7 @@ export const GeometryItem = ({
                     mouseout: e => e.target.setStyle({ opacity: 0 }),
                     ...featureEventHandler,
                   }}
-                  className="streams-hover"
+                  className={`streams-hover ${pointerClassName}`}
                 >
                   <GeometryTooltip properties={properties} layer={layer} />
                 </Polyline>
@@ -126,7 +129,7 @@ export const GeometryItem = ({
             <Polyline
               positions={group.map(([lat, lng]) => [lng, lat])}
               pathOptions={options.style as GeoJSONOptions}
-              className={layer.type}
+              className={`${layer.type} ${pointerClassName}`}
               eventHandlers={featureEventHandler}
             >
               <GeometryTooltip properties={properties} layer={layer} />
@@ -160,7 +163,7 @@ export const GeometryItem = ({
                 }),
               ...featureEventHandler,
             }}
-            className="transition-[fill-opacity]"
+            className={`transition-[fill-opacity] ${pointerClassName}`}
             pane="tilePane"
           >
             <GeometryTooltip properties={properties} layer={layer} />
