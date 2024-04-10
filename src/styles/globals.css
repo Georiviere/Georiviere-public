@@ -132,3 +132,23 @@ just hide all tooltips that aren't the last one
 .leaflet-tooltip-pane > .leaflet-tooltip:not(:last-child) {
   display: none;
 }
+
+
+.skeleton-animation {
+  background: linear-gradient(90deg, hsl(var(--muted-foreground)) 0%, hsl(var(--foreground)) 50%, hsl(var(--muted-foreground)) 100%);
+  background-size: 300% 100%;
+  opacity: 0.2;
+  animation: skeletonator 4s ease infinite;
+}
+
+@keyframes skeletonator {
+  0% {
+    background-position-x: 0%;
+  }
+  50% {
+    background-position-x: 100%;
+  }
+  100% {
+    background-position-x: 0%;
+  }
+}

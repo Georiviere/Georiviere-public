@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { Settings, getMapSettings } from '@/api/settings';
 import { MapContextProvider } from '@/context/map';
 import { getTranslations } from 'next-intl/server';
 
@@ -20,16 +19,8 @@ export const generateMetadata = async () => {
 };
 
 export default async function MapLayout({ children }: Props) {
-  let settings = null;
-
-  try {
-    settings = (await getMapSettings()) as Settings['map'];
-  } catch (error) {
-    throw error;
-  }
-
   return (
-    <MapContextProvider defaultSettings={settings}>
+    <MapContextProvider>
       <main
         role="main"
         className="grid h-full w-screen grid-cols-[100dvw_auto_100dvw] grid-rows-1 justify-stretch overflow-x-hidden scroll-smooth md:grid-cols-[50dvw_auto_50dvw] lg:grid-cols-[300px_auto_1fr]"

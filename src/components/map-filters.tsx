@@ -1,8 +1,7 @@
 import { useCallback } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useMapContext } from '@/context/map';
 
-import { getUrlSearchParamsForLayers, partition } from '@/lib/utils';
+import { partition } from '@/lib/utils';
 import {
   Accordion,
   AccordionContent,
@@ -14,29 +13,30 @@ import { Label } from './ui/label';
 import { Switch } from './ui/switch';
 
 export default function MapFilters() {
-  const { settings } = useMapContext();
-  const router = useRouter();
-  const pathname = usePathname();
-  const params = useSearchParams();
-  const layersFromParams = params.get('layers') ?? '';
+  const { settings, layers, toggleLayer } = useMapContext();
 
   const handleChange = useCallback(
     (id: number, isActive: boolean) => {
-      const nextLayerSearchParams = getUrlSearchParamsForLayers(
-        layersFromParams,
-        [id],
-        isActive,
-      );
-      const textFromParams = params.get('text')
-        ? `&text=${params.get('text')}`
-        : '';
-      router.push(`${pathname}${nextLayerSearchParams}${textFromParams}`);
+      toggleLayer(id, isActive);
     },
-    [layersFromParams, params, router, pathname],
+    [toggleLayer],
   );
 
-  if (settings === null || settings.layersTree.length === 0) {
-    return null;
+  if (
+    settings === null ||
+    settings.layersTree.length === 0 ||
+    layers === null
+  ) {
+    return (
+      <div className="bg-background px-3">
+        {Array.from({ length: 4 }).map(() => (
+          <div className="w-full flex justify-between border-b last:border-b-0 py-4">
+            <div className="w-32 h-6 rounded skeleton-animation"></div>
+            <div className="w-12 h-6 rounded-xl skeleton-animation"></div>
+          </div>
+        ))}
+      </div>
+    );
   }
 
   const [grouped, [notGrouped]] = partition(
@@ -44,10 +44,9 @@ export default function MapFilters() {
     layer => layer.label !== null,
   );
 
-  const defaultActivatedLayers = layersFromParams
-    .split(',')
-    .filter(Boolean)
-    .map(Number);
+  const activatedLayers = layers
+    .filter(({ isActive }) => isActive)
+    .map(({ id }) => id);
 
   return (
     <>
@@ -75,7 +74,11 @@ export default function MapFilters() {
                       </Label>
                       <Switch
                         id={`layerItem-${layer.id}`}
-                        checked={defaultActivatedLayers.includes(layer.id)}
+                        checked={activatedLayers.includes(layer.id)}
+                        isLoading={
+                          !layers.find(e => e.id === layer.id)?.geojson &&
+                          activatedLayers.includes(layer.id)
+                        }
                         onCheckedChange={isActive =>
                           handleChange(layer.id, isActive)
                         }
@@ -100,7 +103,11 @@ export default function MapFilters() {
               </Label>
               <Switch
                 id={`layerItem-${layer.id}`}
-                checked={defaultActivatedLayers.includes(layer.id)}
+                checked={activatedLayers.includes(layer.id)}
+                isLoading={
+                  !layers.find(e => e.id === layer.id)?.geojson &&
+                  activatedLayers.includes(layer.id)
+                }
                 onCheckedChange={isActive => handleChange(layer.id, isActive)}
               />
             </li>

@@ -3,8 +3,6 @@ import { FeatureCollection } from 'geojson';
 import { GeoJSONOptions, LatLngBoundsExpression } from 'leaflet';
 import slugify from 'slugify';
 
-import { getGeoJSON } from './geojson';
-import { getLocalettings } from './localSettings';
 
 export type Attachement = { thumbnail: string; url: string; title: string };
 
@@ -152,7 +150,7 @@ export type Settings = {
   customization: LocalSettings;
 };
 
-async function fetchSettings(): Promise<RawSettings> {
+export async function fetchSettings(): Promise<RawSettings> {
   try {
     const res = await fetch(
       `${process.env.apiHost}/api/portal/fr/portal/${process.env.portal}/`,
@@ -170,43 +168,6 @@ async function fetchSettings(): Promise<RawSettings> {
     console.error(error);
     throw error;
   }
-}
-
-export async function getSettings(): Promise<Settings | null> {
-  let rawSettings = null;
-  let customization = null;
-  try {
-    rawSettings = await fetchSettings();
-    customization = await getLocalettings();
-  } catch (error) {
-    throw error;
-  }
-  const {
-    map: {
-      baseLayers,
-      group,
-      bounds: [lat1, lng1, lat2, lng2],
-    },
-    flatpages,
-    ...settings
-  } = rawSettings;
-  return {
-    customization: {
-      ...settings,
-      ...customization,
-    },
-    flatpages,
-    map: {
-      baseLayers,
-      layersTree: group,
-      container: {
-        bounds: [
-          [lng1, lat1],
-          [lng2, lat2],
-        ],
-      },
-    },
-  };
 }
 
 async function getRawMapSettings(): Promise<Settings['map']> {
@@ -242,24 +203,7 @@ export async function getMapSettings(): Promise<Settings['map'] | []> {
   if (map === null) {
     return [];
   }
-
-  const layersTree = await Promise.all(
-    map.layersTree.map(async item => ({
-      ...item,
-      layers: await Promise.all(
-        item.layers.map(async layer => {
-          if (layer.defaultActive === false) {
-            return layer;
-          }
-          return { ...layer, geojson: await getGeoJSON(layer.geojsonUrl) };
-        }),
-      ),
-    })),
-  );
-  return {
-    ...map,
-    layersTree,
-  };
+  return map;
 }
 
 export async function getDetailsUrl(path: string): Promise<string> {
