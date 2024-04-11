@@ -9,7 +9,9 @@ import { Icons } from '../icons';
 
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> & { isLoading?: boolean }
+  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> & {
+    isLoading?: boolean;
+  }
 >(({ className, isLoading, ...props }, ref) => (
   <SwitchPrimitives.Root
     className={cn(
@@ -25,7 +27,7 @@ const Switch = React.forwardRef<
       )}
     >
       {isLoading && (
-        <Icons.loading className="animate-spin text-primary w-full h-full" />
+        <Icons.loading className="h-full w-full animate-spin text-primary" />
       )}
     </SwitchPrimitives.Thumb>
   </SwitchPrimitives.Root>

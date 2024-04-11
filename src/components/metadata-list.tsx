@@ -45,7 +45,7 @@ const MetadataItem = ({
     <div className="flex flex-row flex-wrap items-center justify-center gap-1">
       <dt>
         <Icon
-          className={cn('text-primary', small && 'w-4 h-4')}
+          className={cn('text-primary', small && 'h-4 w-4')}
           {...propsForSVGPresentation}
         />
         <span className="sr-only">{t(type)}</span>

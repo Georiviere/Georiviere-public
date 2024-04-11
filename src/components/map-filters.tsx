@@ -30,9 +30,9 @@ export default function MapFilters() {
     return (
       <div className="bg-background px-3">
         {Array.from({ length: 4 }).map(() => (
-          <div className="w-full flex justify-between border-b last:border-b-0 py-4">
-            <div className="w-32 h-6 rounded skeleton-animation"></div>
-            <div className="w-12 h-6 rounded-xl skeleton-animation"></div>
+          <div className="flex w-full justify-between border-b py-4 last:border-b-0">
+            <div className="skeleton-animation h-6 w-32 rounded"></div>
+            <div className="skeleton-animation h-6 w-12 rounded-xl"></div>
           </div>
         ))}
       </div>

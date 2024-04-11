@@ -1,5 +1,5 @@
-import { Icons } from "@/components/icons";
+import { Icons } from '@/components/icons';
 
 export default function Loading() {
-    return <Icons.loading className="animate-spin text-primary h-8 w-8 m-auto" />;
-  }
+  return <Icons.loading className="m-auto h-8 w-8 animate-spin text-primary" />;
+}

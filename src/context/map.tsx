@@ -14,7 +14,6 @@ import { Layer, Settings, getMapSettings } from '@/api/settings';
 import { FeatureCollection, Point } from 'geojson';
 import { Map } from 'leaflet';
 
-
 type MapContextProps = {
   layers: Layer[] | null;
   map: Map | null;
@@ -82,7 +81,7 @@ export const MapContextProvider = ({ children }: MapContextProviderProps) => {
           null,
       );
     }
-  }, [settings]);
+  }, [settings, layersFromParams]);
 
   const [map, setMap] = useState<Map | null>(null);
   const [observationCoordinates, setObservationCoordinates] =
@@ -165,7 +164,7 @@ export const MapContextProvider = ({ children }: MapContextProviderProps) => {
       '',
       `${nextLayerSearchParams}${textFromParams}`,
     );
-  }, [layers, params.get('text')]);
+  }, [layers, params]);
 
   return (
     <MapContext.Provider

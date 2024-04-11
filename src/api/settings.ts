@@ -3,7 +3,6 @@ import { FeatureCollection } from 'geojson';
 import { GeoJSONOptions, LatLngBoundsExpression } from 'leaflet';
 import slugify from 'slugify';
 
-
 export type Attachement = { thumbnail: string; url: string; title: string };
 
 type BaseLayers = {
