@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useMapContext } from '@/context/map';
+import { useTranslations } from 'next-intl';
 
 import { partition } from '@/lib/utils';
 import {
@@ -14,6 +15,7 @@ import { Switch } from './ui/switch';
 
 export default function MapFilters() {
   const { settings, layers, toggleLayer } = useMapContext();
+  const t = useTranslations();
 
   const handleChange = useCallback(
     (id: number, isActive: boolean) => {
@@ -29,7 +31,8 @@ export default function MapFilters() {
   ) {
     return (
       <div className="bg-background px-3">
-        {Array.from({ length: 4 }).map(() => (
+        <p className="sr-only">{t('site.loading')}</p>
+        {Array.from({ length: 4 }, () => (
           <div className="flex w-full justify-between border-b py-4 last:border-b-0">
             <div className="skeleton-animation h-6 w-32 rounded"></div>
             <div className="skeleton-animation h-6 w-12 rounded-xl"></div>
