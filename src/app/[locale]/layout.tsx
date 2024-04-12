@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
-import { getMenuSettings, getSettings } from '@/api/settings';
+import { getSettings } from '@/api/fullsettings';
+import { getMenuSettings } from '@/api/settings';
 import { SettingsContextProvider } from '@/context/settings';
 import { NextIntlClientProvider, useLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';

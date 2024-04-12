@@ -86,7 +86,8 @@
     "menu": "Menu",
     "openMenu": "Ouvrir le menu",
     "prev": "Précédent",
-    "next": "Suivant"
+    "next": "Suivant",
+    "loading": "Chargement"
   },
   "theme": {
     "toggle": "Thème {theme}",

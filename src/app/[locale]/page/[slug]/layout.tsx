@@ -17,7 +17,6 @@ type GenerateMetaDataProps = {
 export const generateMetadata = async ({
   params: { slug },
 }: GenerateMetaDataProps) => {
-  const t = await getTranslations('site');
   const content = await getPage(slug);
   if (content === null) {
     return;

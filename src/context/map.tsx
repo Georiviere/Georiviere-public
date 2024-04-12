@@ -8,13 +8,11 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { getGeoJSON } from '@/api/geojson';
-import { Layer, Settings } from '@/api/settings';
+import { Layer, Settings, getMapSettings } from '@/api/settings';
 import { FeatureCollection, Point } from 'geojson';
 import { Map } from 'leaflet';
-
-import { getUrlSearchParamsForLayers, partition } from '@/lib/utils';
 
 type MapContextProps = {
   layers: Layer[] | null;
@@ -29,7 +27,6 @@ type MapContextProps = {
 
 type MapContextProviderProps = {
   children: React.ReactNode;
-  defaultSettings: Settings['map'] | null;
 };
 
 export const MapContext = createContext<MapContextProps>({
@@ -45,25 +42,47 @@ export const MapContext = createContext<MapContextProps>({
 
 export const useMapContext = () => useContext(MapContext);
 
-export const MapContextProvider = ({
-  defaultSettings,
-  children,
-}: MapContextProviderProps) => {
-  const router = useRouter();
-  const pathname = usePathname();
+export const MapContextProvider = ({ children }: MapContextProviderProps) => {
   const params = useSearchParams();
   const layersFromParams = params.get('layers') ?? '';
 
+  const [defaultSettings, setDefaultSettings] = useState<
+    Settings['map'] | null
+  >(null);
+
+  // Fetch settings on first render
+  useEffect(() => {
+    (getMapSettings() as Promise<Settings['map']>).then(settings =>
+      setDefaultSettings(settings),
+    );
+  }, []);
+
   const settings = useMemo(
     () => defaultSettings?.layersTree.flatMap(group => group.layers) ?? null,
-    [defaultSettings?.layersTree],
+    [defaultSettings],
   );
 
-  const [layers, setLayers] = useState<Layer[] | null>(
-    () =>
-      settings?.map(item => ({ ...item, isActive: item.defaultActive })) ??
-      null,
-  );
+  const [layers, setLayers] = useState<Layer[] | null>(null);
+
+  // When settings are loaded, initialize layers
+  useEffect(() => {
+    if (layersFromParams !== '') {
+      // if there's layers in the URL, those are the active ones
+      setLayers(
+        settings?.map(item => ({
+          ...item,
+          isActive: layersFromParams.split(',').map(Number).includes(item.id),
+        })) ?? null,
+      );
+    } else {
+      // If not, just use the default ones
+      setLayers(
+        settings?.map(item => ({ ...item, isActive: item.defaultActive })) ??
+          null,
+      );
+    }
+  }, [settings, layersFromParams]);
+
   const [map, setMap] = useState<Map | null>(null);
   const [observationCoordinates, setObservationCoordinates] =
     useState<Point | null>(null);
@@ -82,64 +101,70 @@ export const MapContextProvider = ({
       if (currentLayer.isActive === isActive) {
         return;
       }
+
+      setLayers(
+        prevLayers =>
+          prevLayers?.map(layer => {
+            if (layer.id === currentLayer.id) {
+              return { ...layer, isActive };
+            }
+            return layer;
+          }) ?? [],
+      );
+
+      if (currentLayer.geojson) return;
+
       const geojson =
         currentLayer.geojson ?? (await getGeoJSON(currentLayer.geojsonUrl));
-      setLayers(prevLayers => {
-        if (prevLayers === null) {
-          return prevLayers;
-        }
 
-        return prevLayers.reduce((list: Layer[], layer) => {
-          const { defaultActive, ...nextLayer } = layer;
-          if (nextLayer.id !== id) {
-            list.push(nextLayer);
-          } else {
-            list.push({
-              ...nextLayer,
-              isActive,
-              geojson: geojson as FeatureCollection,
-            });
-          }
-          return list;
-        }, []);
-      });
+      setLayers(
+        prevLayers =>
+          prevLayers?.map(layer => {
+            if (layer.id === currentLayer.id) {
+              return { ...layer, geojson: geojson as FeatureCollection };
+            }
+            return layer;
+          }) ?? [],
+      );
     },
     [getLayerById],
   );
 
+  // When active layers are changed, fetch the geojson
   useEffect(() => {
-    if (
-      layersFromParams === '' &&
-      layers?.some(item => 'defaultActive' in item)
-    ) {
-      const layersID = layers
-        .filter(item => item.defaultActive)
-        .map(({ id }) => id);
-      const nextLayerSearchParams = getUrlSearchParamsForLayers(
-        layersFromParams,
-        layersID,
-        true,
-      );
-      const text = params.get('text');
-      router.replace(
-        `${pathname}${nextLayerSearchParams}${
-          text ? `&text=${encodeURIComponent(text)}` : ''
-        }`,
-      );
-    }
-  }, [layers, layersFromParams, params, pathname, router]);
+    layers
+      ?.filter(({ isActive }) => isActive)
+      .forEach(async currentLayer => {
+        if (!currentLayer.geojson) {
+          const geojson = await getGeoJSON(currentLayer.geojsonUrl);
+          setLayers(
+            prevLayers =>
+              prevLayers?.map(layer => {
+                if (layer.id === currentLayer.id) {
+                  return { ...layer, geojson: geojson as FeatureCollection };
+                }
+                return layer;
+              }) ?? [],
+          );
+        }
+      });
+  }, [layers]);
 
+  // Update URL when active layers are changed
   useEffect(() => {
-    const [activatedLayers, disabledLayers] = partition(layers ?? [], item =>
-      layersFromParams.split(',').map(Number).includes(item.id),
+    const textFromParams = params.get('text')
+      ? `&text=${params.get('text')}`
+      : '';
+    const nextLayerSearchParams = `?layers=${layers
+      ?.filter(({ isActive }) => isActive)
+      .map(({ id }) => id)
+      .join(',')}`;
+    window.history.pushState(
+      null,
+      '',
+      `${nextLayerSearchParams}${textFromParams}`,
     );
-    activatedLayers.forEach(item => toggleLayer(item.id, true));
-    disabledLayers.forEach(item => toggleLayer(item.id, false));
-  }, [layers, layersFromParams, toggleLayer]);
-
-  if (!defaultSettings && !layers) {
-    return null;
-  }
+  }, [layers, params]);
 
   return (
     <MapContext.Provider
