@@ -152,3 +152,85 @@ just hide all tooltips that aren't the last one
     background-position-x: 0%;
   }
 }
+
+.is-WYSIWYG h2 {
+  @apply my-6 lg:my-8;
+  @apply clear-both text-xl font-bold tracking-tight lg:text-2xl;
+}
+
+.is-WYSIWYG h3 {
+  @apply my-4 lg:my-6;
+  @apply clear-both text-xl tracking-tight lg:text-2xl;
+}
+
+.is-WYSIWYG h4 {
+  @apply my-3 lg:my-5;
+  @apply text-lg font-bold tracking-tight lg:text-xl;
+}
+
+.is-WYSIWYG h5,
+.is-WYSIWYG h6 {
+  @apply my-2 lg:my-4;
+  @apply text-lg tracking-tight lg:text-xl;
+}
+
+.is-WYSIWYG p {
+  @apply mb-6 lg:mb-8;
+}
+
+.is-WYSIWYG blockquote {
+  @apply my-3 lg:my-5 flex gap-4 text-lg text-foreground/75 italic;
+}
+
+.is-WYSIWYG blockquote p:last-child {
+  @apply mb-0;
+}
+
+.is-WYSIWYG blockquote::before {
+  content: "“";
+  @apply text-5xl;
+}
+
+.is-WYSIWYG .information {
+  @apply py-2 px-4 lg:py-4 lg:px-8 bg-muted;
+}
+
+.is-WYSIWYG iframe,
+.is-WYSIWYG video {
+  @apply my-6 w-full h-auto lg:my-10 aspect-video;
+}
+
+.is-WYSIWYG .image {
+  @apply clear-both overflow-hidden lg:mb-8;
+}
+
+.is-WYSIWYG .image:not(.align-left):not(.align-right) img {
+  @apply w-full;
+}
+
+.is-WYSIWYG .align-left {
+  @apply mb-8 lg:float-start lg:mr-10 lg:mb-8 lg:w-min;
+}
+
+.is-WYSIWYG .align-right {
+  @apply mb-8 lg:float-end lg:ml-10 lg:mb-8 lg:w-min;
+}
+
+.is-WYSIWYG .align-left img,
+.is-WYSIWYG .align-right img {
+  @apply mt-2;
+  max-width: revert-layer;
+}
+
+@media (max-width: 1024px) {
+  .is-WYSIWYG .align-left img,
+  .is-WYSIWYG .align-right img {
+    @apply w-auto max-w-full;
+  }
+}
+
+.is-WYSIWYG .align-left figcaption,
+.is-WYSIWYG .align-right figcaption,
+.is-WYSIWYG .image figcaption {
+  @apply text-sm mt-1 text-center;
+}
