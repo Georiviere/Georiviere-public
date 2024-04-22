@@ -6,7 +6,7 @@ export default function Loading() {
   const t = useTranslations();
   return (
     <Icons.loading
-      className="m-auto h-8 w-8 animate-spin text-primary"
+      className="m-auto size-8 animate-spin text-primary"
       role="img"
       aria-label={t('site.loading')}
     />

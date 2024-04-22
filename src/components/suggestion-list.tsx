@@ -44,7 +44,7 @@ export default function SuggestionList({
             {item.images?.[0]?.thumbnail && (
               <CardMedia>
                 <Carousel
-                  className="aspect-[4/3] h-auto w-auto object-cover transition-all group-hover:scale-105"
+                  className="aspect-[4/3] size-auto object-cover transition-all group-hover:scale-105"
                   images={convertAttachementsToImages(item.images, true)}
                   width={400}
                   height={300}
