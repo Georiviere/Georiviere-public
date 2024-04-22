@@ -123,7 +123,7 @@ export default function ObservationForm({ jsonSchema, handleSubmit }: Props) {
   if (validationMessage?.error === false) {
     return (
       <Alert variant="default">
-        <Icons.check className="h-4 w-4" />
+        <Icons.check className="size-4" />
         <AlertTitle className="ml-6">{t('validation.title')}</AlertTitle>
         <AlertDescription>{t('validation.content')}</AlertDescription>
       </Alert>
@@ -134,7 +134,7 @@ export default function ObservationForm({ jsonSchema, handleSubmit }: Props) {
     <Form {...form}>
       {validationMessage?.error && (
         <Alert variant="destructive">
-          <Icons.alert className="h-4 w-4" />
+          <Icons.alert className="size-4" />
           <AlertTitle className="ml-6">{t('error.title')}</AlertTitle>
           <AlertDescription>{validationMessage.message}</AlertDescription>
         </Alert>

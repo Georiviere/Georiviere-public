@@ -27,7 +27,7 @@ export const GeometryTooltip = ({
         {properties.attachments?.[0]?.thumbnail && (
           <Image
             loading="lazy"
-            className="aspect-[4/3] h-auto w-auto object-cover transition-all group-hover:scale-105"
+            className="aspect-[4/3] size-auto object-cover transition-all group-hover:scale-105"
             src={properties.attachments[0].thumbnail}
             alt=""
             width="400"

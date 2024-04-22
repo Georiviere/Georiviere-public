@@ -26,12 +26,12 @@ const Switch = React.forwardRef<
     >
       <SwitchPrimitives.Thumb
         className={cn(
-          'pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0',
+          'pointer-events-none block size-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0',
         )}
       >
         {isLoading && (
           <Icons.loading
-            className="h-full w-full animate-spin text-primary"
+            className="size-full animate-spin text-primary"
             role="img"
             aria-label={t('site.loading')}
           />

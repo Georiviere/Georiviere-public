@@ -27,7 +27,7 @@ export function SiteHeader({ menu }: Props) {
         <Link href="/" className="flex items-center space-x-2">
           {settings && settings.customization.header?.logo?.src ? (
             <Image
-              className="lock hidden h-8 w-8 sm:inline"
+              className="lock hidden size-8 sm:inline"
               width={32}
               height={32}
               {...settings.customization.header.logo}
@@ -36,7 +36,7 @@ export function SiteHeader({ menu }: Props) {
           ) : (
             <Icons.logo
               {...propsForSVGPresentation}
-              className="lock hidden h-8 w-8 sm:inline"
+              className="lock hidden size-8 sm:inline"
             />
           )}
           <span className="font-bold">{t('title')}</span>
