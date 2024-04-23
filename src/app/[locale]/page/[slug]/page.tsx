@@ -14,7 +14,7 @@ export default async function FlatPage({ params: { slug } }: Props) {
   }
   return (
     <>
-      <h1 className="text-lg font-bold lg:text-2xl">{content.title}</h1>
+      <h1 className="text-xl font-bold lg:text-3xl">{content.title}</h1>
       <div
         className="is-WYSIWYG after:clear-both after:table after:content-['']"
         dangerouslySetInnerHTML={{ __html: content.content }}
