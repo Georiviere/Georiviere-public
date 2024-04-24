@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, usePathname, useSearchParams } from 'next/navigation';
 import ResetViewControl from '@20tab/react-leaflet-resetview';
+import { getObservation } from '@/api/customObservations';
 import { useMapContext } from '@/context/map';
 import L, { LeafletEvent } from 'leaflet';
 import { useTranslations } from 'next-intl';
@@ -24,6 +25,8 @@ import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css';
 import SearchMapBadge from './search-map-badge';
 
 export default function SearchMap() {
+  const [hasObservationMarker, setHasObservationMarker] = useState(false);
+
   const params = useParams();
   const searchParams = useSearchParams();
   useEffect(() => {
@@ -34,6 +37,19 @@ export default function SearchMap() {
   const pathName = usePathname();
   const { settings, layers, setMap } = useMapContext();
   const t = useTranslations('map');
+
+  useEffect(() => {
+    const getObs = async (id: string | undefined) => {
+      if (!id) return;
+      const obs = await getObservation(id);
+      if (!obs?.stations) setHasObservationMarker(true);
+    };
+    if (pathName.startsWith('/map/observation')) {
+      getObs(pathName.match(/\/map\/observation\/([^?/]+)/)?.[1]);
+    } else {
+      setHasObservationMarker(false);
+    }
+  }, [pathName]);
 
   if (settings === null) {
     return null;
@@ -93,7 +109,7 @@ export default function SearchMap() {
 
       <ScaleControl />
 
-      {pathName.startsWith('/map/observation') && <ObservationMarker />}
+      {hasObservationMarker && <ObservationMarker />}
     </MapContainer>
   );
 }

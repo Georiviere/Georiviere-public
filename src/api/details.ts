@@ -26,7 +26,9 @@ export async function getDetails(path: string, id: number) {
   }
   let details = null;
   try {
-    details = await fetchDetails(`${endpoint}${id}`);
+    details = await fetchDetails(
+      `/api/portal/fr/${process.env.portal}/${path}/${id}`,
+    );
   } catch (e) {
     // notfound
   }
