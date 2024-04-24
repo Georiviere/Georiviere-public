@@ -20,6 +20,9 @@ async function fetchPois({ params }: FetchPoisProps = {}): Promise<Poi[]> {
   const url = `${process.env.apiHost}/api/portal/fr/${process.env.portal}/pois/`;
   const urlWithParams = [url, params].filter(Boolean).join('?');
   const res = await fetch(urlWithParams, {
+    headers: {
+      Accept: 'application/json',
+    },
     next: { revalidate: 60 * 60 },
   });
   if (res.status < 200 || res.status > 299) {

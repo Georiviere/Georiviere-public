@@ -155,6 +155,9 @@ export async function fetchSettings(): Promise<RawSettings> {
       `${process.env.apiHost}/api/portal/fr/portal/${process.env.portal}/`,
       {
         next: { revalidate: 60 * 60 },
+        headers: {
+          Accept: 'application/json',
+        },
       },
     ).catch(error => {
       throw error;
