@@ -3,6 +3,9 @@ import { getDetailsUrl } from './settings';
 async function fetchDetails(url: string) {
   const res = await fetch(`${process.env.apiHost}${url}`, {
     next: { revalidate: 60 * 60 },
+    headers: {
+      Accept: 'application/json',
+    },
   });
   if (res.status < 200 || res.status > 299) {
     throw new Error('Failed to fetch data');

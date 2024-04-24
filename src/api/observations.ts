@@ -16,6 +16,9 @@ async function fetchObservation() {
     `${process.env.apiHost}/api/portal/fr/${process.env.portal}/contributions/json_schema/`,
     {
       next: { revalidate: 60 * 60 },
+      headers: {
+        Accept: 'application/json',
+      },
     },
   );
   if (res.status < 200 || res.status > 299) {
