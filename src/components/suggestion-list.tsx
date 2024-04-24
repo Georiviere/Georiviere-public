@@ -42,9 +42,9 @@ export default function SuggestionList({
         {content.map(item => (
           <Card key={item.label} className="group relative">
             {item.images?.[0]?.thumbnail && (
-              <CardMedia>
+              <CardMedia className="bg-accent">
                 <Carousel
-                  className="aspect-[4/3] size-auto object-cover transition-all group-hover:scale-105"
+                  className="aspect-[4/3] object-cover transition-all group-hover:scale-105"
                   images={convertAttachementsToImages(item.images, true)}
                   width={400}
                   height={300}
