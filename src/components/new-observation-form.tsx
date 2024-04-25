@@ -1,7 +1,15 @@
 'use client';
 
-import { FormEvent, useCallback, useEffect, useState } from 'react';
+import React, {
+  FormEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { handleSubmitObservation } from '@/api/customObservations';
 import { Station, getStations } from '@/api/stations';
+import { useMapContext } from '@/context/map';
 import {
   DataValidator,
   EditorState,
@@ -17,11 +25,13 @@ const NewObservationForm = ({
   id,
   stations,
 }: {
-  id: string;
+  id?: string;
   schema: any;
-  stations: number[];
+  stations?: number[];
 }) => {
   const t = useTranslations('observation');
+  const { observationCoordinates } = useMapContext();
+
   const [isLoading, setLoading] = useState(false);
   const [stationsDetails, setStationsDetails] = useState<Station[]>([]);
 
@@ -30,6 +40,8 @@ const NewObservationForm = ({
   );
 
   const [errorMap, setErrorMap] = useState({});
+
+  const [lng, lat] = observationCoordinates?.coordinates ?? [];
 
   useEffect(() => {
     const fetchStations = async () => {
@@ -47,39 +59,98 @@ const NewObservationForm = ({
       const formData = new FormData(event.target as HTMLFormElement);
 
       const isValid = validation.isValid;
-      if (isValid)
-        console.log(
-          'form info to send : ',
-          editorState.state.data,
-          formData.values(),
+      if (isValid && id) {
+        const contributedAt = new Date(
+          `${formData.get('contributed_at_date')} ${formData.get(
+            'contributed_at_time',
+          )}`,
         );
-      else {
+        const files = [
+          {
+            file: formData.get('file1-file'),
+            type: formData.get('file1-category'),
+          },
+          {
+            file: formData.get('file2-file'),
+            type: formData.get('file2-category'),
+          },
+          {
+            file: formData.get('file3-file'),
+            type: formData.get('file3-category'),
+          },
+          {
+            file: formData.get('file4-file'),
+            type: formData.get('file4-category'),
+          },
+          {
+            file: formData.get('file5-file'),
+            type: formData.get('file5-category'),
+          },
+        ];
+        handleSubmitObservation(
+          {
+            ...(formData.get('lat') && formData.get('lat')
+              ? { lat: formData.get('lat'), lng: formData.get('lng') }
+              : {}),
+            ...(formData.get('station')
+              ? { station: formData.get('station') }
+              : {}),
+            contributed_at: contributedAt.toISOString(),
+            ...editorState.state.data,
+          },
+          id,
+        );
+      } else {
         const errorMap = validation.errorMap;
         setErrorMap(errorMap);
       }
     },
-    [schema, editorState],
+    [schema, editorState, id],
   );
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label className="text-sm font-medium">Station</label>
+      {stations?.length && stations?.length > 0 ? (
         <div className="rjf-input-group">
-          {stations.length > 0 ? (
-            <select>
-              {stations.map(station => (
-                <option value={station}>
-                  {stationsDetails.find(e => e.id === station)?.label}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <div className="flex flex-row">
-              <input type="text" placeholder="lat" />
-              <input type="text" placeholder="lng" />
+          <label htmlFor="station" className="text-sm font-medium">
+            {t('station')}
+          </label>
+          <select name="station">
+            {stations?.map(station => (
+              <option value={station}>
+                {stationsDetails.find(e => e.id === station)?.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      ) : (
+        <>
+          <div className="rjf-form-row">
+            <div className="rjf-input-group">
+              <label htmlFor="lat">{t('lat')}</label>
+              <input required name="lat" type="number" readOnly value={lat} />
             </div>
-          )}
+          </div>
+
+          <div className="rjf-form-row">
+            <div className="rjf-input-group">
+              <label htmlFor="lng">{t('lng')}</label>
+              <input required name="lng" type="number" readOnly value={lng} />
+            </div>
+            <div className="rjf-help-text">{t('coordinatesHelptext')}</div>
+          </div>
+        </>
+      )}
+      <div className="rjf-form-row">
+        <div className="rjf-input-group">
+          <label htmlFor="contributed_at_date">{t('date')}</label>
+          <input required name="contributed_at_date" type="date" />
+        </div>
+      </div>
+      <div className="rjf-form-row">
+        <div className="rjf-input-group">
+          <label htmlFor="contributed_at_time">{t('time')}</label>
+          <input required name="contributed_at_time" type="time" />
         </div>
       </div>
 
@@ -93,16 +164,20 @@ const NewObservationForm = ({
           <div key={index} className="rjf-input-group">
             <div className="flex flex-row justify-between">
               <label htmlFor="" className="text-sm font-medium">
-                Fichier {index + 1}
+                {t('photoLabel')} {index + 1}
               </label>
               <select
                 name={`file${index + 1}-category`}
                 className="rounded bg-input p-1 text-sm"
               >
-                <option value="photo">Photo</option>
-                <option value="fiche">Fiche</option>
-                <option value="cat_3">Catégorie 3</option>
-                <option value="cat_4">Categorie 4</option>
+                <option value="croquis">Croquis station</option>
+                <option value="photos_comp">Photo complémentaire</option>
+                <option value="photo_station">Photo station</option>
+                <option value="photo_equipe">
+                  Photo équipe de prélèvement
+                </option>
+                <option value="photos">Photographies</option>
+                <option value="scan_fiche">Scan des fiches terrains</option>
               </select>
             </div>
             <input type="file" name={`file${index + 1}-file`} id="" />
