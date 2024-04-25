@@ -7,7 +7,9 @@
     "km": "km",
     "kilometers": "kilomètres",
     "m": "m",
-    "meters": "mètres"
+    "meters": "mètres",
+    "observationTypes": "Types d'observations",
+    "observations": "Observations"
   },
   "home": {
     "title": "Sentinelle des rivières : j'observe, je protège",
