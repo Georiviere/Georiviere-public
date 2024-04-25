@@ -22,6 +22,8 @@ import { ObservationMarker } from '@/components/map/observation-marker';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.locatecontrol';
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css';
+import { DEFAULT_OBSERVATION_TYPES } from '@/constants';
+
 import SearchMapBadge from './search-map-badge';
 
 export default function SearchMap() {
@@ -39,13 +41,20 @@ export default function SearchMap() {
   const t = useTranslations('map');
 
   useEffect(() => {
-    const getObs = async (id: string | undefined) => {
-      if (!id) return;
+    const getObs = async (id: string) => {
       const obs = await getObservation(id);
-      if (!obs?.stations) setHasObservationMarker(true);
+      if (obs?.stations?.length === 0) setHasObservationMarker(true);
     };
     if (pathName.startsWith('/map/observation')) {
-      getObs(pathName.match(/\/map\/observation\/([^?/]+)/)?.[1]);
+      const observationType = pathName.match(
+        /\/map\/observation\/([^?/]+)/,
+      )?.[1];
+      if (!observationType) return;
+      if (DEFAULT_OBSERVATION_TYPES.includes(observationType)) {
+        setHasObservationMarker(true);
+      } else {
+        getObs(observationType);
+      }
     } else {
       setHasObservationMarker(false);
     }

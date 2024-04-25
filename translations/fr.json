@@ -25,8 +25,13 @@
     "coordinatesHelptext": "Indiquez la position de l'observation sur la carte",
     "submit": "Soumettre votre observation",
     "title": "Observation",
+    "station": "Station",
     "labelButton": "Ajouter une observation",
     "photoLabel": "Photo",
+    "lng": "Longitude",
+    "lat": "Latitude",
+    "date": "Date de l'observation",
+    "time": "Heure de l'observation",
     "quality": {
       "label": "Qualité",
       "description": "Apportez des observations sur les propriétés des cours d'eau (pollution, température, développement algal, etc.)",
