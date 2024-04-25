@@ -7,7 +7,7 @@ export type PostObservationProps = {
 };
 
 export type Observation = {
-  id: string;
+  id: number;
   label: string;
   description: string;
   json_schema_form: JSONSchema;

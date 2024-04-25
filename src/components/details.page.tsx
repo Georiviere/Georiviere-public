@@ -33,7 +33,7 @@ type Props = {
 export default function DetailsPageUI({ content }: Props) {
   return (
     <article>
-      {content.attachments.length > 0 && (
+      {content?.attachments?.length > 0 && (
         <div className="-m-8 mb-6">
           <Carousel
             className="w-full"
