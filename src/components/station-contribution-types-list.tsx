@@ -12,9 +12,11 @@ import { Icons } from './icons';
 export const StationContributionTypesList = ({
   types,
   ids,
+  station,
 }: {
   types: Observation[];
   ids: number[];
+  station: number;
 }) => {
   const params = useSearchParams();
   const t = useTranslations('details');
@@ -30,7 +32,7 @@ export const StationContributionTypesList = ({
               className={cn(
                 'flex select-none items-center space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
               )}
-              href={`/map/observation/${id}?${params.toString()}`}
+              href={`/map/observation/${id}?station=${station}&${params.toString()}`}
               title={types.find(type => type.id === id)?.label}
             >
               <span>

@@ -39,6 +39,7 @@ export default function StationPageUI({ content, observationTypes }: Props) {
       <StationContributionTypesList
         ids={content.customContributionTypes || []}
         types={observationTypes}
+        station={content.id}
       />
       <StationContributionList
         types={observationTypes}

@@ -133,7 +133,14 @@ const NewObservationForm = ({
           <label htmlFor="station" className="text-sm font-medium">
             {t('station')}
           </label>
-          <select name="station">
+          <select
+            name="station"
+            defaultValue={
+              params.get('station')
+                ? parseInt(params.get('station') ?? '')
+                : undefined
+            }
+          >
             {stations?.map(station => (
               <option value={station}>
                 {stationsDetails.find(e => e.id === station)?.label}
