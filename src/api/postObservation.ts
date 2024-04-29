@@ -18,10 +18,8 @@ async function postObservation(
   Array.from({ length: 5 }).forEach((_, index) => {
     const number = index + 1;
     const file = formData.get(`file${number}-file`) as File;
-    const category = formData.get(`file${number}-category`);
-    if (file && file.size > 0 && category) {
+    if (file && file.size > 0) {
       body.append(`file${number}`, file);
-      body.append(`file${number}-category`, category);
     }
   });
 

@@ -170,19 +170,6 @@ const NewObservationForm = ({
               <label htmlFor="" className="text-sm font-medium">
                 {t('photoLabel')} {index + 1}
               </label>
-              <select
-                name={`file${index + 1}-category`}
-                className="rounded bg-input p-1 text-sm"
-              >
-                <option value="croquis">Croquis station</option>
-                <option value="photos_comp">Photo complémentaire</option>
-                <option value="photo_station">Photo station</option>
-                <option value="photo_equipe">
-                  Photo équipe de prélèvement
-                </option>
-                <option value="photos">Photographies</option>
-                <option value="scan_fiche">Scan des fiches terrains</option>
-              </select>
             </div>
             <input type="file" name={`file${index + 1}-file`} id="" />
           </div>
