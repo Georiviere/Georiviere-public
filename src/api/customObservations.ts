@@ -46,6 +46,35 @@ async function fetchObservation(id: string): Promise<Observation | null> {
   return res.json();
 }
 
+async function fetchObservationDetails(id: string): Promise<any> {
+  const res = await fetch(
+    `${process.env.apiHost}/api/portal/fr/${process.env.portal}/custom-contribution-types/${id}/contributions`,
+    {
+      next: { revalidate: 60 * 60 },
+      headers: {
+        Accept: 'application/json',
+      },
+    },
+  );
+  if (res.status < 200 || res.status > 299) {
+    return null;
+  }
+  return res.json();
+}
+
+export async function getObservationDetails(type: string, id: string) {
+  const schema = await fetchObservation(type);
+  const detailsList = await fetchObservationDetails(type);
+
+  const details = {
+    value: detailsList?.[id],
+    id,
+    label: schema?.json_schema_form.properties?.title,
+  };
+
+  return details;
+}
+
 async function postObservation(props: any, id: string) {
   // const { files, properties, geom } = props;
   // const decodedFiles = await Promise.all(
