@@ -70,32 +70,10 @@ const NewObservationForm = ({
             'contributed_at_time',
           )}`,
         );
-        const files = [
-          {
-            file: formData.get('file1-file'),
-            type: formData.get('file1-category'),
-          },
-          {
-            file: formData.get('file2-file'),
-            type: formData.get('file2-category'),
-          },
-          {
-            file: formData.get('file3-file'),
-            type: formData.get('file3-category'),
-          },
-          {
-            file: formData.get('file4-file'),
-            type: formData.get('file4-category'),
-          },
-          {
-            file: formData.get('file5-file'),
-            type: formData.get('file5-category'),
-          },
-        ];
         const result = await handleSubmitObservation(
           {
-            ...(formData.get('lat') && formData.get('lat')
-              ? { lat: formData.get('lat'), lng: formData.get('lng') }
+            ...(formData.get('lat') && formData.get('lng')
+              ? { geom: `POINT(${formData.get('lng')} ${formData.get('lat')})` }
               : {}),
             ...(formData.get('station')
               ? { station: formData.get('station') }
@@ -104,6 +82,7 @@ const NewObservationForm = ({
             ...editorState.state.data,
           },
           id,
+          formData,
         );
         setLoading(false);
         if (!result.error) {

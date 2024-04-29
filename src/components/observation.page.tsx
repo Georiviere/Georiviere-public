@@ -1,8 +1,12 @@
+import { Attachement } from '@/api/settings';
 import { LatLngTuple } from 'leaflet';
 import { useTranslations } from 'next-intl';
 
+import { convertAttachementsToImages } from '@/lib/utils';
+
 import ButtonCenterView from './button-center-view';
 import ButtonClose from './button-close';
+import Carousel from './carousel';
 
 type Props = {
   content: {
@@ -15,6 +19,7 @@ type Props = {
     geometry: {
       coordinates: number[];
     };
+    attachments: Attachement[];
   };
 };
 
@@ -25,6 +30,16 @@ export default function ObservationDetailsPageUI({ content }: Props) {
 
   return (
     <article>
+      {content?.attachments?.length > 0 && (
+        <div className="-m-8 mb-6">
+          <Carousel
+            className="w-full"
+            images={convertAttachementsToImages(content.attachments)}
+            width={800}
+            height={600}
+          />
+        </div>
+      )}
       <header>
         <h1 className="text-2xl font-extrabold tracking-tight lg:text-3xl">
           {t('title')} {content.id} - {content.label}
