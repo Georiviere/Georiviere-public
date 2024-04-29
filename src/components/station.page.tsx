@@ -1,26 +1,20 @@
 import { Observation } from '@/api/customObservations';
+import { Station } from '@/api/stations';
 import { LatLngTuple } from 'leaflet';
-import { useTranslations } from 'next-intl';
 
 import ButtonCenterView from './button-center-view';
 import ButtonClose from './button-close';
 import { StationContributionList } from './station-contribution-list';
+import { StationContributionTypesList } from './station-contribution-types-list';
 
 type Props = {
-  content: {
-    description: string;
-    label: string;
-    geometry: {
-      type: 'Point';
-      coordinates: [number, number];
-    };
-    customContributionTypes?: number[];
-  };
+  content: Station;
   observationTypes: Observation[];
 };
 
 export default function StationPageUI({ content, observationTypes }: Props) {
-  const t = useTranslations('details');
+  const observations = content.observations ?? [];
+
   return (
     <article>
       <header>
@@ -42,14 +36,14 @@ export default function StationPageUI({ content, observationTypes }: Props) {
           <p>{e}</p>
         ))}
       </div>
-      <StationContributionList
+      <StationContributionTypesList
         ids={content.customContributionTypes || []}
         types={observationTypes}
       />
-      <h2 className="text-l mt-8 font-extrabold">{t('observations')} :</h2>
-      <ul>
-        <li>Test</li>
-      </ul>
+      <StationContributionList
+        types={observationTypes}
+        observations={observations}
+      />
     </article>
   );
 }

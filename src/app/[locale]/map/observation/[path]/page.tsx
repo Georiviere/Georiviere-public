@@ -3,6 +3,7 @@ import {
   getObservationJsonSchema,
   handleSubmitObservation,
 } from '@/api/observations';
+import { handleSubmitCustomObservation } from '@/api/postObservation';
 import { DEFAULT_OBSERVATION_TYPES } from '@/constants';
 import { JSONSchema } from 'json-schema-yup-transformer/dist/schema';
 import { getTranslations } from 'next-intl/server';
@@ -36,7 +37,7 @@ export default async function ObservationPage({ params: { path } }: Props) {
   }
 
   return (
-    <section className="px-2">
+    <section className="p-4 lg:p-8">
       <header className="flex items-center justify-between pb-8">
         <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">
           {isDefaultObservation ? t(`${path}.label`) : observation.label}
@@ -62,6 +63,7 @@ export default async function ObservationPage({ params: { path } }: Props) {
           id={observation.id}
           schema={jsonSchema}
           stations={observation.stations}
+          handleSubmitObservation={handleSubmitCustomObservation}
         />
       )}
     </section>
