@@ -19,6 +19,12 @@ export type ObservationDetails = {
   };
 };
 
+type ObservationList = {
+  id: number;
+  contributed_at: string;
+  attachments: any[];
+};
+
 async function fetchObservations(): Promise<Observation[]> {
   const res = await fetch(
     `${process.env.apiHost}/api/portal/fr/${process.env.portal}/custom-contribution-types/`,
@@ -51,7 +57,9 @@ async function fetchObservation(id: string): Promise<Observation | null> {
   return res.json();
 }
 
-async function fetchObservationDetails(id: string): Promise<any> {
+async function fetchObservationDetails(
+  id: string,
+): Promise<ObservationList[] | null> {
   const res = await fetch(
     `${process.env.apiHost}/api/portal/fr/${process.env.portal}/custom-contribution-types/${id}/contributions`,
     {
@@ -73,18 +81,23 @@ export async function getObservationDetails(
 ): Promise<any> {
   const schema = await fetchObservation(type);
   const detailsList = await fetchObservationDetails(type);
-  const values = detailsList?.[id];
+  const values = detailsList?.find(detail => detail.id === parseInt(id));
+
+  if (!values) return null;
 
   const details = {
-    values: Object.entries(values).map(([key, value]) => ({
-      id: key,
-      value,
-      label: (schema?.json_schema_form.properties?.[key] as any)?.title,
-    })),
+    values: Object.entries(values)
+      .filter(([key]) => schema?.json_schema_form.properties?.[key])
+      .map(([key, value]) => ({
+        id: key,
+        value,
+        label: (schema?.json_schema_form.properties?.[key] as any)?.title,
+      })),
     id,
-    contributedAt: values.contributed_at,
+    contributedAt: values?.contributed_at,
     label: schema?.label,
     description: schema?.description,
+    attachments: values?.attachments,
   };
 
   return details;
