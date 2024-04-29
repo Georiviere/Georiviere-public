@@ -2,7 +2,8 @@
   "header": {
     "logo": {
       "src": "/medias/logo.svg"
-    }
+    },
+    "displayTitle": true
   },
   "footer": {
     "partners": [

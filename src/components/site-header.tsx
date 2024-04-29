@@ -6,6 +6,7 @@ import { Menu } from '@/api/settings';
 import { useSettingsContext } from '@/context/settings';
 import { useTranslations } from 'next-intl';
 
+import { cn } from '@/lib/utils';
 import { MainNav } from '@/components/main-nav';
 import { ThemeToggle } from '@/components/theme-toggle';
 
@@ -20,23 +21,27 @@ export function SiteHeader({ menu }: Props) {
   const { settings = null } = useSettingsContext();
   return (
     <header
-      className="sticky top-0 z-[500] w-full border-b bg-background"
+      className="custo-header sticky top-0 z-[500] w-full border-b bg-background"
       role="banner"
     >
-      <div className="flex h-16 items-center space-x-4 px-3 sm:justify-between sm:space-x-0">
+      <div className="custo-logo flex h-16 items-center space-x-4 px-3 sm:justify-between sm:space-x-0">
         <Link href="/" className="flex items-center space-x-2">
           {settings && settings.customization.header?.logo?.src ? (
             <Image
               className="lock hidden size-8 sm:inline"
-              width={32}
-              height={32}
+              width={300}
+              height={300}
               {...settings.customization.header.logo}
               alt={settings.customization.header.logo.alt ?? ''}
             />
           ) : (
             <Icons.logo
               {...propsForSVGPresentation}
-              className="lock hidden size-8 sm:inline"
+              className={cn(
+                settings?.customization.header?.displayTitle
+                  ? 'sr-only'
+                  : 'lock hidden size-8 sm:inline',
+              )}
             />
           )}
           <span className="font-bold">{t('title')}</span>

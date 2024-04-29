@@ -91,6 +91,7 @@ type LocaleSettingsFooter = {
 export type RawLocalSettings = {
   header?: {
     logo: ImageProps;
+    displayTitle: boolean;
   };
   footer?: LocaleSettingsFooter;
   homepage?: {
@@ -112,6 +113,7 @@ export type RawLocalSettings = {
 export type LocalSettings = {
   header?: {
     logo: ImageProps;
+    displayTitle: boolean;
   };
   footer?: LocaleSettingsFooter;
   homepage: {
