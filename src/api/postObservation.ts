@@ -1,9 +1,3 @@
-export type PostObservationProps = {
-  geom?: string;
-  properties: string;
-  files?: string;
-};
-
 async function postObservation(
   props: { [key: string]: string | Blob },
   id: string,
@@ -53,7 +47,7 @@ async function postObservation(
 }
 
 export async function handleSubmitCustomObservation(
-  body: PostObservationProps,
+  body: { [key: string]: string | Blob },
   id: string,
   formData: FormData,
 ) {
