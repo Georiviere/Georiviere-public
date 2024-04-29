@@ -1,4 +1,4 @@
-import { Attachement } from '@/api/settings';
+import { ObservationDetails } from '@/api/customObservations';
 import { LatLngTuple } from 'leaflet';
 import { useTranslations } from 'next-intl';
 
@@ -9,18 +9,7 @@ import ButtonClose from './button-close';
 import Carousel from './carousel';
 
 type Props = {
-  content: {
-    values: any[];
-    contributedAt: string;
-    id: string;
-    label: string;
-    description: string;
-    customContributionTypes: number[];
-    geometry: {
-      coordinates: number[];
-    };
-    attachments: Attachement[];
-  };
+  content: ObservationDetails;
 };
 
 export default function ObservationDetailsPageUI({ content }: Props) {
@@ -30,7 +19,7 @@ export default function ObservationDetailsPageUI({ content }: Props) {
 
   return (
     <article>
-      {content?.attachments?.length > 0 && (
+      {content.attachments && content.attachments?.length > 0 && (
         <div className="-m-8 mb-6">
           <Carousel
             className="w-full"

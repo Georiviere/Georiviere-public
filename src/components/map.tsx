@@ -45,11 +45,14 @@ export default function SearchMap() {
       const obs = await getObservation(id);
       if (obs?.stations?.length === 0) setHasObservationMarker(true);
     };
+
     if (pathName.startsWith('/map/observation')) {
       const observationType = pathName.match(
         /\/map\/observation\/([^?/]+)/,
       )?.[1];
+
       if (!observationType) return;
+
       if (DEFAULT_OBSERVATION_TYPES.includes(observationType)) {
         setHasObservationMarker(true);
       } else {
