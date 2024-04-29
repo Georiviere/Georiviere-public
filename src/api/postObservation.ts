@@ -4,37 +4,33 @@ export type PostObservationProps = {
   files?: string;
 };
 
-async function postObservation(props: any, id: string) {
-  // const { files, properties, geom } = props;
-  // const decodedFiles = await Promise.all(
-  //   JSON.parse(files).map(async (item: { name: string; file: string }) => {
-  //     return {
-  //       name: item.name,
-  //       file: await fetch(item.file).then(res => res.blob()),
-  //     };
-  //   }),
-  // );
+async function postObservation(
+  props: { [key: string]: string | Blob },
+  id: string,
+  formData: FormData,
+) {
+  const body = new FormData();
 
-  // const body = new FormData();
+  Object.entries(props).forEach(([key, value]) => {
+    body.append(key, value);
+  });
 
-  // body.append('properties', properties);
-  // body.append('geom', geom);
-
-  // decodedFiles.map((item, index) => {
-  //   body.append(`file${index + 1}`, item.file, item.name);
-  // });
-
-  // console.log('>> content to send >>>>', body);
+  Array.from({ length: 5 }).forEach((_, index) => {
+    const number = index + 1;
+    const file = formData.get(`file${number}-file`) as File;
+    const category = formData.get(`file${number}-category`);
+    if (file && file.size > 0 && category) {
+      body.append(`file${number}`, file);
+      body.append(`file${number}-category`, category);
+    }
+  });
 
   try {
     const res = await fetch(
       `${process.env.apiHost}/api/portal/fr/${process.env.portal}/custom-contribution-types/${id}/contributions/`,
       {
-        headers: {
-          'Content-Type': 'application/json',
-        },
         method: 'POST',
-        body: JSON.stringify(props),
+        body,
       },
     ).catch(errorServer => {
       throw Error(errorServer);
@@ -61,7 +57,8 @@ async function postObservation(props: any, id: string) {
 export async function handleSubmitCustomObservation(
   body: PostObservationProps,
   id: string,
+  formData: FormData,
 ) {
   'use server';
-  return await postObservation(body, id);
+  return await postObservation(body, id, formData);
 }
