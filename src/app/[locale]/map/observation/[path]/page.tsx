@@ -9,7 +9,7 @@ import { JSONSchema } from 'json-schema-yup-transformer/dist/schema';
 import { getTranslations } from 'next-intl/server';
 
 import ButtonClose from '@/components/button-close';
-import NewObservationForm from '@/components/new-observation-form';
+import CustomObservationForm from '@/components/custom-observation-form';
 import ObservationForm from '@/components/observation-form';
 
 type Props = {
@@ -60,7 +60,7 @@ export default async function ObservationPage({ params: { path } }: Props) {
           handleSubmit={handleSubmitObservation}
         />
       ) : (
-        <NewObservationForm
+        <CustomObservationForm
           id={observation.id}
           schema={jsonSchema}
           stations={observation.stations}

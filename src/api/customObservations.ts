@@ -1,5 +1,7 @@
 import { JSONSchema } from 'json-schema-yup-transformer/dist/schema';
 
+import { Attachement } from './settings';
+
 export type Observation = {
   id: number;
   label: string;
@@ -9,20 +11,21 @@ export type Observation = {
 };
 
 export type ObservationDetails = {
-  value: number;
+  values: { id: string; value: any; label?: string }[];
   id: string;
-  label: string;
-  description: string;
-  customContributionTypes: number[];
-  geometry: {
+  contributedAt: string;
+  label?: string;
+  description?: string;
+  attachments?: Attachement[];
+  geometry?: {
     coordinates: number[];
   };
 };
 
-type ObservationList = {
+type ObservationListItem = {
   id: number;
   contributed_at: string;
-  attachments: any[];
+  attachments: Attachement[];
 };
 
 async function fetchObservations(): Promise<Observation[]> {
@@ -59,7 +62,7 @@ async function fetchObservation(id: string): Promise<Observation | null> {
 
 async function fetchObservationDetails(
   id: string,
-): Promise<ObservationList[] | null> {
+): Promise<ObservationListItem[] | null> {
   const res = await fetch(
     `${process.env.apiHost}/api/portal/fr/${process.env.portal}/custom-contribution-types/${id}/contributions`,
     {
@@ -78,7 +81,7 @@ async function fetchObservationDetails(
 export async function getObservationDetails(
   type: string,
   id: string,
-): Promise<any> {
+): Promise<ObservationDetails | null> {
   const schema = await fetchObservation(type);
   const detailsList = await fetchObservationDetails(type);
   const values = detailsList?.find(detail => detail.id === parseInt(id));

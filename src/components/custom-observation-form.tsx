@@ -20,7 +20,7 @@ import { useTranslations } from 'next-intl';
 import { Icons, propsForSVGPresentation } from './icons';
 import { Button } from './ui/button';
 
-const NewObservationForm = ({
+const CustomObservationForm = ({
   schema,
   id,
   stations,
@@ -194,4 +194,4 @@ const NewObservationForm = ({
   );
 };
 
-export default NewObservationForm;
+export default CustomObservationForm;
