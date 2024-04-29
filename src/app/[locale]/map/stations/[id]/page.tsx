@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
-import { getObservation } from '@/api/customObservations';
-import { getDetails } from '@/api/details';
+import { Observation, getObservation } from '@/api/customObservations';
+import { getStation } from '@/api/stations';
 
 import StationPageUI from '@/components/station.page';
 
@@ -12,14 +12,17 @@ type Props = {
 };
 
 export default async function StationsPage({ params: { id } }: Props) {
-  const content = await getDetails('stations', id);
-  const observationTypes = await Promise.all(
-    content.customContributionTypes?.map((id: string) => getObservation(id)),
-  );
+  const content = await getStation(id);
   if (content === null) {
     notFound();
   }
+  const observationTypes = await Promise.all(
+    content.customContributionTypes?.map(id => getObservation(`${id}`)),
+  );
   return (
-    <StationPageUI content={content} observationTypes={observationTypes} />
+    <StationPageUI
+      content={content}
+      observationTypes={observationTypes as Observation[]}
+    />
   );
 }

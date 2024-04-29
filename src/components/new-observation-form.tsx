@@ -7,7 +7,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { handleSubmitObservation } from '@/api/customObservations';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Station, getStations } from '@/api/stations';
 import { useMapContext } from '@/context/map';
 import {
@@ -24,12 +24,16 @@ const NewObservationForm = ({
   schema,
   id,
   stations,
+  handleSubmitObservation,
 }: {
-  id?: string;
+  id?: number;
   schema: any;
   stations?: number[];
+  handleSubmitObservation: Function;
 }) => {
   const t = useTranslations('observation');
+  const params = useSearchParams();
+  const router = useRouter();
   const { observationCoordinates } = useMapContext();
 
   const [isLoading, setLoading] = useState(false);
@@ -52,7 +56,7 @@ const NewObservationForm = ({
   }, []);
 
   const handleSubmit = useCallback(
-    (event: FormEvent<HTMLFormElement>) => {
+    async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       const validator = new DataValidator(schema);
       const validation = validator.validate(editorState.state.data);
@@ -60,6 +64,7 @@ const NewObservationForm = ({
 
       const isValid = validation.isValid;
       if (isValid && id) {
+        setLoading(true);
         const contributedAt = new Date(
           `${formData.get('contributed_at_date')} ${formData.get(
             'contributed_at_time',
@@ -87,7 +92,7 @@ const NewObservationForm = ({
             type: formData.get('file5-category'),
           },
         ];
-        handleSubmitObservation(
+        const result = await handleSubmitObservation(
           {
             ...(formData.get('lat') && formData.get('lat')
               ? { lat: formData.get('lat'), lng: formData.get('lng') }
@@ -100,12 +105,25 @@ const NewObservationForm = ({
           },
           id,
         );
+        setLoading(false);
+        if (!result.error) {
+          router.push(`/map?${params.toString()}`);
+        } else {
+          console.error(result.message);
+        }
       } else {
         const errorMap = validation.errorMap;
         setErrorMap(errorMap);
       }
     },
-    [schema, editorState, id],
+    [
+      schema,
+      editorState.state.data,
+      id,
+      handleSubmitObservation,
+      router,
+      params,
+    ],
   );
 
   return (
