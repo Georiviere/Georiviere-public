@@ -26,13 +26,14 @@ export default async function ObservationPage({ params: { path } }: Props) {
   const isDefaultObservation = DEFAULT_OBSERVATION_TYPES.includes(path);
 
   if (isDefaultObservation) {
+    observation = {};
     jsonSchema = (await getObservationJsonSchema(path)) as JSONSchema;
   } else {
     observation = await getObservation(path);
     jsonSchema = observation?.json_schema_form as JSONSchema;
   }
 
-  if (!observation) {
+  if (!isDefaultObservation && !observation) {
     return null;
   }
 
