@@ -44,14 +44,15 @@ export function ObservationCTA() {
                     {observation.description ?? ''}
                   </ListItem>
                 ))}
-                {DEFAULT_OBSERVATION_TYPES.map(observation => (
-                  <ListItem
-                    href={`/map/observation/${observation}?${params.toString()}`}
-                    title={t(`${observation}.label`)}
-                  >
-                    {t(`${observation}.shortDescription`)}
-                  </ListItem>
-                ))}
+                {observations?.length === 0 &&
+                  DEFAULT_OBSERVATION_TYPES.map(observation => (
+                    <ListItem
+                      href={`/map/observation/${observation}?${params.toString()}`}
+                      title={t(`${observation}.label`)}
+                    >
+                      {t(`${observation}.shortDescription`)}
+                    </ListItem>
+                  ))}
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
