@@ -29,9 +29,5 @@ export const generateMetadata = async ({
 };
 
 export default function ObservationLayout({ children }: Props) {
-  return (
-    <ScrollArea className="h-full">
-      <div className="p-4 lg:p-8">{children}</div>
-    </ScrollArea>
-  );
+  return <ScrollArea className="h-full">{children}</ScrollArea>;
 }
