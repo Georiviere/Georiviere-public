@@ -24,11 +24,13 @@ const CustomObservationForm = ({
   schema,
   id,
   stations,
+  passwordProtected,
   handleSubmitObservation,
 }: {
   id?: number;
   schema: any;
   stations?: number[];
+  passwordProtected: boolean;
   handleSubmitObservation: Function;
 }) => {
   const t = useTranslations('observation');
@@ -77,6 +79,9 @@ const CustomObservationForm = ({
               : {}),
             ...(formData.get('station')
               ? { station: formData.get('station') }
+              : {}),
+            ...(formData.get('observation-password')
+              ? { password: formData.get('observation-password') }
               : {}),
             contributed_at: contributedAt.toISOString(),
             ...editorState.state.data,
@@ -144,6 +149,14 @@ const CustomObservationForm = ({
             <div className="rjf-help-text">{t('coordinatesHelptext')}</div>
           </div>
         </>
+      )}
+      {passwordProtected && (
+        <div className="rjf-form-row">
+          <div className="rjf-input-group">
+            <label htmlFor="observation-password">{t('password')}</label>
+            <input required name="observation-password" type="password" />
+          </div>
+        </div>
       )}
       <div className="rjf-form-row">
         <div className="rjf-input-group">
