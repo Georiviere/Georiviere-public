@@ -105,7 +105,7 @@ export default function SearchMap() {
       <LayersControl position="topright">
         {baseLayers.map(({ id, label, ...layer }, index) => (
           <LayersControl.BaseLayer key={id} checked={index === 0} name={label}>
-            <TileLayer {...layer} />
+            <TileLayer {...layer} attribution={layer.control.attribution} />
           </LayersControl.BaseLayer>
         ))}
       </LayersControl>

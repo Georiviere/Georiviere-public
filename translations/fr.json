@@ -27,6 +27,7 @@
     "coordinatesHelptext": "Indiquez la position de l'observation sur la carte",
     "submit": "Soumettre votre observation",
     "title": "Observation",
+    "password": "Mot de passe",
     "contributedAt": "Observé le",
     "station": "Station",
     "labelButton": "Ajouter une observation",

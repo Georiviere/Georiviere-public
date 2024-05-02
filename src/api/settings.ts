@@ -9,7 +9,9 @@ type BaseLayers = {
   id: number;
   label: string;
   url: string;
-  attribution: string;
+  control: {
+    attribution: string;
+  };
 }[];
 
 export type RawLayer = {
