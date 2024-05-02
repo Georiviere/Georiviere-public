@@ -64,6 +64,7 @@ export default async function ObservationPage({ params: { path } }: Props) {
           id={observation.id}
           schema={jsonSchema}
           stations={observation.stations}
+          passwordProtected={!!observation.password_required}
           handleSubmitObservation={handleSubmitCustomObservation}
         />
       )}

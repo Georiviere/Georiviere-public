@@ -8,6 +8,7 @@ export type Observation = {
   description: string;
   json_schema_form: JSONSchema;
   stations: number[];
+  password_required?: boolean;
 };
 
 export type ObservationDetails = {
