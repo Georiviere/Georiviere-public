@@ -33,7 +33,7 @@ async function fetchObservations(): Promise<Observation[]> {
   const res = await fetch(
     `${process.env.apiHost}/api/portal/fr/${process.env.portal}/custom-contribution-types/`,
     {
-      next: { revalidate: 60 * 60 },
+      next: { revalidate: 5 * 60 },
       headers: {
         Accept: 'application/json',
       },
@@ -49,7 +49,7 @@ async function fetchObservation(id: string): Promise<Observation | null> {
   const res = await fetch(
     `${process.env.apiHost}/api/portal/fr/${process.env.portal}/custom-contribution-types/${id}`,
     {
-      next: { revalidate: 60 * 60 },
+      next: { revalidate: 5 * 60 },
       headers: {
         Accept: 'application/json',
       },
@@ -67,7 +67,7 @@ async function fetchObservationDetails(
   const res = await fetch(
     `${process.env.apiHost}/api/portal/fr/${process.env.portal}/custom-contribution-types/${id}/contributions`,
     {
-      next: { revalidate: 60 * 60 },
+      next: { revalidate: 5 * 60 },
       headers: {
         Accept: 'application/json',
       },
