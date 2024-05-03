@@ -10,7 +10,7 @@ async function fetchObservation() {
   const res = await fetch(
     `${process.env.apiHost}/api/portal/fr/${process.env.portal}/contributions/json_schema/`,
     {
-      next: { revalidate: 5 * 60 },
+      next: { revalidate: 5 * 60, tags: ['admin', 'observations'] },
       headers: {
         Accept: 'application/json',
       },
