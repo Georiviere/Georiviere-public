@@ -16,6 +16,7 @@ type Props = {
     length?: number;
     descent?: number;
     flow?: string;
+    url?: string;
     geometryCenter?: {
       type: 'Point';
       coordinates: [number, number];
@@ -66,6 +67,19 @@ export default function DetailsPageUI({ content }: Props) {
       </header>
 
       <div dangerouslySetInnerHTML={{ __html: content.description }} />
+      {content?.url && (
+        <div 
+          className="w-full"
+          >
+          <a 
+            href={content.url}
+            target="_blank"
+            className="w-fit block gap-4 py-2 px-2 my-4 mx-auto border rounded-md font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-primary hover:bg-primary/80 border-transparent text-primary-foreground"
+          >
+              Voir le site associé
+          </a>
+        </div>
+      )}
     </article>
   );
 }
