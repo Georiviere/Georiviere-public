@@ -158,7 +158,7 @@ export async function fetchSettings(): Promise<RawSettings> {
     const res = await fetch(
       `${process.env.apiHost}/api/portal/fr/portal/${process.env.portal}/`,
       {
-        next: { revalidate: 5 * 60 },
+        next: { revalidate: 5 * 60, tags: ['admin', 'settings'] },
         headers: {
           Accept: 'application/json',
         },
