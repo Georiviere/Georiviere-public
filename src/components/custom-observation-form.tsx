@@ -39,6 +39,7 @@ const CustomObservationForm = ({
   const { observationCoordinates } = useMapContext();
 
   const [isLoading, setLoading] = useState(false);
+  const [serverErrors, setServerErrors] = useState(false);
   const [stationsDetails, setStationsDetails] = useState<Station[]>([]);
 
   const [editorState, setEditorState] = useState(() =>
@@ -93,7 +94,8 @@ const CustomObservationForm = ({
         if (!result.error) {
           router.push(`/map?${params.toString()}`);
         } else {
-          console.error(result.message);
+          console.error(result);
+          setServerErrors(result.message);
         }
       } else {
         const errorMap = validation.errorMap;
@@ -189,6 +191,14 @@ const CustomObservationForm = ({
         ))}
       </div>
       <p className="my-8 text-sm">{t('gdpr')}</p>
+
+      {Object.entries(serverErrors).map(([type, message]) => (
+        <div className="rjf-input-group">
+          <span className="rjf-error-text">
+            {type}: {message}
+          </span>
+        </div>
+      ))}
 
       <Button className="my-3 flex gap-2" type="submit">
         {isLoading && (
