@@ -71,7 +71,11 @@ export default function DetailsPageUI({ content }: Props) {
 
       <div dangerouslySetInnerHTML={{ __html: content.description }} />
       {content?.url && (
-        <LinkAsButton className="mx-auto mt-4 block w-fit" href={content?.url}>
+        <LinkAsButton
+          target="_blank"
+          className="mx-auto mt-4 block w-fit"
+          href={content?.url}
+        >
           {t('link')}
         </LinkAsButton>
       )}
