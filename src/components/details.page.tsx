@@ -1,5 +1,6 @@
 import { Attachement } from '@/api/settings';
 import { LatLngTuple } from 'leaflet';
+import { useTranslations } from 'next-intl';
 
 import { convertAttachementsToImages } from '@/lib/utils';
 
@@ -7,6 +8,7 @@ import ButtonCenterView from './button-center-view';
 import ButtonClose from './button-close';
 import Carousel from './carousel';
 import { MetadataList } from './metadata-list';
+import LinkAsButton from './ui/link-as-button';
 
 type Props = {
   content: {
@@ -16,6 +18,7 @@ type Props = {
     length?: number;
     descent?: number;
     flow?: string;
+    url?: string;
     geometryCenter?: {
       type: 'Point';
       coordinates: [number, number];
@@ -31,6 +34,7 @@ type Props = {
 };
 
 export default function DetailsPageUI({ content }: Props) {
+  const t = useTranslations('details');
   return (
     <article>
       {content?.attachments?.length > 0 && (
@@ -66,6 +70,11 @@ export default function DetailsPageUI({ content }: Props) {
       </header>
 
       <div dangerouslySetInnerHTML={{ __html: content.description }} />
+      {content?.url && (
+        <LinkAsButton className="mx-auto mt-4 block w-fit" href={content?.url}>
+          {t('link')}
+        </LinkAsButton>
+      )}
     </article>
   );
 }
