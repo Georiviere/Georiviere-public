@@ -33,10 +33,7 @@ async function postObservation(
     const json = await res.json();
 
     if (res.status < 200 || res.status > 299) {
-      const errors = Object.values(json)
-        .map(err => (Array.isArray(err) ? err[0] : err))
-        .join('. ');
-      return { error: true, message: errors };
+      return { error: true, message: json };
     }
     return { error: false, message: json };
   } catch (error) {
