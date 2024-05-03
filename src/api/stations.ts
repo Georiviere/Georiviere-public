@@ -25,7 +25,7 @@ async function fetchStations(): Promise<Station[]> {
     headers: {
       Accept: 'application/json',
     },
-    next: { revalidate: 60 * 60 },
+    next: { revalidate: 5 * 60 },
   });
   if (res.status < 200 || res.status > 299) {
     return [];
@@ -39,7 +39,7 @@ async function fetchStation(id: number): Promise<Station | null> {
     headers: {
       Accept: 'application/json',
     },
-    next: { revalidate: 60 * 60 },
+    next: { revalidate: 5 * 60 },
   });
   if (res.status < 200 || res.status > 299) {
     return null;
@@ -55,7 +55,7 @@ async function fetchStationObservations(
     headers: {
       Accept: 'application/json',
     },
-    next: { revalidate: 60 * 60 },
+    next: { revalidate: 5 * 60 },
   });
   if (res.status < 200 || res.status > 299) {
     return null;
