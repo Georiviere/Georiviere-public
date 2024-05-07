@@ -26,7 +26,7 @@ export default function MapFilters() {
 
   if (
     settings === null ||
-    settings.layersTree.length === 0 ||
+    settings?.layersTree?.length === 0 ||
     layers === null
   ) {
     return (
@@ -43,8 +43,8 @@ export default function MapFilters() {
   }
 
   const [grouped, [notGrouped]] = partition(
-    settings.layersTree,
-    layer => layer.label !== null,
+    settings?.layersTree,
+    layer => layer?.label !== null,
   );
 
   const activatedLayers = layers
@@ -53,13 +53,13 @@ export default function MapFilters() {
 
   return (
     <>
-      {grouped.length !== 0 && (
+      {grouped?.length !== 0 && (
         <Accordion
           type="multiple"
           className="w-full bg-background"
-          defaultValue={grouped.map((_, index) => `item-${index}`)}
+          defaultValue={grouped?.map((_, index) => `item-${index}`)}
         >
-          {grouped.map((group, index) => (
+          {grouped?.map((group, index) => (
             <AccordionItem key={index} value={`item-${index}`} className="px-4">
               <AccordionTrigger>{group.label}</AccordionTrigger>
               <AccordionContent>
@@ -94,9 +94,9 @@ export default function MapFilters() {
           ))}
         </Accordion>
       )}
-      {notGrouped.layers.length !== 0 && (
+      {notGrouped?.layers.length !== 0 && (
         <ul className="bg-background px-4">
-          {notGrouped.layers.map(layer => (
+          {notGrouped?.layers.map(layer => (
             <li
               key={layer.id}
               className="flex flex-1 items-center justify-between border-b py-4 font-medium hover:underline"
