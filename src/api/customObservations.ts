@@ -12,9 +12,9 @@ export type Observation = {
 };
 
 export type ObservationDetails = {
-  values: { id: string; value: any; label?: string }[];
+  values?: { id: string; value: any; label?: string }[];
   id: string;
-  contributedAt: string;
+  contributedAt?: string;
   label?: string;
   description?: string;
   attachments?: Attachement[];

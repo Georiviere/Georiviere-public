@@ -1,14 +1,40 @@
 import { getCorrespondingPath } from '@/lib/utils';
 
+import { Attachement } from './settings';
+
 export type PostObservationProps = {
   geom: string;
   properties: string;
   files: string;
 };
 
+export type ObservationDetails = {
+  id: number;
+  type: string;
+  category: string;
+  description: string;
+  attachments?: Attachement[];
+};
+
 async function fetchObservation() {
   const res = await fetch(
     `${process.env.apiHost}/api/portal/fr/${process.env.portal}/contributions/json_schema/`,
+    {
+      next: { revalidate: 5 * 60, tags: ['admin', 'observations'] },
+      headers: {
+        Accept: 'application/json',
+      },
+    },
+  );
+  if (res.status < 200 || res.status > 299) {
+    return {};
+  }
+  return res.json();
+}
+
+async function fetchObservationDetails(id: string) {
+  const res = await fetch(
+    `${process.env.apiHost}/api/portal/fr/${process.env.portal}/contributions/${id}/`,
     {
       next: { revalidate: 5 * 60, tags: ['admin', 'observations'] },
       headers: {
@@ -102,6 +128,14 @@ function observationAdapter(json: any, path: string) {
       item => item !== 'category',
     ),
   };
+}
+
+export async function getObservationDetails(
+  id: string,
+): Promise<ObservationDetails | null> {
+  const observationDetails = fetchObservationDetails(id);
+
+  return observationDetails;
 }
 
 export async function getObservationJsonSchema(path: string) {

@@ -56,6 +56,11 @@ export const GeometryItem = ({
         );
       },
     }),
+    ...(layer.type === 'contributions' && {
+      click: () => {
+        router.push(`/map/observation/damages/details/${id}`);
+      },
+    }),
   };
 
   if (geometry.type === 'Point' || geometry.type === 'MultiPoint') {

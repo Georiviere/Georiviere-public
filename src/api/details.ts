@@ -30,7 +30,12 @@ export async function getDetails(path: string, id: number) {
       `/api/portal/fr/${process.env.portal}/${path}/${id}`,
     );
   } catch (e) {
-    // notfound
+    try {
+      details = await fetchDetails(`/api/portal/fr/${path}/${id}`);
+    } catch (e) {
+      return null;
+    }
+    return details;
   }
   return details;
 }
