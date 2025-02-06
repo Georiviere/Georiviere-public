@@ -15,7 +15,7 @@ type Props = {
 export default function ObservationDetailsPageUI({ content }: Props) {
   const t = useTranslations('observation');
 
-  const date = new Date(content.contributedAt);
+  const date = new Date(content.contributedAt ?? '');
 
   return (
     <article>
@@ -53,7 +53,7 @@ export default function ObservationDetailsPageUI({ content }: Props) {
         </span>
       </div>
       <ul className="mt-4">
-        {content.values
+        {(content.values ?? [])
           .filter(value => value.label)
           .map(value => (
             <li className="mt-2">

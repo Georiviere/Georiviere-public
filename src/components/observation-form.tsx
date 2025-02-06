@@ -61,16 +61,14 @@ export default function ObservationForm({ jsonSchema, handleSubmit }: Props) {
   };
 
   const form = useForm({
-    resolver: yupResolver(
-      convertToYup(schema, config) as InferType<typeof schema>,
-    ),
+    resolver: yupResolver(convertToYup(schema, config) as any),
     defaultValues: {
       type: '',
       date_observation: new Date().toISOString().split('T')[0],
     },
-  }) as InferType<typeof schema>;
+  }) as any;
 
-  async function onSubmit(values: InferType<typeof schema>, event: Event) {
+  async function onSubmit(values: any, event: Event) {
     const formData = new FormData(event.target as HTMLFormElement);
 
     const formDataFiles = [
