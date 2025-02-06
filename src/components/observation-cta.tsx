@@ -42,7 +42,7 @@ export function ObservationCTA({ observations }: OversationsCTAProps) {
                     }?${params.toString()}`}
                     title={observation.label}
                   >
-                    {observation.description ?? ''}
+                    {observation.description}
                   </ListItem>
                 ))}
                 {observations?.length === 0 &&
@@ -84,9 +84,11 @@ const ListItem = React.forwardRef<
       >
         <span>
           <span className="text-sm font-medium leading-none">{title}</span>
-          <span className="line-clamp-2 block text-sm leading-snug text-muted-foreground">
-            {children}
-          </span>
+          {children && (
+            <span className="line-clamp-2 block text-sm leading-snug text-muted-foreground">
+              {children}
+            </span>
+          )}
         </span>
         <Icons.chevronRight className="shrink-0" />
       </Link>

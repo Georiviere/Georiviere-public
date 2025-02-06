@@ -85,7 +85,7 @@ export async function getObservationDetails(
 ): Promise<ObservationDetails | null> {
   const schema = await fetchObservation(type);
   const detailsList = await fetchObservationDetails(type);
-  const values = detailsList?.find(detail => detail.id === parseInt(id));
+  const values = detailsList?.find(detail => detail.id === parseInt(id, 10));
 
   if (!values) return null;
 
@@ -98,10 +98,10 @@ export async function getObservationDetails(
         label: (schema?.json_schema_form.properties?.[key] as any)?.title,
       })),
     id,
-    contributedAt: values?.contributed_at,
+    contributedAt: values.contributed_at,
     label: schema?.label,
     description: schema?.description,
-    attachments: values?.attachments,
+    attachments: values.attachments,
   };
 
   return details;
@@ -109,12 +109,13 @@ export async function getObservationDetails(
 
 export async function getObservation(id: string) {
   const observation = await fetchObservation(id);
+  if (!observation || !observation.json_schema_form) return null;
   return {
     ...observation,
     json_schema_form: {
-      ...observation?.json_schema_form,
+      ...observation.json_schema_form,
       properties: {
-        ...observation?.json_schema_form?.properties,
+        ...observation.json_schema_form.properties,
       },
     },
   };
