@@ -18,12 +18,9 @@ export const GeometryTooltip = ({
   ) {
     return null;
   }
-  if (layer.type === undefined || !layer.url || !properties.id) {
-    return (
-      <Tooltip>
-        {properties.name ?? properties.category ?? properties.label}
-      </Tooltip>
-    );
+  const label = properties?.name || properties?.category || properties?.label;
+  if (label) {
+    return <Tooltip>{label}</Tooltip>;
   }
   return (
     <Tooltip

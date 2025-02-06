@@ -71,13 +71,12 @@ export async function getStations() {
 
 export async function getStation(id: number): Promise<Station | null> {
   const station = await fetchStation(id);
-  const observations = await fetchStationObservations(id);
-  if (station) {
-    return {
-      ...station,
-      observations,
-    };
-  } else {
+  if (!station) {
     return null;
   }
+  const observations = await fetchStationObservations(id);
+  return {
+    ...station,
+    observations,
+  };
 }
