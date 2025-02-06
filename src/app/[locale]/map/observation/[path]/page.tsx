@@ -41,7 +41,7 @@ export default async function ObservationPage({ params: { path } }: Props) {
     <section className="p-4 lg:p-8">
       <header className="flex items-center justify-between pb-8">
         <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">
-          {isDefaultObservation ? t(`${path}.label`) : observation.label}
+          {isDefaultObservation ? t(`${path}.label`) : observation?.label}
         </h1>
         <div className="absolute right-0 top-0 flex rounded-bl-lg border border-t-0 bg-background">
           <ButtonClose label={t('cancel')} />
@@ -51,7 +51,7 @@ export default async function ObservationPage({ params: { path } }: Props) {
       <p className="pb-8">
         {isDefaultObservation
           ? t(`${path}.description`)
-          : observation.description}
+          : observation?.description}
       </p>
 
       {isDefaultObservation ? (
@@ -61,10 +61,10 @@ export default async function ObservationPage({ params: { path } }: Props) {
         />
       ) : (
         <CustomObservationForm
-          id={observation.id}
+          id={observation?.id}
           schema={jsonSchema}
-          stations={observation.stations}
-          passwordProtected={!!observation.password_required}
+          stations={observation?.stations}
+          passwordProtected={!!observation?.password_required}
           handleSubmitObservation={handleSubmitCustomObservation}
         />
       )}
