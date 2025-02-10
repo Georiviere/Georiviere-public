@@ -128,7 +128,7 @@ const CustomObservationForm = ({
             }
           >
             {stations?.map(station => (
-              <option value={station}>
+              <option key={station} value={station}>
                 {stationsDetails.find(e => e.id === station)?.label}
               </option>
             ))}

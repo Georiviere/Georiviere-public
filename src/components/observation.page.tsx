@@ -55,8 +55,8 @@ export default function ObservationDetailsPageUI({ content }: Props) {
       <ul className="mt-4">
         {(content.values ?? [])
           .filter(value => value.label)
-          .map(value => (
-            <li className="mt-2">
+          .map((value, index) => (
+            <li key={index} className="mt-2">
               <span className="text-sm font-medium leading-none">
                 {value.label}:
               </span>
