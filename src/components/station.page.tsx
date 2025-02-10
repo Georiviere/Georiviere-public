@@ -34,8 +34,8 @@ export default function StationPageUI({ content, observationTypes }: Props) {
       </header>
 
       <div className="mt-4">
-        {content.description.split('\n').map(e => (
-          <p>{e}</p>
+        {content.description.split('\n').map((element, index) => (
+          <p key={index}>{element}</p>
         ))}
         {content?.url && (
           <LinkAsButton
