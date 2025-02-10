@@ -32,7 +32,7 @@
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.79.0",
     "lucide-react": "^0.221.0",
-    "next": "^13.5.4",
+    "next": "14.2.23",
     "next-intl": "2.15.0-beta.5",
     "next-themes": "^0.2.1",
     "react": "^19.0.0",
