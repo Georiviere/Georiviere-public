@@ -83,9 +83,11 @@ export async function getObservationDetails(
   type: string,
   id: string,
 ): Promise<ObservationDetails | null> {
-  const schema = await fetchObservation(type);
-  const detailsList = await fetchObservationDetails(type);
-  const values = detailsList?.find(detail => detail.id === parseInt(id, 10));
+  const [schema, detailsList] = await Promise.all([
+    fetchObservation(type),
+    fetchObservationDetails(type),
+  ]);
+  const values = detailsList?.find(detail => String(detail.id) === id);
 
   if (!values) return null;
 
