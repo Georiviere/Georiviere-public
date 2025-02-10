@@ -26,10 +26,6 @@ export const generateMetadata = async () => {
       template: `%s - ${t('title')}`,
     },
     description: t('description'),
-    themeColor: [
-      { media: '(prefers-color-scheme: light)', color: 'white' },
-      { media: '(prefers-color-scheme: dark)', color: 'black' },
-    ],
     icons: {
       icon: '/medias/favicon.png',
       shortcut: '/medias/favicon-16x16.png',
@@ -37,6 +33,15 @@ export const generateMetadata = async () => {
     },
   };
 };
+
+export function generateViewport() {
+  return {
+    themeColor: [
+      { media: '(prefers-color-scheme: light)', color: 'white' },
+      { media: '(prefers-color-scheme: dark)', color: 'black' },
+    ],
+  };
+}
 
 export default async function PageLayout({ children, params }: Props) {
   const locale = useLocale();

@@ -10,9 +10,6 @@ const nextConfig = withNextIntl({
     apiHost: process.env.NEXT_PUBLIC_API_HOST,
     portal: process.env.NEXT_PUBLIC_PORTAL,
   },
-  experimental: {
-    serverActions: true,
-  },
   images: {
     remotePatterns: [
       {
