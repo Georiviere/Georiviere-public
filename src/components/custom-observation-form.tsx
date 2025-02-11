@@ -1,12 +1,6 @@
 'use client';
 
-import React, {
-  FormEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Station, getStations } from '@/api/stations';
 import { useMapContext } from '@/context/map';
@@ -120,6 +114,7 @@ const CustomObservationForm = ({
             {t('station')}
           </label>
           <select
+            id="station"
             name="station"
             defaultValue={
               params.get('station')
@@ -139,14 +134,28 @@ const CustomObservationForm = ({
           <div className="rjf-form-row">
             <div className="rjf-input-group">
               <label htmlFor="lat">{t('lat')}</label>
-              <input required name="lat" type="number" readOnly value={lat} />
+              <input
+                id="lat"
+                required
+                name="lat"
+                type="number"
+                readOnly
+                value={lat}
+              />
             </div>
           </div>
 
           <div className="rjf-form-row">
             <div className="rjf-input-group">
               <label htmlFor="lng">{t('lng')}</label>
-              <input required name="lng" type="number" readOnly value={lng} />
+              <input
+                id="lng"
+                required
+                name="lng"
+                type="number"
+                readOnly
+                value={lng}
+              />
             </div>
             <div className="rjf-help-text">{t('coordinatesHelptext')}</div>
           </div>
@@ -156,20 +165,35 @@ const CustomObservationForm = ({
         <div className="rjf-form-row">
           <div className="rjf-input-group">
             <label htmlFor="observation-password">{t('password')}</label>
-            <input required name="observation-password" type="password" />
+            <input
+              id="observation-password"
+              required
+              name="observation-password"
+              type="password"
+            />
           </div>
         </div>
       )}
       <div className="rjf-form-row">
         <div className="rjf-input-group">
           <label htmlFor="contributed_at_date">{t('date')}</label>
-          <input required name="contributed_at_date" type="date" />
+          <input
+            id="contributed_at_date"
+            required
+            name="contributed_at_date"
+            type="date"
+          />
         </div>
       </div>
       <div className="rjf-form-row">
         <div className="rjf-input-group">
           <label htmlFor="contributed_at_time">{t('time')}</label>
-          <input required name="contributed_at_time" type="time" />
+          <input
+            id="contributed_at_time"
+            required
+            name="contributed_at_time"
+            type="time"
+          />
         </div>
       </div>
 
@@ -182,11 +206,18 @@ const CustomObservationForm = ({
         {Array.from({ length: 5 }).map((_, index) => (
           <div key={index} className="rjf-input-group">
             <div className="flex flex-row justify-between">
-              <label htmlFor="" className="text-sm font-medium">
+              <label
+                htmlFor={`file${index + 1}-file`}
+                className="text-sm font-medium"
+              >
                 {t('photoLabel')} {index + 1}
               </label>
             </div>
-            <input type="file" name={`file${index + 1}-file`} id="" />
+            <input
+              type="file"
+              name={`file${index + 1}-file`}
+              id={`file${index + 1}-file`}
+            />
           </div>
         ))}
       </div>
