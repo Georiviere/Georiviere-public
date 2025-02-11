@@ -217,6 +217,7 @@ const CustomObservationForm = ({
               type="file"
               name={`file${index + 1}-file`}
               id={`file${index + 1}-file`}
+              accept="image/*"
             />
           </div>
         ))}
